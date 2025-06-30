@@ -6,7 +6,6 @@ def usage():
     """Print short help message."""
     print(
         """\
-diffpy.cmi – Complex Modeling Infrastructure
 
 DiffPy-CMI is our complex modeling framework. It is a highly flexible library
 of Python modules for robust modeling of nanostructures in crystals,
