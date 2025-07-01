@@ -12,7 +12,8 @@
 # See LICENSE.rst for license information.
 #
 ##############################################################################
-"""Complex modeling infrastructure: a modulare framework for multi-modal modeling of scientific data."""
+"""Complex modeling infrastructure:
+a modulare framework for multi-modal modeling of scientific data."""
 
 # package version
 from diffpy.cmi.version import __version__  # noqa
