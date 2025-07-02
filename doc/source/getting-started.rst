@@ -39,12 +39,12 @@ Here is how you can write a block of code in the documentation. You can use the 
 
     # Create a new environment, without build dependencies (pure Python package)
     conda create -n <package_name>-env python=3.13 \
-        --file requirements/test.txt \
+        --file requirements/tests.txt \
         --file requirements/conda.txt
 
     # Create a new environment, with build dependencies (non-pure Python package)
     conda create -n <package_name>-env python=3.13 \
-        --file requirements/test.txt \
+        --file requirements/tests.txt \
         --file requirements/conda.txt \
         --file requirements/build.txt
 
