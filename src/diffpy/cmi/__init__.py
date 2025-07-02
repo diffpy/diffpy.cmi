@@ -13,7 +13,7 @@
 #
 ##############################################################################
 """Complex modeling infrastructure:
-a modulare framework for multi-modal modeling of scientific data."""
+a modular framework for multi-modal modeling of scientific data."""
 
 # package version
 from diffpy.cmi.version import __version__  # noqa

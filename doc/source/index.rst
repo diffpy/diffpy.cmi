@@ -4,7 +4,7 @@
 
 .. |title| replace:: diffpy.cmi documentation
 
-``diffpy.cmi`` - Complex modeling infrastructure: a modulare framework for multi-modal modeling of scientific data.
+``diffpy.cmi`` - Complex modeling infrastructure: a modular framework for multi-modal modeling of scientific data.
 
 | Software version |release|
 | Last updated |today|.
