@@ -30,7 +30,7 @@ Options:
     )
 
 
-def version():
+def print_version():
     print(f"diffpy-cmi {__version__}")
 
 
@@ -47,7 +47,7 @@ def main():
             usage()
             return
         elif opt in ("-V", "--version"):
-            version()
+            print_version()
             return
 
     # Default behavior (if no arguments)
