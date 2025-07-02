@@ -1,4 +1,4 @@
-import getopt
+import argparse
 import sys
 
 from diffpy.cmi.version import __version__
@@ -43,22 +43,31 @@ def print_version():
 
 
 def main():
-    try:
-        opts, args = getopt.gnu_getopt(sys.argv[1:], "h", ["help", "version"])
-    except getopt.GetoptError as err:
-        print(f"Error: {err}", file=sys.stderr)
+    parser = argparse.ArgumentParser(
+        prog="diffpy-cmi",
+        add_help=False,
+    )
+    parser.add_argument(
+        "--version", action="store_true", help="Show version and exit"
+    )
+    parser.add_argument(
+        "-h", "--help", action="store_true", help="Show this message and exit"
+    )
+    args, unknown = parser.parse_known_args()
+    if unknown:
+        print(
+            f"Error: unrecognized arguments: {' '.join(unknown)}",
+            file=sys.stderr,
+        )
         short_usage()
         sys.exit(1)
-
-    for opt, _ in opts:
-        if opt in ("-h", "--help"):
-            usage()
-            return
-        elif opt == "--version":
-            print_version()
-            return
-
-    # Default behavior (if no arguments)
+    if args.help:
+        usage()
+        return
+    if args.version:
+        print_version()
+        return
+    # Default behavior (no args)
     usage()
 
 
