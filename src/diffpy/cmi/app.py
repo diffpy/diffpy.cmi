@@ -5,7 +5,7 @@ from diffpy.cmi.version import __version__
 
 
 def usage():
-    """Print short help message."""
+    """Print full help message."""
     print(
         """\
 
@@ -24,9 +24,17 @@ Usage:
     diffpy-cmi [--version] [--help]
 
 Options:
-    -V, --version     Show version and exit
+    --version         Show version and exit
     -h, --help        Show this message and exit
 """
+    )
+
+
+def short_usage():
+    """Print brief usage message for invalid input."""
+    print(
+        "Usage: diffpy-cmi [--version] [--help]\nUse --help to see more.",
+        file=sys.stderr,
     )
 
 
@@ -36,17 +44,17 @@ def print_version():
 
 def main():
     try:
-        opts, args = getopt.gnu_getopt(sys.argv[1:], "hV", ["help", "version"])
+        opts, args = getopt.gnu_getopt(sys.argv[1:], "h", ["help", "version"])
     except getopt.GetoptError as err:
         print(f"Error: {err}", file=sys.stderr)
-        usage()
+        short_usage()
         sys.exit(1)
 
     for opt, _ in opts:
         if opt in ("-h", "--help"):
             usage()
             return
-        elif opt in ("-V", "--version"):
+        elif opt == "--version":
             print_version()
             return
 
