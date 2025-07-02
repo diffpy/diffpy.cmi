@@ -1,15 +1,22 @@
 import getopt
 import sys
 
+from diffpy.cmi.version import __version__
+
 
 def usage():
     """Print short help message."""
     print(
         """\
 
-DiffPy-CMI is our complex modeling framework. It is a highly flexible library
-of Python modules for robust modeling of nanostructures in crystals,
-nanomaterials, and amorphous materials.
+Welcome to diffpy-CMI, a complex modeling infrastructure
+designed for multi-modal analysis of scientific data.
+While broadly applicable to a wide range of problems,
+including those beyond materials science, diffpy-CMI currently
+provides robust tools for modeling atomic structure based on
+Pair Distribution Function (PDF) and Small-Angle Scattering (SAS) data.
+Its modular Python architecture enables extensible workflows,
+with additional capabilities continually being developed.
 
 Docs: https://www.diffpy.org/diffpy.cmi
 
@@ -24,8 +31,6 @@ Options:
 
 
 def version():
-    from diffpy.cmi.version import __version__
-
     print(f"diffpy-cmi {__version__}")
 
 
