@@ -23,7 +23,7 @@ def main():
     args = parser.parse_args()
 
     if args.version:
-        print(f"diffpy-cmi {__version__}")
+        print(f"diffpy.cmi {__version__}")
     else:
         # Default behavior when no arguments are given
         parser.print_help()
