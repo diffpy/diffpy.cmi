@@ -13,15 +13,12 @@ def main():
         ),
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
-
     parser.add_argument(
         "--version",
         action="store_true",
         help="Show the program's version number and exit",
     )
-
     args = parser.parse_args()
-
     if args.version:
         print(f"diffpy.cmi {__version__}")
     else:
