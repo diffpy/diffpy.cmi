@@ -11,7 +11,7 @@ authors = [
 maintainers = [
   { name="Simon Billinge", email="sb2896@columbia.edu" },
 ]
-description = "Complex modeling infrastructure: a modulare framework for multi-modal modeling of scientific data."
+description = "Complex modeling infrastructure: a modular framework for multi-modal modeling of scientific data."
 keywords = ['modelling', 'regression', 'diffraction', 'PDF', 'complex-modeling']
 readme = "README.rst"
 requires-python = ">=3.11, <3.14"
@@ -47,6 +47,10 @@ where = ["src"]  # list of folders that contain the packages (["."] by default)
 include = ["*"]  # package names should match these glob patterns (["*"] by default)
 exclude = []  # exclude packages matching these glob patterns (empty by default)
 namespaces = false  # to disable scanning PEP 420 namespaces (true by default)
+
+[project.scripts]
+diffpy-cmi = "diffpy.cmi.app:main"
+cmi = "diffpy.cmi.app:main"
 
 [tool.setuptools.dynamic]
 dependencies = {file = ["requirements/pip.txt"]}
