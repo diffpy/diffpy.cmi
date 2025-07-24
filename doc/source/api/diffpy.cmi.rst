@@ -3,28 +3,16 @@
 |title|
 =======
 
-.. |title| replace:: diffpy.cmi package
+.. |title| replace:: diffpy.cmi Contents
 
-.. automodule:: diffpy.cmi
-    :members:
-    :undoc-members:
-    :show-inheritance:
+``diffpy.cmi`` includes Python and C++ libraries developed by the DiffPy team as well as external libraries necessary for functionality.
 
-Subpackages
------------
+Libraries developed by the DiffPy team
+--------------------------------------
 
-.. toctree::
-   diffpy.cmi.example_package
+.. include:: ../snippets/diffpy_libraries.rst
 
-Submodules
-----------
+External Libraries
+------------------
 
-|module|
---------
-
-.. |module| replace:: diffpy.cmi.example_submodule module
-
-.. automodule:: diffpy.cmi.example_submodule
-    :members:
-    :undoc-members:
-    :show-inheritance:
+.. include:: ../snippets/external_libraries.rst
