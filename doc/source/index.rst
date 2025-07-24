@@ -6,14 +6,6 @@
 | Software version |release|
 | Last updated |today|.
 
-===============
-Getting started
-===============
-
-Welcome to the ``diffpy.cmi`` documentation!
-
-To get started, please visit the :ref:`Getting started <getting-started>` page.
-
 ``diffpy.cmi`` - Complex modeling infrastructure: a modular framework for multi-modal modeling of scientific data.
 
 DiffPy.CMI is our complex modeling framework. It is a highly flexible library of Python modules for robust modeling of nanostructures in crystals, nanomaterials, and amorphous materials.
@@ -25,7 +17,13 @@ The software provides functionality for storage and manipulation of structure da
     :width: 400px
     :align: center
 
+===============
+Getting started
+===============
 
+Welcome to the ``diffpy.cmi`` documentation!
+
+To get started, please visit the :ref:`Getting started <getting-started>` page.
 
 =======
 Authors
