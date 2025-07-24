@@ -21,8 +21,6 @@ The software provides functionality for storage and manipulation of structure da
 Getting started
 ===============
 
-Welcome to the ``diffpy.cmi`` documentation!
-
 To get started, please visit the :ref:`Getting started <getting-started>` page.
 
 =======
