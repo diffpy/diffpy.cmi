@@ -48,7 +48,7 @@ Citation
 
 If you use diffpy.cmi in a scientific publication, we would like you to cite this package as
 
-        diffpy.cmi Package, https://github.com/diffpy/diffpy.cmi
+        (1) Juhás, P.; Farrow, C. L.; Yang, X.; Knox, K. R.; Billinge, S. J. L. Complex Modeling: A Strategy and Software Program for Combining Multiple Information Sources to Solve Ill Posed Structure and Nanostructure Inverse Problems. Acta Crystallogr A Found Adv 2015, 71 (6), 562–568. https://doi.org/10.1107/S2053273315014473.
 
 Installation
 ------------
