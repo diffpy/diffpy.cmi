@@ -37,7 +37,9 @@
 
 Complex modeling infrastructure: a modulare framework for multi-modal modeling of scientific data.
 
-* LONGER DESCRIPTION HERE
+DiffPy.CMI is designed as an extensible complex modeling infrastructure. Users and developers can readily integrate novel data types and constraints into custom workflows. While widely used for advanced analysis of structural data, the framework is general and can be applied to any problem where model parameters are refined to fit calculated quantities to data.
+
+DiffPy.CMI is a community-driven project that supports Unix, Linux, macOS, and Windows platforms. It is designed to be used in Python scripts enabling flexible scripting and automation for advanced and reproducible workflows. Users are encouraged to leverage the software for their modeling needs and to contribute feedback, use cases, and extensions through the project community.
 
 For more information about the diffpy.cmi library, please consult our `online documentation <https://diffpy.github.io/diffpy.cmi>`_.
 
@@ -46,7 +48,7 @@ Citation
 
 If you use diffpy.cmi in a scientific publication, we would like you to cite this package as
 
-        diffpy.cmi Package, https://github.com/diffpy/diffpy.cmi
+        Juhás, P.; Farrow, C. L.; Yang, X.; Knox, K. R.; Billinge, S. J. L. Complex Modeling: A Strategy and Software Program for Combining Multiple Information Sources to Solve Ill Posed Structure and Nanostructure Inverse Problems. Acta Crystallogr A Found Adv 2015, 71 (6), 562–568. https://doi.org/10.1107/S2053273315014473.
 
 Installation
 ------------
