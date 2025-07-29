@@ -22,7 +22,7 @@ To purchase this book, please visit `this link <https://www.amazon.com/Atomic-Pa
 Installation
 ------------
 
-To install ``diffpy.cmi``, create a new conda environment and install the package from the conda-forge channel.
+To install ``diffpy.cmi``, create a new conda environment or activate an existing environment and install the package from the conda-forge channel.
 
 .. code-block:: console
 
