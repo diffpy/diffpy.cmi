@@ -28,14 +28,14 @@ While its current core functionality is in PDF modeling and multi-dataset fittin
 
 .. image:: ./img/cmi_problem_types.png
     :alt: codecov-in-pr-comment
-    :width: 400px
-    :align: right
+    :width: 500px
+    :align: center
 
 Have you built a new workflow you'd like to implement into ``diffpy.cmi``?
 We would love to **highlight your extension or application!**
 
-- **Share your work:** Please `open an issue or a pull request <https://github.com/diffpy/diffpy.cmi>`_ to share your work and help us expand the platform.
-- **Be recognized:** Community contributions and new use cases will be showcased and credited here.
+1. **Share your work:** Please `open an issue or a pull request <https://github.com/diffpy/diffpy.cmi>`_ to share your work and help us expand the platform.
+2. **Be recognized:** Community contributions and new use cases will be showcased and credited here.
 
 ===============
 Getting started
