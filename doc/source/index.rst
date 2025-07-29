@@ -21,17 +21,21 @@ The software provides functionality for storage and manipulation of structure da
 Community Use and Extensible Modeling
 =======================================
 
-One of the key strengths of ``diffpy.cmi`` is its modular design, which allows the integration and fitting of *any* structure-based experimental data, not just PDFs.
-While its current core functionality is in PDF modeling and multi-dataset fitting, **we actively encourage and support community-developed modules and workflows using XANES, EXAFS, SAS, and more.**
 
-Have you built a new workflow using ``diffpy.cmi``?
-Did you implement support for a new measurement, or combine it with PDF fitting?
+
+One of the key strengths of ``diffpy.cmi`` is its modular design, which allows the integration and fitting of *any* data type, not just PDFs.
+While its current core functionality is in PDF modeling and multi-dataset fitting, **we actively encourage and support community-developed modules and workflows for any data types you see fit!**
+
+.. image:: ./img/cmi_problem_types.png
+    :alt: codecov-in-pr-comment
+    :width: 400px
+    :align: right
+
+Have you built a new workflow you'd like to implement into ``diffpy.cmi``?
 We would love to **highlight your extension or application!**
 
-- Please `open an issue or a pull request <https://github.com/diffpy/diffpy.cmi>`_ to share your work and help us expand the platform.
-- Community contributions and new use cases will be showcased and credited here.
-
-*Illustrative flowchart showing how diffpy.cmi can be extended with new modules and workflows for different experimental data types.*
+- **Share your work:** Please `open an issue or a pull request <https://github.com/diffpy/diffpy.cmi>`_ to share your work and help us expand the platform.
+- **Be recognized:** Community contributions and new use cases will be showcased and credited here.
 
 ===============
 Getting started
