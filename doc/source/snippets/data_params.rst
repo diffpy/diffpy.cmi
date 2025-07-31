@@ -20,11 +20,11 @@
      - Yes
      - Instrumental
    * - ``qmin``
-     - Minimum Q included in the fit; sets the lower bound of the S(Q) integration range.
+     - Minimum Q included in the fit; sets the lower bound of the fourier transform (converting S(Q) to G(r)).
      - No, from experiment/setup
      - Instrumental
    * - ``qmax``
-     - Maximum Q included in the fit; sets the upper bound of the S(Q) integration range.
+     - Maximum Q included in the fit; sets the upper bound of the fourier transform (converting S(Q) to G(r)).
      - No, from experiment/setup
      - Instrumental
    * - ``rmin``
