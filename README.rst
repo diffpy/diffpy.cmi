@@ -35,7 +35,7 @@
 .. |Tracking| image:: https://img.shields.io/badge/issue_tracking-github-blue
         :target: https://github.com/diffpy/diffpy.cmi/issues
 
-Complex modeling infrastructure: a modulare framework for multi-modal modeling of scientific data.
+Complex modeling infrastructure: a modular framework for multi-modal modeling of scientific data.
 
 DiffPy.CMI is designed as an extensible complex modeling infrastructure. Users and developers can readily integrate novel data types and constraints into custom workflows. While widely used for advanced analysis of structural data, the framework is general and can be applied to any problem where model parameters are refined to fit calculated quantities to data.
 
