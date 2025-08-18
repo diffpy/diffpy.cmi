@@ -1,0 +1,9 @@
+# all
+
+packs:
+  - core
+  - pdf
+  - plotting
+
+extras:
+  - ipykernel
