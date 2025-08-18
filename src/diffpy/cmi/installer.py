@@ -200,8 +200,6 @@ def _script_supported_on_platform(ext: str) -> bool:
     """
     ext = (ext or "").lower()
     if os.name == "nt":
-        if ext == ".sh":
-            return shutil.which("bash") is not None
         return ext == ".bat"
     return ext == ".sh"
 
@@ -262,11 +260,6 @@ def _script_exec_cmd(path: Path, args: List[str]) -> List[str]:
     """
     ext = path.suffix.lower()
     if os.name == "nt":
-        if ext == ".sh":
-            bash = shutil.which("bash")
-            if bash:
-                return [bash, str(path)] + args
-            return [str(path)] + args
         if ext != ".bat":
             return [str(path)] + args
         return ["cmd", "/c", str(path)] + args
@@ -338,7 +331,10 @@ def install_requirements(
 
     # Execute scripts
     for r in reqs:
-        if r.kind != "script":
+        if r.kind != "script" or not r.name:
+            continue
+        if not r.name.startswith("_") and _is_installed(r.name):
+            plog.info("Skipping script (already satisfied): %s", r.raw.strip())
             continue
         first_token = shlex.split(r.raw.strip(), posix=(os.name != "nt"))[0]
         ext = Path(first_token).suffix.lower()

@@ -9,3 +9,4 @@ packs:
 
 extras:
   - _pytest.sh tar_url.txt
+  - _pytest.bat tar_url.txt

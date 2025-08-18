@@ -16,6 +16,7 @@
 import json
 import subprocess
 import sys
+import os
 from dataclasses import dataclass
 from pathlib import Path
 from typing import List, Optional, Sequence, Tuple
@@ -97,10 +98,18 @@ def run(
     do_capture = (not dbg) if capture is None else bool(capture)
     qcmd = " ".join(str(x) for x in cmd)
 
+    win = (os.name == "nt")
+    prog = str(cmd[0]).lower() if cmd else ""
+    needs_cmd = win and (
+        prog.endswith("\\conda.bat") or prog.endswith("\\mamba.bat")
+        or prog in ("conda", "conda.bat", "mamba", "mamba.bat")
+    )
+    argv = (["cmd", "/c"] + list(cmd)) if needs_cmd else list(cmd)
+
     try:
         if do_capture:
             cp = subprocess.run(
-                list(cmd),
+                argv,
                 cwd=str(cwd) if cwd else None,
                 capture_output=True,
                 text=True,
@@ -119,7 +128,7 @@ def run(
                     sys.stderr.flush()
         else:
             cp = subprocess.run(
-                list(cmd),
+                argv,
                 cwd=str(cwd) if cwd else None,
                 text=True,
                 check=False,
