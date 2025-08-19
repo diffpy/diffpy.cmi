@@ -1,3 +1,2 @@
-diffpy-srreal.sh
-diffpy-srreal.bat
+diffpy.srreal
 pyobjcryst

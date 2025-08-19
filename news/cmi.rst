@@ -2,7 +2,6 @@
 
 * Add modules ``cli``, ``conda``, ``installer``, ``log``, ``packsmanager``, ``profilesmanager``.
 * Add cmi cli commands for managing/installing profiles and packs; example and manual commands.
-* Add `diffpy-srreal` script for script installation demonstration.
 * Add `all.yml` for profile installation demonstration.
 * Add `_tests.yml` profile for profile post-steps demonstration.
 
