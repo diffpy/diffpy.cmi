@@ -4,7 +4,7 @@
 # (c) 2025 The Trustees of Columbia University in the City of New York.
 # All rights reserved.
 #
-# File coded by: Simon Billinge and members of the Billinge Group.
+# File coded by: Tieqiong Zhang and members of the Billinge Group.
 #
 # See GitHub contributions for a more detailed list of contributors.
 # https://github.com/diffpy/diffpy.cmi/graphs/contributors

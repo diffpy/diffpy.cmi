@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Usage:
-#   ./run-remote-tests.sh urls.txt
-#   ./run-remote-tests.sh https://host/a.tar.gz https://host/b.tgz
+#   ./_pytest.sh urls.txt
+#   ./_pytest.sh https://host/a.tar.gz https://host/b.tgz
 # From ChatGPT
 
 set -euo pipefail
@@ -26,7 +26,7 @@ cd "$TMPROOT"
 overall_ec=0
 i=0
 for url in "${URLS[@]}"; do
-  ((i++))
+  ((++i))
   echo -e "\n==> [$i] $url"
 
   tarball="$(mktemp -p "$TMPROOT" "dl_${i}.XXXXXX.tar.gz")"

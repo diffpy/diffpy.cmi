@@ -1,0 +1,10 @@
+# temporary before updating skpkg release-scripts
+flake8
+pytest
+codecov
+coverage
+pytest-cov
+pytest-env
+pytest-mock
+freezegun
+DeepDiff

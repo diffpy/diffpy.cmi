@@ -11,5 +11,8 @@ jobs:
       project: diffpy.cmi
       c_extension: false
       headless: false
+      run: |
+        echo "Running tests for diffpy.cmi"
+        cmi install _tests
     secrets:
       CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}

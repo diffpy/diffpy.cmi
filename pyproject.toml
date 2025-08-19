@@ -49,7 +49,6 @@ exclude = []  # exclude packages matching these glob patterns (empty by default)
 namespaces = false  # to disable scanning PEP 420 namespaces (true by default)
 
 [project.scripts]
-# diffpy-cmi = "diffpy.cmi.apps.cmi:main"
 cmi = "diffpy.cmi.cli:main"
 
 [tool.setuptools.dynamic]
