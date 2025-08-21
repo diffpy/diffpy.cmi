@@ -15,4 +15,3 @@ Release notes
 * Add long description to README.
 * Add light-weight documentation migrated from old diffpy-CMI documentation.
 * Add bulk Ni PDF fitting tutorial.
-

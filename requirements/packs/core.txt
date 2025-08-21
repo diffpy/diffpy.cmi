@@ -1,4 +1,3 @@
-# temporary before updating skpkg release-scripts
 packaging
 PyYAML
 diffpy.utils

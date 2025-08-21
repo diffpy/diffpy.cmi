@@ -88,7 +88,40 @@ and run the following ::
 Getting Started
 ---------------
 
-You may consult our `online documentation <https://diffpy.github.io/diffpy.cmi>`_ for tutorials and API references.
+Use the `cmi` command-line interface to install and manage modular optional dependencies, known as `packs`,
+and to configure or execute user-defined workflows that combine multiple packs with optional post-installation steps,
+known as `profiles`. To use `cmi`, you can run the following example commands:
+
+.. code-block:: bash
+        :caption: Show available commands and options
+
+        cmi -h
+
+.. code-block:: bash
+        :caption: List installed and available packs and profiles
+
+        cmi pack list
+        cmi profile list
+
+.. code-block:: bash
+        :caption: Show details of a specific pack or profile
+
+        cmi pack show <pack_name>
+        cmi profile show <profile_name>
+
+.. code-block:: bash
+        :caption: Install a pack or profile (by name or path)
+
+        cmi install <pack_name|profile_name|/absolute/path/to/profile>
+
+.. code-block:: bash
+        :caption: List and get installed examples
+
+        cmi example list
+        cmi example (copy) <example_name>
+
+You may consult our `online documentation <https://diffpy.github.io/diffpy.cmi>`_ for more information,
+tutorials, and API references.
 
 Support and Contribute
 ----------------------

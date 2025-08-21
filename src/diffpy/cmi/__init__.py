@@ -15,10 +15,22 @@
 """Complex modeling infrastructure:
 a modular framework for multi-modal modeling of scientific data."""
 
+from importlib.resources import as_file, files
+
+
+def get_package_dir():
+    resource = files(__name__)
+    return as_file(resource)
+
+
+__all__ = [
+    "__version__",
+    "get_package_dir",
+]
+
 # package version
 from diffpy.cmi.version import __version__  # noqa
 
-# silence the pyflakes syntax checker
 assert __version__ or True
 
 # End of file

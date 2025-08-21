@@ -1,4 +1,3 @@
-# temporary before updating skpkg release-scripts
 flake8
 pytest
 codecov

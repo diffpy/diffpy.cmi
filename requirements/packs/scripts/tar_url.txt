@@ -1,0 +1,5 @@
+https://github.com/diffpy/diffpy.srreal/archive/refs/tags/1.4.0.tar.gz
+https://github.com/diffpy/diffpy.srfit/archive/refs/tags/3.2.0.tar.gz
+https://github.com/diffpy/pyobjcryst/archive/refs/tags/2025.1.0.tar.gz
+https://github.com/diffpy/diffpy.structure/archive/refs/tags/3.3.1.tar.gz
+https://github.com/Tieqiong/diffpy.utils/archive/refs/tags/3.6.2-rc.0.tar.gz

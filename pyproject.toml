@@ -49,11 +49,10 @@ exclude = []  # exclude packages matching these glob patterns (empty by default)
 namespaces = false  # to disable scanning PEP 420 namespaces (true by default)
 
 [project.scripts]
-diffpy-cmi = "diffpy.cmi.diffpy_cmi_app:main"
-cmi = "diffpy.cmi.diffpy_cmi_app:main"
+cmi = "diffpy.cmi.cli:main"
 
 [tool.setuptools.dynamic]
-dependencies = {file = ["requirements/pip.txt"]}
+dependencies = {file = ["requirements/packs/core.txt"]}
 
 [tool.codespell]
 exclude-file = ".codespell/ignore_lines.txt"

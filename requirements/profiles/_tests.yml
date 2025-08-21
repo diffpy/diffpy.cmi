@@ -1,0 +1,11 @@
+# script name must coincide with conda installation name
+# script named "_*" can escape install presence check
+
+packs:
+  - core
+  - pdf
+  - tests
+
+extras:
+  - _pytest.sh tar_url.txt
+  - _pytest.bat tar_url.txt

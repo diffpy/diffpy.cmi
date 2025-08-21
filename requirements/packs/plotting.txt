@@ -1,0 +1,4 @@
+ipywidgets
+matplotlib
+ipympl
+py3dmol>=2.0.1
