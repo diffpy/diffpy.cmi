@@ -468,7 +468,8 @@ def _cmd_install(ns: argparse.Namespace) -> int:
             else:
                 r = pm.install(path if path.is_absolute() else path.stem)
             if isinstance(r, bool):
-                if not r: rc = max(rc, 1)
+                if not r:
+                    rc = max(rc, 1)
             elif isinstance(r, int):
                 rc = max(rc, r)
         except (ValueError, FileNotFoundError) as e:
