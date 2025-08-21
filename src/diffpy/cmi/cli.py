@@ -464,16 +464,20 @@ def _cmd_install(ns: argparse.Namespace) -> int:
         try:
             kind, path = _resolve_target_for_install(tgt)
             if kind == "pack":
-                mgr.install_pack(path.stem)
+                r = mgr.install_pack(path.stem)
             else:
-                pm.install(path if path.is_absolute() else path.stem)
+                r = pm.install(path if path.is_absolute() else path.stem)
+            if isinstance(r, bool):
+                if not r: rc = max(rc, 1)
+            elif isinstance(r, int):
+                rc = max(rc, r)
         except (ValueError, FileNotFoundError) as e:
             plog.error("%s", e)
             ns._parser.print_help()
-            rc = 1
+            rc = max(rc, 1)
         except Exception as e:
             plog.error("%s", e)
-            rc = 1
+            rc = max(rc, 1)
     return rc
 
 

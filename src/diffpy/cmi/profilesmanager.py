@@ -191,7 +191,10 @@ class ProfilesManager:
         scripts_root = self.packs_mgr.packs_dir / "scripts"
 
         plog.info("Installing profile: %s", prof.name)
-        if install_requirements(reqs, scripts_root=scripts_root) == 0:
+        exit_code = install_requirements(reqs, scripts_root=scripts_root)
+        if exit_code == 0:
             plog.info("Profile '%s' installation complete.", prof.name)
         else:
             plog.error("Profile '%s' installation failed.", prof.name)
+
+        return exit_code

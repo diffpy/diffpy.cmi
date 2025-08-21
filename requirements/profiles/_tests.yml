@@ -4,7 +4,6 @@
 packs:
   - core
   - pdf
-  - plotting
   - tests
 
 extras:

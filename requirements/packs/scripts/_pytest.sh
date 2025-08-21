@@ -19,7 +19,7 @@ else
 fi
 
 START_DIR="$PWD"
-TMPROOT="$(mktemp -d -p "$START_DIR" ".tmp_remote_tests.XXXXXX")"
+TMPROOT="$(TMPDIR="$START_DIR" mktemp -d -t .tmp_remote_tests.XXXXXXXX)"
 trap 'cd "$START_DIR" 2>/dev/null || true; rm -rf -- "$TMPROOT"' EXIT
 cd "$TMPROOT"
 
@@ -27,16 +27,21 @@ overall_ec=0
 i=0
 for url in "${URLS[@]}"; do
   ((++i))
-  echo -e "\n==> [$i] $url"
+  printf '\n==> [%d] %s\n' "$i" "$url"
 
-  tarball="$(mktemp -p "$TMPROOT" "dl_${i}.XXXXXX.tar.gz")"
+  tfile="$(TMPDIR="$TMPROOT" mktemp -t "dl_${i}.XXXXXXXX")"
+  tarball="${tfile}.tar.gz"
   curl -L --fail -o "$tarball" "$url"
 
   pkgdir="$TMPROOT/pkg_${i}"
   mkdir -p "$pkgdir"
-  tar -xzf "$tarball" -C "$pkgdir"
+  tar -xzf "$tarball" -C "$pkgdir" 2>/dev/null || tar -xf "$tarball" -C "$pkgdir"
 
-  first_entry="$(tar -tzf "$tarball" | head -1 || true)"
+  first_entry="$(tar -tzf "$tarball" 2>/dev/null | head -1 || true)"
+  if [ -z "$first_entry" ]; then
+    first_entry="$(tar -tf "$tarball" 2>/dev/null | head -1 || true)"
+  fi
+
   top="${first_entry%%/*}"
   if [ -n "$top" ] && [ -d "$pkgdir/$top" ]; then
     projroot="$pkgdir/$top"
@@ -44,9 +49,7 @@ for url in "${URLS[@]}"; do
     projroot="$pkgdir"
   fi
 
-  if [ -d "$projroot/src" ]; then
-    rm -rf -- "$projroot/src"
-  fi
+  [ -d "$projroot/src" ] && rm -rf -- "$projroot/src"
 
   if [ -d "$projroot/tests" ]; then
     ( cd "$projroot" && PYTHONPATH="$PWD:tests:${PYTHONPATH:-}" pytest ) || overall_ec=1
@@ -54,7 +57,7 @@ for url in "${URLS[@]}"; do
     ( cd "$projroot" && PYTHONPATH="$PWD:${PYTHONPATH:-}" pytest ) || overall_ec=1
   fi
 
-  rm -f -- "$tarball"
+  rm -f -- "$tarball" "$tfile"
   rm -rf -- "$pkgdir"
 done
 

@@ -12,7 +12,22 @@ jobs:
       c_extension: false
       headless: false
       run: |
-        echo "Running tests for diffpy.cmi"
+        set -Eeuo pipefail
+        echo "Test cmds"
+        cmi -h
+        cmi env
+        cmi pack list
+        cmi profile list
+        cmi install plotting
+        if [ "${RUNNER_OS}" != "Windows" ]; then
+          conda list | grep -i ipympl
+        else
+          source "$(cygpath -u "$CONDA")/etc/profile.d/conda.sh"
+          conda activate test
+          conda list | grep -i ipympl
+        fi
+
+        echo "Running tests for diffpy.cmi dependencies"
         cmi install _tests
     secrets:
       CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
