@@ -46,7 +46,7 @@ To install using ``pip`` into your ``diffpy.cmi_env`` environment, type
 
         pip install diffpy.cmi
 
-Pack Installation
+Pack and Profile Installation
 -----------------
 
 Use the `cmi` command-line interface to install and manage modular optional dependencies, known as `packs`,
