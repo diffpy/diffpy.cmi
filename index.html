@@ -1,0 +1,203 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>diffpy.cmi documentation &mdash; diffpy.cmi 0.1.0rc1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="_static/wrap_table.css?v=dc09091b" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=3b45b1b0"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="_static/copybutton.js?v=cca77546"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Getting started" href="getting-started.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="#" class="icon icon-home">
+            diffpy.cmi
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="getting-started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/diffpy.cmi.html">Package API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="release.html">Release notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">diffpy.cmi</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">diffpy.cmi documentation</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/diffpy/diffpy.cmi/blob/main/doc/source/index.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="title">
+<h1>diffpy.cmi documentation<a class="headerlink" href="#title" title="Link to this heading"></a></h1>
+<div class="line-block">
+<div class="line">Software version 0.1.0rc1</div>
+<div class="line">Last updated August 28, 2025.</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">diffpy.cmi</span></code> - Complex modeling infrastructure: a modular framework for multi-modal modeling of scientific data.</p>
+<p>diffpy.cmi is designed as an extensible complex modeling infrastructure. Users and developers can readily integrate novel data types and constraints into custom workflows. While widely used for advanced analysis of structural data, the framework is general and can be applied to any problem where model parameters are refined to fit calculated quantities to data.</p>
+<p>diffpy.cmi is a community-driven project that supports Unix, Linux, macOS, and Windows platforms. It is designed to be used in Python scripts enabling flexible scripting and automation for advanced and reproducible workflows. Users are encouraged to leverage the software for their modeling needs and to contribute feedback, use cases, and extensions through the project community.</p>
+<a class="reference internal image-reference" href="_images/diffpycmi_screenshot.png"><img alt="codecov-in-pr-comment" class="align-center" src="_images/diffpycmi_screenshot.png" style="width: 400px;" />
+</a>
+<section id="community-use-and-extensible-modeling">
+<h2>Community Use and Extensible Modeling<a class="headerlink" href="#community-use-and-extensible-modeling" title="Link to this heading"></a></h2>
+<p>One of the key strengths of <code class="docutils literal notranslate"><span class="pre">diffpy.cmi</span></code> is its modular design, which allows the integration and fitting of <em>any</em> data type, not just PDFs.
+While its current core functionality is in PDF modeling and multi-dataset fitting, <strong>we actively encourage and support community-developed modules and workflows for any data types you see fit!</strong></p>
+<a class="reference internal image-reference" href="_images/cmi_problem_types.png"><img alt="codecov-in-pr-comment" class="align-center" src="_images/cmi_problem_types.png" style="width: 500px;" />
+</a>
+<p>Have you built a new workflow you’d like to implement into <code class="docutils literal notranslate"><span class="pre">diffpy.cmi</span></code>?
+We would love to <strong>highlight your extension or application!</strong></p>
+<ol class="arabic simple">
+<li><p><strong>Share your work:</strong> Please <a class="reference external" href="https://github.com/diffpy/diffpy.cmi">open an issue or a pull request</a> to share your work and help us expand the platform.</p></li>
+<li><p><strong>Be recognized:</strong> Community contributions and new use cases will be showcased and credited here.</p></li>
+</ol>
+</section>
+<section id="getting-started">
+<h2>Getting started<a class="headerlink" href="#getting-started" title="Link to this heading"></a></h2>
+<p>To get started, please visit the <a class="reference internal" href="getting-started.html#getting-started"><span class="std std-ref">Getting started</span></a> page.</p>
+</section>
+<section id="authors">
+<h2>Authors<a class="headerlink" href="#authors" title="Link to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">diffpy.cmi</span></code> is developed by Simon Billinge and members of the Billinge Group. The maintainer for this project is Simon Billinge. For a detailed list of contributors see
+<a class="reference external" href="https://github.com/diffpy/diffpy.cmi/graphs/contributors">https://github.com/diffpy/diffpy.cmi/graphs/contributors</a>.</p>
+</section>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Link to this heading"></a></h2>
+<p>See the <a class="reference external" href="https://github.com/diffpy/diffpy.cmi#installation">README</a>
+file included with the distribution.</p>
+</section>
+<section id="acknowledgements">
+<h2>Acknowledgements<a class="headerlink" href="#acknowledgements" title="Link to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">diffpy.cmi</span></code> is built and maintained with <a class="reference external" href="https://scikit-package.github.io/scikit-package/">scikit-package</a>.</p>
+</section>
+<section id="citation">
+<h2>Citation<a class="headerlink" href="#citation" title="Link to this heading"></a></h2>
+<p>If you use <code class="docutils literal notranslate"><span class="pre">diffpy.cmi</span></code> in a scientific publication, we would like you to cite this package as</p>
+<blockquote>
+<div><p>Juhás, P.; Farrow, C. L.; Yang, X.; Knox, K. R.; Billinge, S. J. L.
+Complex Modeling: A Strategy and Software Program for Combining Multiple Information Sources to Solve Ill Posed Structure and Nanostructure Inverse Problems.
+<em>Acta Crystallogr A Found Adv</em> <strong>2015</strong>, <em>71</em> (6), 562–568.
+<a class="reference external" href="https://doi.org/10.1107/S2053273315014473">https://doi.org/10.1107/S2053273315014473</a></p>
+</div></blockquote>
+</section>
+<section id="table-of-contents">
+<h2>Table of contents<a class="headerlink" href="#table-of-contents" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="getting-started.html">Getting started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="getting-started.html#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getting-started.html#pack-and-profile-installation">Pack and Profile Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getting-started.html#data-and-examples">Data and Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/index.html">Tutorials</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/index.html#structural-parameters">Structural parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/index.html#dataset-parameters">Dataset parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/index.html#bulk-ni-pdf-fitting">Bulk Ni PDF fitting</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api/diffpy.cmi.html">Package API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/diffpy.cmi.html#libraries-developed-by-the-diffpy-team">Libraries developed by the DiffPy team</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/diffpy.cmi.html#external-libraries">External Libraries</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="release.html">Release notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="release.html#id1">0.0.1</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="license.html#open-source-license-agreement">OPEN SOURCE LICENSE AGREEMENT</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="indices">
+<h2>Indices<a class="headerlink" href="#indices" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="getting-started.html" class="btn btn-neutral float-right" title="Getting started" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, The Trustees of Columbia University in the City of New York.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

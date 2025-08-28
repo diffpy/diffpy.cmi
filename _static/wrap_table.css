@@ -1,0 +1,8 @@
+/* Force all Sphinx docutils tables to wrap text in cells (RTD theme & general) */
+.rst-content table.docutils td,
+.rst-content table.docutils th,
+.wy-table-responsive table td,
+.wy-table-responsive table th {
+  white-space: normal !important;
+  word-break: normal !important;
+}
