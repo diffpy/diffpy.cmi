@@ -13,11 +13,12 @@ Getting started
     :width: 150px
     :align: right
 
-For detailed instructions and in-depth examples of modeling with ``diffpy.cmi``, we highly recommend the book,
+For detailed instructions and in-depth examples of modeling Pair Distribution Function data with ``diffpy.cmi``, we highly recommend the book,
 
 *Atomic Pair Distribution Function Analysis: A Primer* by Simon J. L. Billinge and Kirsten M. Ø. Jensen (Oxford University Press, 2023).
 
 To purchase this book, please visit `this link <https://www.amazon.com/Atomic-Pair-Distribution-Function-Analysis/dp/0198885806>`_.
+
 
 Installation
 ------------
@@ -34,7 +35,7 @@ To confirm that the installation was successful, type
 
 .. code-block:: bash
 
-        python -c "import diffpy.cmi; print(diffpy.cmi.__version__)"
+        cmi --version
 
 The output should print the latest version.
 
@@ -87,6 +88,33 @@ List and get installed examples,
 
     cmi example list
     cmi example (copy) <example_name>
+
+.. admonition:: Example installation
+
+    For example, to install the pack for PDF modeling, type,
+
+    .. code-block:: bash
+
+        cmi install pdf
+
+    To check to see if the pack was installed, type,
+
+    .. code-block:: bash
+
+        cmi pack list
+
+    The output should look something like this,
+
+    .. code-block:: bash
+
+        Installed:
+            - core
+            - pdf
+        Available to install:
+            - plotting
+            - tests
+            - docs
+
 
 Data and Examples
 -----------------
