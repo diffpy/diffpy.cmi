@@ -82,13 +82,6 @@ Install a pack or profile (by name or path),
     cmi install <profile_name>
     cmi install </absolute/path/to/profile>
 
-List and get installed examples,
-
-.. code-block:: bash
-
-    cmi example list
-    cmi example copy <example_name>
-
 .. admonition:: Example installation
 
     For example, to install the pack for PDF modeling, type,
@@ -114,6 +107,52 @@ List and get installed examples,
             - plotting
             - tests
             - docs
+
+
+Download examples
+-----------------
+
+To list and copy example scripts and data to your working directory, type,
+
+.. code-block:: bash
+
+    cmi example list
+    cmi example copy <example_name>
+
+.. admonition:: Example
+
+    For example, to see the example scripts for PDF fitting, type,
+
+    .. code-block:: bash
+
+        cmi example list
+
+    The output should look something like this,
+
+    .. code-block:: bash
+
+        ch03NiModelling
+        ch05Fit2Phase
+        ch06RefineCrystalStructureGen
+        ch07StructuralPhaseTransitions
+        ch08NPRefinement
+        ch10DisorderedNanostructuredFilms
+        ch11ClusterXYZ
+
+    To copy the example for bulk Ni PDF fitting, type,
+
+    .. code-block:: bash
+
+        cmi example copy ch03NiModelling
+
+    This will copy the example directory ``ch03NiModelling`` to your working directory. Within this directory exists
+    the scripts and data to fit the bulk Ni PDF.
+
+    You can then run the fitting script with,
+
+    .. code-block:: bash
+
+        python ch03NiModelling/solutions/diffpy-cmi/fitBulkNi.py
 
 
 Data and Examples
