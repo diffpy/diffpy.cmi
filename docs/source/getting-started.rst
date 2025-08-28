@@ -87,7 +87,7 @@ List and get installed examples,
 .. code-block:: bash
 
     cmi example list
-    cmi example (copy) <example_name>
+    cmi example copy <example_name>
 
 .. admonition:: Example installation
 
