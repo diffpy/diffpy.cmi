@@ -40,10 +40,15 @@ to fit the same Ni PDF with PDFgui.
 
 .. admonition:: Data Download
 
-    First, visit `this link <https://github.com/Billingegroup/pdfttp_data/raw/main/ch03NiModelling/data/Ni.cif>`_ and download the files for this tutorial:
+   To download the data and scripts for this fit, type in your command line,
 
-    - ``Ni.cif``
-    - ``Ni.gr``
+   .. code-block:: bash
+
+      cmi example copy ch03NiModelling
+
+   This will copy the example directory ``ch03NiModelling`` to your current working directory.
+   Within this directory exists data for this exercise and a script to fit the bulk Ni PDF.
+   Below walks you through the code in the script step-by-step.
 
 1. To start, we must first import all necessary modules and packages.
 
