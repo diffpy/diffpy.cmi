@@ -136,7 +136,6 @@ To list and copy example scripts and data to your working directory, type,
         ch06RefineCrystalStructureGen
         ch07StructuralPhaseTransitions
         ch08NPRefinement
-        ch10DisorderedNanostructuredFilms
         ch11ClusterXYZ
 
     To copy the example for bulk Ni PDF fitting, type,
@@ -145,7 +144,7 @@ To list and copy example scripts and data to your working directory, type,
 
         cmi example copy ch03NiModelling
 
-    This will copy the example directory ``ch03NiModelling`` to your working directory. Within this directory exists
+    This will copy the example directory ``ch03NiModelling`` to your current working directory. Within this directory exists
     the scripts and data to fit the bulk Ni PDF.
 
     You can then run the fitting script with,
