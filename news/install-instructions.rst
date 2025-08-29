@@ -1,6 +1,6 @@
 **Added:**
 
-* Add example for installing pdf pack.
+* Add example for installing pdf pack and add example scripts.
 
 **Changed:**
 
