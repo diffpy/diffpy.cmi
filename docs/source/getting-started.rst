@@ -13,11 +13,12 @@ Getting started
     :width: 150px
     :align: right
 
-For detailed instructions and in-depth examples of modeling with ``diffpy.cmi``, we highly recommend the book,
+For detailed instructions and in-depth examples of modeling Pair Distribution Function data with ``diffpy.cmi``, we highly recommend the book,
 
 *Atomic Pair Distribution Function Analysis: A Primer* by Simon J. L. Billinge and Kirsten M. Ø. Jensen (Oxford University Press, 2023).
 
 To purchase this book, please visit `this link <https://www.amazon.com/Atomic-Pair-Distribution-Function-Analysis/dp/0198885806>`_.
+
 
 Installation
 ------------
@@ -34,7 +35,7 @@ To confirm that the installation was successful, type
 
 .. code-block:: bash
 
-        python -c "import diffpy.cmi; print(diffpy.cmi.__version__)"
+        cmi --version
 
 The output should print the latest version.
 
@@ -81,12 +82,77 @@ Install a pack or profile (by name or path),
     cmi install <profile_name>
     cmi install </absolute/path/to/profile>
 
-List and get installed examples,
+.. admonition:: Example installation
+
+    For example, to install the pack for PDF modeling, type,
+
+    .. code-block:: bash
+
+        cmi install pdf
+
+    To check to see if the pack was installed, type,
+
+    .. code-block:: bash
+
+        cmi pack list
+
+    The output should look something like this,
+
+    .. code-block:: bash
+
+        Installed:
+            - core
+            - pdf
+        Available to install:
+            - plotting
+            - tests
+            - docs
+
+
+Download examples
+-----------------
+
+To list and copy example scripts and data to your working directory, type,
 
 .. code-block:: bash
 
     cmi example list
-    cmi example (copy) <example_name>
+    cmi example copy <example_name>
+
+.. admonition:: Example
+
+    For example, to see the example scripts for PDF fitting, type,
+
+    .. code-block:: bash
+
+        cmi example list
+
+    The output should look something like this,
+
+    .. code-block:: bash
+
+        ch03NiModelling
+        ch05Fit2Phase
+        ch06RefineCrystalStructureGen
+        ch07StructuralPhaseTransitions
+        ch08NPRefinement
+        ch11ClusterXYZ
+
+    To copy the example for bulk Ni PDF fitting, type,
+
+    .. code-block:: bash
+
+        cmi example copy ch03NiModelling
+
+    This will copy the example directory ``ch03NiModelling`` to your current working directory. Within this directory exists
+    the scripts and data to fit the bulk Ni PDF.
+
+    You can then run the fitting script with,
+
+    .. code-block:: bash
+
+        python ch03NiModelling/solutions/diffpy-cmi/fitBulkNi.py
+
 
 Data and Examples
 -----------------
