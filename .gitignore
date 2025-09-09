@@ -6,6 +6,11 @@ __pycache__/
 # C extensions
 *.so
 
+# ignore any data saved by the diffpy.cmi examples
+docs/examples/ch*/solutions/diffpy-cmi/fig/*
+docs/examples/ch*/solutions/diffpy-cmi/fit/*
+docs/examples/ch*/solutions/diffpy-cmi/res/*
+
 # Distribution / packaging
 .Python
 env/
