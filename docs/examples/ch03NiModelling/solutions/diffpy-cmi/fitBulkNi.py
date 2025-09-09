@@ -70,7 +70,7 @@ QBROAD_I = 0.02
 
 # If we want to run using multiprocessors, we can switch this to 'True'.
 # This requires that the 'psutil' python package installed.
-RUN_PARALLEL = True
+RUN_PARALLEL = False
 
 
 # Functions that will carry out the refinement ##################
