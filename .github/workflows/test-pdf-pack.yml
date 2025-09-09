@@ -22,9 +22,12 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
           channels: conda-forge
-      - name: Install diffpy.cmi
+      - name: Install diffpy.cmi and dependencies
         run: |
           conda install -y diffpy.cmi
+          for file in requirements/packs/*.txt; do
+            xargs -a "$file" conda install -y -c conda-forge
+          done
       - name: Run diffpy.cmi scripts from docs/examples
         shell: bash
         run: |
@@ -51,6 +54,14 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install diffpy.cmi
+
+      - name: Install diffpy.cmi and dependencies (pip)
+        run: |
+          python -m pip install --upgrade pip
+          pip install diffpy.cmi
+          for file in requirements/packs/*.txt; do
+            pip install -r "$file"
+          done
       - name: Run diffpy.cmi scripts from docs/examples
         shell: bash
         run: |
