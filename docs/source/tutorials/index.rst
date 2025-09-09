@@ -6,7 +6,7 @@ Despite its utility, PDF fitting and analysis can be challenging.
 The process of understand PDFs requires time, care, and the development of intuition to connect structural models to experimental data.
 Hopefully by the end of this tutorial series, PDF fitting will go from being a mysterious black box to a powerful tool in your structural analysis.
 
-Example usage of ``diffpy.cmi`` can be found at `this GitHub repo <https://github.com/diffpy/pdfttp_data>`_.
+Example usage of ``diffpy.cmi`` can be found at `this GitHub repo <https://github.com/Billingegroup/pdfttp_data>`_.
 
 .. _structural-parameters:
 
