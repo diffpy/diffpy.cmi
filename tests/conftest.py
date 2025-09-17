@@ -40,5 +40,6 @@ def load_module_from_path(path: Path):
 def run_cmi_script(script_path: Path):
     """General runner for example scripts with a main()."""
     module = load_module_from_path(script_path)
-    assert hasattr(module, "main"), f"{script_path} has no main() function"
+    if not hasattr(module, "main"):
+        pytest.skip(f"{script_path} has no main() function")
     module.main()

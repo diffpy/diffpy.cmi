@@ -3,14 +3,13 @@ from pathlib import Path
 import pytest
 from conftest import __examples_dir__, run_cmi_script
 
+chapter = "ch08NPRefinement"
+chapter_dir = Path(__examples_dir__) / chapter
+example_scripts = list(chapter_dir.rglob("*.py"))
 
-@pytest.mark.parametrize(
-    "relative_path",
-    [
-        f"{__examples_dir__}/ch08NPRefinement"
-        + "/solutions/diffpy-cmi/fitCdSeNP.py",
-    ],
-)
-def test_ch08_examples(relative_path):
-    script_path = Path(__file__).parent.parent / relative_path
+
+# Runs all example scripts in chapter 8, skips files in main() is not defined.
+# Passes if script runs without error.
+@pytest.mark.parametrize("script_path", example_scripts, ids=lambda p: p.name)
+def test_ch03_examples(script_path):
     run_cmi_script(script_path)
