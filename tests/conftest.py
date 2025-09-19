@@ -1,11 +1,18 @@
-import importlib.util
 import json
+import shutil
+import warnings
 from pathlib import Path
 
 import matplotlib
 import pytest
 
-__examples_dir__ = Path(__file__).parent.parent / "docs" / "examples"
+# Suppress specific UserWarnings when running mpl headless
+warnings.filterwarnings(
+    "ignore", category=UserWarning, message=".*FigureCanvasAgg.*"
+)
+
+EXAMPLES_DIR = Path(__file__).parent.parent / "docs" / "examples"
+TESTS_DIR = Path(__file__).parent
 
 
 @pytest.fixture
@@ -29,17 +36,14 @@ def use_headless_matplotlib():
     matplotlib.use("Agg")
 
 
-def load_module_from_path(path: Path):
-    """Load a module given an absolute Path."""
-    spec = importlib.util.spec_from_file_location(path.stem, path)
-    module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
-    return module
+@pytest.fixture(scope="session")
+def examples_tmpdir(tmp_path_factory):
+    """Make a temp copy of all examples for safe testing.
 
-
-def run_cmi_script(script_path: Path):
-    """General runner for example scripts with a main()."""
-    module = load_module_from_path(script_path)
-    if not hasattr(module, "main"):
-        pytest.skip(f"{script_path} has no main() function")
-    module.main()
+    Removes the temp copy after tests are done.
+    """
+    temp_dir = tmp_path_factory.mktemp("examples_copy")
+    temp_examples = temp_dir / "examples"
+    shutil.copytree(EXAMPLES_DIR, temp_examples, dirs_exist_ok=True)
+    yield temp_examples
+    shutil.rmtree(temp_dir, ignore_errors=True)
