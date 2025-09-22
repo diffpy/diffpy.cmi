@@ -87,9 +87,7 @@ else:
     print("The Ni example refines instrument parameters\n")
     print("The instrument parameters are necessary to run this fit\n")
     print("Please run the Ni example first\n")
-    print("Setting Q_damp and Q_broad to the refined values\n")
-    QDAMP_I = 0.045298
-    QBROAD_I = 0.016809
+
 # If we want to run using multiprocessors, we can switch this to 'True'.
 # This requires that the 'psutil' python package installed.
 RUN_PARALLEL = False
