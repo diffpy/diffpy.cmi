@@ -10,7 +10,6 @@ Diffpy-CMI.
 # 1: Import relevant system packages that we will need...
 from pathlib import Path
 
-import matplotlib as mpl
 import matplotlib.pyplot as plt
 import numpy as np
 from scipy.optimize import least_squares
@@ -444,9 +443,6 @@ def plot_results(recipe, fig_name):
 
     # Calculate the residual (difference) array and offset it vertically.
     diff = g - gcalc + diffzero
-
-    # Change some style details of the plot
-    mpl.rcParams.update(mpl.rcParamsDefault)
 
     # Create a figure and an axis on which to plot
     fig, ax1 = plt.subplots(1, 1)
