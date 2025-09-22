@@ -8,4 +8,4 @@ pytest-env
 pytest-mock
 freezegun
 DeepDiff
-psutils
+psutil
