@@ -33,7 +33,7 @@ from diffpy.structure.parsers import getParser
 # First we store the absolute directory of this script,
 # then two directories above this,with the directory
 # 'data' appended
-PWD = Path(__file__).parent.absolute()
+PWD = Path(__file__).parent.resolve()
 DPATH = PWD.parent.parent / "data"
 
 # 3: Give an identifying name for the refinement, similar
