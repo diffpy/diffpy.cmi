@@ -447,10 +447,6 @@ def plot_results(recipe, fig_name):
 
     # Change some style details of the plot
     mpl.rcParams.update(mpl.rcParamsDefault)
-    if (PWD.parent.parent.parent / "utils" / "billinge.mplstyle").exists():
-        plt.style.use(
-            str(PWD.parent.parent.parent / "utils" / "billinge.mplstyle")
-        )
 
     # Create a figure and an axis on which to plot
     fig, ax1 = plt.subplots(1, 1)

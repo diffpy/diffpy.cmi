@@ -4,6 +4,7 @@ import json
 import shutil
 from pathlib import Path
 
+import matplotlib
 import pytest
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
@@ -21,6 +22,12 @@ def tmp_examples(tmp_path_factory):
     tmp_examples = tmpdir / "examples"
     shutil.copytree(EXAMPLES_ROOT, tmp_examples)
     yield tmp_examples
+
+
+@pytest.fixture(scope="session", autouse=True)
+def use_headless_matplotlib():
+    """Force matplotlib to use a headless backend during tests."""
+    matplotlib.use("Agg")
 
 
 @pytest.fixture
