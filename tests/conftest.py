@@ -1,6 +1,4 @@
 import json
-
-# tests/conftest.py
 import shutil
 from pathlib import Path
 
