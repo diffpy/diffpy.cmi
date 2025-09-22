@@ -10,9 +10,9 @@ Diffpy-CMI.
 # 1: Import relevant system packages that we will need...
 from pathlib import Path
 
-import matplotlib as mpl
 import matplotlib.pyplot as plt
 import numpy as np
+from bg_mpl_stylesheets.styles import all_styles
 from scipy.optimize import least_squares
 
 # ... and the relevant CMI packages
@@ -27,12 +27,7 @@ from diffpy.srfit.structure import constrainAsSpaceGroup
 from diffpy.structure.atom import Atom
 from diffpy.structure.parsers import getParser
 
-try:
-    from bg_mpl_stylesheets.bg_mpl_stylesheet import bg_mpl_style
-
-    plt.style.use(bg_mpl_style)
-except ImportError:
-    pass
+plt.style.use(all_styles["bg-style"])
 
 # Config ##############################
 # 2: Give a file path to where your pdf (.gr) and (.cif) files are located.
@@ -245,13 +240,6 @@ def plot_results(recipe, fig_name):
 
     # Calculate the residual (difference) array and offset it vertically.
     diff = g - gcalc + diffzero
-
-    # Change some style details of the plot
-    mpl.rcParams.update(mpl.rcParamsDefault)
-    if (PWD.parent.parent.parent / "utils" / "billinge.mplstyle").exists():
-        plt.style.use(
-            str(PWD.parent.parent.parent / "utils" / "billinge.mplstyle")
-        )
 
     # Create a figure and an axis on which to plot
     fig, ax1 = plt.subplots(1, 1)

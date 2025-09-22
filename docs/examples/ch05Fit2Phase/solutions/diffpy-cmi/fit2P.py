@@ -10,9 +10,9 @@ book, only this time using Diffpy-CMI.
 # 1: Import relevant system packages that we will need...
 from pathlib import Path
 
-import matplotlib as mpl
 import matplotlib.pyplot as plt
 import numpy as np
+from bg_mpl_stylesheets.styles import all_styles
 from scipy.optimize import least_squares
 
 # ... and the relevant CMI packages
@@ -26,6 +26,7 @@ from diffpy.srfit.pdf import PDFGenerator, PDFParser
 from diffpy.srfit.structure import constrainAsSpaceGroup
 from diffpy.structure.parsers import getParser
 
+plt.style.use(all_styles["bg-style"])
 # Config ##############################
 # 2: Give a file path to where your pdf (.gr) and (.cif) files are located.
 PWD = Path(__file__).parent.absolute()
@@ -270,13 +271,6 @@ def plot_results(recipe, fig_name):
     # Get the Ni model signal contribution
     ni_signal = ni_scale * recipe.crystal.G_Ni.profile.ycalc
     ni_signal += min(si_signal) - np.abs(max(ni_signal))
-
-    # Change some style details of the plot
-    mpl.rcParams.update(mpl.rcParamsDefault)
-    if (PWD.parent.parent.parent / "utils" / "billinge.mplstyle").exists():
-        plt.style.use(
-            str(PWD.parent.parent.parent / "utils" / "billinge.mplstyle")
-        )
 
     # Create a figure and an axis on which to plot
     fig, ax1 = plt.subplots(1, 1)
