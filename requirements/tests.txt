@@ -9,3 +9,4 @@ pytest-mock
 freezegun
 DeepDiff
 psutil
+bg-mpl-stylesheets

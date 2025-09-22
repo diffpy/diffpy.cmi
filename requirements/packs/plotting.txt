@@ -1,4 +1,5 @@
 ipywidgets
 matplotlib
 ipympl
+bg-mpl-stylesheets
 py3dmol>=2.0.1
