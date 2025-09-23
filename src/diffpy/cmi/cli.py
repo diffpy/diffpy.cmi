@@ -360,7 +360,7 @@ def _cmd_example(ns: argparse.Namespace) -> int:
     int
         Exit code (``0`` on success; non-zero on failure).
     """
-    if ns.example_cmd == "copy":
+    if ns.example_cmd in (None, "copy"):
         name = getattr(ns, "name", None)
         if not name:
             plog.error(
