@@ -53,17 +53,40 @@ def _installed_examples_dir() -> Path:
 
 
 def list_examples() -> List[str]:
-    """List installed example names.
+    """List installed examples grouped by pack.
 
     Returns
     -------
-    list of str
-        Installed example directory names.
+    dict[str, list[str]]
+        Mapping of pack name -> list of example subdirectories.
     """
     root = _installed_examples_dir()
     if not root.exists():
-        return []
-    return sorted([p.name for p in root.iterdir() if p.is_dir()])
+        return {}
+
+    packs: dict[str, list[str]] = {}
+    for pack_dir in sorted(root.iterdir()):
+        if not pack_dir.is_dir():
+            continue
+        pack = pack_dir.name
+        exdirs = sorted([p.name for p in pack_dir.iterdir() if p.is_dir()])
+        packs[pack] = exdirs
+    return packs
+
+
+def print_examples() -> None:
+    """Print the installed examples grouped by pack."""
+    packs = list_examples()
+    if not packs:
+        print("No examples found.")
+        return
+    for pack, exdirs in packs.items():
+        print(pack + ":")
+        if not exdirs:
+            print("  (no examples)")
+        else:
+            for ex in exdirs:
+                print(f"  - {ex}")
 
 
 def copy_example(example: str) -> Path:
@@ -72,7 +95,7 @@ def copy_example(example: str) -> Path:
     Parameters
     ----------
     example : str
-        Example directory name under the installed examples root.
+        Example in the form ``<pack>/<exdir>``.
 
     Returns
     -------
@@ -81,17 +104,25 @@ def copy_example(example: str) -> Path:
 
     Raises
     ------
+    ValueError
+        If the format is invalid.
     FileNotFoundError
         If the example directory does not exist.
     FileExistsError
         If the destination directory already exists.
     """
-    src = _installed_examples_dir() / example
+    if "/" not in example:
+        raise ValueError("Example must be specified as <pack>/<exdir>")
+
+    pack, exdir = example.split("/", 1)
+    src = _installed_examples_dir() / pack / exdir
     if not src.exists() or not src.is_dir():
         raise FileNotFoundError(f"Example not found: {example}")
-    dest = Path.cwd() / example
+
+    dest = Path.cwd() / exdir
     if dest.exists():
         raise FileExistsError(f"Destination {dest} already exists")
+
     copytree(src, dest)
     return dest
 
@@ -163,7 +194,9 @@ def _build_parser() -> argparse.ArgumentParser:
         _parser=p_example
     )
     p_example_copy = sub_ex.add_parser("copy", help="Copy an example to CWD")
-    p_example_copy.add_argument("name", metavar="EXAMPLE", help="Example name")
+    p_example_copy.add_argument(
+        "name", metavar="EXAMPLE", help="Example name <pack>/<exdir>"
+    )
     p_example_copy.set_defaults(_parser=p_example)
     p_example.set_defaults(example_cmd=None)
 
@@ -327,7 +360,7 @@ def _cmd_example(ns: argparse.Namespace) -> int:
     int
         Exit code (``0`` on success; non-zero on failure).
     """
-    if ns.example_cmd in (None, "copy"):
+    if ns.example_cmd == "copy":
         name = getattr(ns, "name", None)
         if not name:
             plog.error(
@@ -335,12 +368,16 @@ def _cmd_example(ns: argparse.Namespace) -> int:
             )
             ns._parser.print_help()
             return 1
-        out = copy_example(name)
-        print(f"Example copied to: {out}")
-        return 0
+        try:
+            out = copy_example(name)
+            print(f"Example copied to: {out}")
+            return 0
+        except (ValueError, FileNotFoundError, FileExistsError) as e:
+            plog.error("%s", e)
+            return 1
+
     if ns.example_cmd == "list":
-        for g in list_examples():
-            print(g)
+        print_examples()
         return 0
 
     plog.error("Unknown example subcommand.")
