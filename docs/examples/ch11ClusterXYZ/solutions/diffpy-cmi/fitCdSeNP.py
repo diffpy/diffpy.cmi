@@ -199,9 +199,6 @@ def plot_results(recipe, figname):
     diff = g - gcalc + diffzero
 
     mpl.rcParams.update(mpl.rcParamsDefault)
-    plt.style.use(
-        str(PWD.parent.parent.parent / "utils" / "billinge.mplstyle")
-    )
 
     fig, ax1 = plt.subplots(1, 1)
 
