@@ -7,7 +7,6 @@ def test_all_examples(tmp_examples):
     # sort list so that fitBulkNi.py runs first
     scripts.sort(key=lambda s: 0 if s.name == "fitBulkNi.py" else 1)
     for script in scripts:
-        script_relative_path = script.relative_to(tmp_examples).as_posix()
-        print("hello", script_relative_path)
+        script_relative_path = script.relative_to(tmp_examples)
         print(f"Testing {script_relative_path}")
         runpy.run_path(str(script), run_name="__main__")
