@@ -72,7 +72,7 @@ def map_packs_to_examples() -> dict[str, List[str]]:
     return examples_by_pack
 
 
-def copy_example(example: str) -> Path:
+def copy_example(pack_example: str) -> Path:
     """Copy an example into the current working directory.
 
     Parameters
@@ -94,12 +94,12 @@ def copy_example(example: str) -> Path:
     FileExistsError
         If the destination directory already exists.
     """
-    if "/" not in example:
+    if "/" not in pack_example:
         raise ValueError("Example must be specified as <pack>/<exdir>")
-    pack, exdir = example.split("/", 1)
+    pack, exdir = pack_example.split("/", 1)
     src = _installed_examples_dir() / pack / exdir
     if not src.exists() or not src.is_dir():
-        raise FileNotFoundError(f"Example not found: {example}")
+        raise FileNotFoundError(f"Example not found: {pack_example}")
     dest = Path.cwd() / exdir
     if dest.exists():
         raise FileExistsError(f"Destination {dest} already exists")
@@ -348,13 +348,9 @@ def _cmd_example(ns: argparse.Namespace) -> int:
             )
             ns._parser.print_help()
             return 1
-        try:
-            out = copy_example(name)
-            print(f"Example copied to: {out}")
-            return 0
-        except (ValueError, FileNotFoundError, FileExistsError) as e:
-            plog.error("%s", e)
-            return 1
+        out = copy_example(name)
+        print(f"Example copied to: {out}")
+        return 0
     if ns.example_cmd == "list":
         for pack, examples in map_packs_to_examples().items():
             print(f"{pack}:")
