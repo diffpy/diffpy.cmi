@@ -52,40 +52,24 @@ def _installed_examples_dir() -> Path:
     )
 
 
-def list_examples() -> List[str]:
-    """List installed examples grouped by pack.
+def map_packs_to_examples() -> dict[str, List[str]]:
+    """Return a dictionary mapping pack name -> list of example
+    subdirectories.
 
     Returns
     -------
-    dict[str, list[str]]
-        Mapping of pack name -> list of example subdirectories.
+    dict:
+        pack name -> list of example subdirectory names
     """
     root = _installed_examples_dir()
     if not root.exists():
         return {}
-    packs = {}
+    examples_by_pack = {}
     for pack_dir in sorted(root.iterdir()):
-        if not pack_dir.is_dir():
-            continue
-        pack = pack_dir.name
-        exdirs = sorted([p.name for p in pack_dir.iterdir() if p.is_dir()])
-        packs[pack] = exdirs
-    return packs
-
-
-def print_examples() -> None:
-    """Print the installed examples grouped by pack."""
-    packs = list_examples()
-    if not packs:
-        print("No examples found.")
-        return
-    for pack, exdirs in packs.items():
-        print(pack + ":")
-        if not exdirs:
-            print("  (no examples)")
-        else:
-            for ex in exdirs:
-                print(f"  - {ex}")
+        if pack_dir.is_dir():
+            exdirs = sorted(p.name for p in pack_dir.iterdir() if p.is_dir())
+            examples_by_pack[pack_dir.name] = exdirs
+    return examples_by_pack
 
 
 def copy_example(example: str) -> Path:
@@ -372,7 +356,10 @@ def _cmd_example(ns: argparse.Namespace) -> int:
             plog.error("%s", e)
             return 1
     if ns.example_cmd == "list":
-        print_examples()
+        for pack, examples in map_packs_to_examples().items():
+            print(f"{pack}:")
+            for ex in examples:
+                print(f"  - {ex}")
         return 0
     plog.error("Unknown example subcommand.")
     ns._parser.print_help()
