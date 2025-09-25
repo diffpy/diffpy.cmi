@@ -52,7 +52,7 @@ def _installed_examples_dir() -> Path:
     )
 
 
-def map_packs_to_examples() -> dict[str, List[str]]:
+def get_examples_by_pack() -> dict[str, List[str]]:
     """Return a dictionary mapping pack name -> list of example
     subdirectories.
 
@@ -352,7 +352,7 @@ def _cmd_example(ns: argparse.Namespace) -> int:
         print(f"Example copied to: {out}")
         return 0
     if ns.example_cmd == "list":
-        for pack, examples in map_packs_to_examples().items():
+        for pack, examples in get_examples_by_pack().items():
             print(f"{pack}:")
             for ex in examples:
                 print(f"  - {ex}")
