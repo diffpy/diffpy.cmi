@@ -1,10 +1,10 @@
 **Added:**
 
-* Add examples under specific pack name.
+* <news item>
 
 **Changed:**
 
-* <news item>
+* change examples directory structure to insert the name of the ``pack" that the examples exemplify.
 
 **Deprecated:**
 
