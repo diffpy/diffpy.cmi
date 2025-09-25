@@ -146,7 +146,7 @@ def _build_parser() -> argparse.ArgumentParser:
     p = argparse.ArgumentParser(
         prog="cmi",
         description=(
-            "Welcome to diffpy-CMI, a complex modeling infrastructure "
+            "Welcome to diffpy.cmi, a complex modeling infrastructure "
             "for multi-modal analysis of scientific data.\n\n"
         ),
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
