@@ -78,7 +78,7 @@ def copy_example(pack_example: str) -> Path:
     Parameters
     ----------
     example : str
-        Example in the form ``<pack>/<exdir>``.
+        Pack and example name in the form ``<pack>/<exdir>``.
 
     Returns
     -------
