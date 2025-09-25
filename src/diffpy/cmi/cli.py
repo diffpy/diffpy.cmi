@@ -63,8 +63,7 @@ def list_examples() -> List[str]:
     root = _installed_examples_dir()
     if not root.exists():
         return {}
-
-    packs: dict[str, list[str]] = {}
+    packs = {}
     for pack_dir in sorted(root.iterdir()):
         if not pack_dir.is_dir():
             continue
@@ -113,16 +112,13 @@ def copy_example(example: str) -> Path:
     """
     if "/" not in example:
         raise ValueError("Example must be specified as <pack>/<exdir>")
-
     pack, exdir = example.split("/", 1)
     src = _installed_examples_dir() / pack / exdir
     if not src.exists() or not src.is_dir():
         raise FileNotFoundError(f"Example not found: {example}")
-
     dest = Path.cwd() / exdir
     if dest.exists():
         raise FileExistsError(f"Destination {dest} already exists")
-
     copytree(src, dest)
     return dest
 
@@ -375,11 +371,9 @@ def _cmd_example(ns: argparse.Namespace) -> int:
         except (ValueError, FileNotFoundError, FileExistsError) as e:
             plog.error("%s", e)
             return 1
-
     if ns.example_cmd == "list":
         print_examples()
         return 0
-
     plog.error("Unknown example subcommand.")
     ns._parser.print_help()
     return 2
