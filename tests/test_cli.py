@@ -34,6 +34,6 @@ def test_example_copy(monkeypatch, tmp_path):
     )
     cwd = tmp_path
     monkeypatch.chdir(cwd)
-    rc = main(["example", "copy", "pdf/ch03NiModelling"])
+    rc = main(["example", "copy", "pack1/ex1"])
     assert rc == 0
-    assert (cwd / "ch03NiModelling").exists()
+    assert (cwd / "ex1").exists()
