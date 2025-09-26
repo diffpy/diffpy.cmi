@@ -6,6 +6,8 @@ from diffpy.cmi import cli
 @pytest.mark.parametrize(
     "structure, expected",
     [
+        # case: no packs, no examples
+        ([], {}),
         # case: one pack with one example
         ([("packA", ["ex1"])], {"packA": ["ex1"]}),
         # case: one pack with multiple examples
