@@ -26,7 +26,7 @@ from diffpy.cmi.profilesmanager import ProfilesManager
 
 
 # Examples
-def _installed_examples_dir() -> Path:
+def _get_examples_dir() -> Path:
     """Return the absolute path to the installed examples directory.
 
     Returns
@@ -52,7 +52,7 @@ def _installed_examples_dir() -> Path:
     )
 
 
-def get_examples_by_pack() -> dict[str, List[str]]:
+def map_pack_to_examples() -> dict[str, List[str]]:
     """Return a dictionary mapping pack name -> list of example
     subdirectories.
 
@@ -61,7 +61,7 @@ def get_examples_by_pack() -> dict[str, List[str]]:
     dict:
         pack name -> list of example subdirectory names
     """
-    root = _installed_examples_dir()
+    root = _get_examples_dir()
     if not root.exists():
         return {}
     examples_by_pack = {}
@@ -97,7 +97,7 @@ def copy_example(pack_example: str) -> Path:
     if "/" not in pack_example:
         raise ValueError("Example must be specified as <pack>/<exdir>")
     pack, exdir = pack_example.split("/", 1)
-    src = _installed_examples_dir() / pack / exdir
+    src = _get_examples_dir() / pack / exdir
     if not src.exists() or not src.is_dir():
         raise FileNotFoundError(f"Example not found: {pack_example}")
     dest = Path.cwd() / exdir
@@ -352,7 +352,7 @@ def _cmd_example(ns: argparse.Namespace) -> int:
         print(f"Example copied to: {out}")
         return 0
     if ns.example_cmd == "list":
-        for pack, examples in get_examples_by_pack().items():
+        for pack, examples in map_pack_to_examples().items():
             print(f"{pack}:")
             for ex in examples:
                 print(f"  - {ex}")
