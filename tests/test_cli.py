@@ -32,9 +32,17 @@ def test_map_pack_to_examples(tmp_path, mocker, structure, expected):
         packdir = tmp_path / pack
         packdir.mkdir()
         for ex in exdirs:
-            (packdir / ex).mkdir()
+            exdir = packdir / ex
+            exdir.mkdir()
+            # check directory was created
+            assert exdir.exists() and exdir.is_dir(), f"{exdir} not created"
     # patch _get_examples_dir to point to tmp_path
     mocker.patch.object(cli, "_get_examples_dir", return_value=tmp_path)
     # expected behavior: a dictionary mapping pack to lists of examples
     result = cli.map_pack_to_examples()
     assert result == expected
+
+
+def test_copy_examples():
+    """"""
+    return
