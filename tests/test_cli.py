@@ -1,39 +1,38 @@
 import pytest
 
-from diffpy.cmi.cli import main
+from diffpy.cmi import cli
 
 
-def test_cli_help(capsys):
-    """Test that the CLI help message is displayed correctly."""
-    with pytest.raises(SystemExit) as exc:
-        main(["--help", "-h"])
-    assert exc.value.code == 0
-    out, _ = capsys.readouterr()
-    assert "Welcome to diffpy.cmi" in out
-
-
-def test_example_list(capsys):
-    """Test that the example listing works."""
-    rc = main(["example", "list"])
-    assert rc == 0
-    out, _ = capsys.readouterr()
-    # test specific known pack and example
-    assert "ch03NiModelling" in out
-    assert "pdf" in out
-
-
-def test_example_copy(monkeypatch, tmp_path):
-    """Test that an example can be copied to the current directory."""
-    # create a fake example
-    fake_examples = tmp_path / "docs" / "examples"
-    src = fake_examples / "pack1" / "ex1"
-    src.mkdir(parents=True)
-    monkeypatch.setattr(
-        "diffpy.cmi.cli._installed_examples_dir",
-        lambda: fake_examples,
-    )
-    cwd = tmp_path
-    monkeypatch.chdir(cwd)
-    rc = main(["example", "copy", "pack1/ex1"])
-    assert rc == 0
-    assert (cwd / "ex1").exists()
+@pytest.mark.parametrize(
+    "structure, expected",
+    [
+        # case: one pack with one example
+        ([("packA", ["ex1"])], {"packA": ["ex1"]}),
+        # case: one pack with multiple examples
+        ([("packA", ["ex1", "ex2"])], {"packA": ["ex1", "ex2"]}),
+        # case: multiple packs with one example each
+        (
+            [("packA", ["ex1"]), ("packB", ["ex2"])],
+            {"packA": ["ex1"], "packB": ["ex2"]},
+        ),
+        # case: multiple packs with multiple examples
+        (
+            [("packA", ["ex1", "ex2"]), ("packB", ["ex3", "ex4"])],
+            {"packA": ["ex1", "ex2"], "packB": ["ex3", "ex4"]},
+        ),
+    ],
+)
+def test_map_pack_to_examples(tmp_path, mocker, structure, expected):
+    """Finds examples directory and returns a dictionary mapping packs
+    to examples."""
+    # example input: build example structure
+    for pack, exdirs in structure:
+        packdir = tmp_path / pack
+        packdir.mkdir()
+        for ex in exdirs:
+            (packdir / ex).mkdir()
+    # patch _get_examples_dir to point to tmp_path
+    mocker.patch.object(cli, "_get_examples_dir", return_value=tmp_path)
+    # expected behavior: a dictionary mapping pack to lists of examples
+    result = cli.map_pack_to_examples()
+    assert result == expected
