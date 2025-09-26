@@ -77,7 +77,7 @@ def copy_example(pack_example: str) -> Path:
 
     Parameters
     ----------
-    example : str
+    pack_example : str
         Pack and example name in the form ``<pack>/<exdir>``.
 
     Returns
@@ -88,7 +88,7 @@ def copy_example(pack_example: str) -> Path:
     Raises
     ------
     ValueError
-        If the format is invalid.
+        If the format is invalid (missing pack or example).
     FileNotFoundError
         If the example directory does not exist.
     FileExistsError
@@ -97,6 +97,11 @@ def copy_example(pack_example: str) -> Path:
     if "/" not in pack_example:
         raise ValueError("Example must be specified as <pack>/<exdir>")
     pack, exdir = pack_example.split("/", 1)
+    if not pack or not exdir:
+        raise ValueError(
+            f"Invalid format for example '{pack_example}'. "
+            "Must be '<pack>/<exdir>'"
+        )
     src = _get_examples_dir() / pack / exdir
     if not src.exists() or not src.is_dir():
         raise FileNotFoundError(f"Example not found: {pack_example}")
