@@ -94,7 +94,7 @@ def copy_example(pack_example: str) -> Path:
     FileExistsError
         If the destination directory already exists.
     """
-    if "/" not in pack_example:
+    if "/" not in pack_example or pack_example.count("/") != 1:
         raise ValueError("Example must be specified as <pack>/<exdir>")
     pack, exdir = pack_example.split("/", 1)
     if not pack or not exdir:
