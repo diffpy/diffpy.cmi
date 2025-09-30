@@ -26,7 +26,7 @@ from diffpy.cmi.profilesmanager import ProfilesManager
 
 
 # Examples
-def _installed_examples_dir() -> Path:
+def _get_examples_dir() -> Path:
     """Return the absolute path to the installed examples directory.
 
     Returns
@@ -52,27 +52,33 @@ def _installed_examples_dir() -> Path:
     )
 
 
-def list_examples() -> List[str]:
-    """List installed example names.
+def map_pack_to_examples() -> dict[str, List[str]]:
+    """Return a dictionary mapping pack name -> list of example
+    subdirectories.
 
     Returns
     -------
-    list of str
-        Installed example directory names.
+    dict:
+        pack name -> list of example subdirectory names
     """
-    root = _installed_examples_dir()
+    root = _get_examples_dir()
     if not root.exists():
-        return []
-    return sorted([p.name for p in root.iterdir() if p.is_dir()])
+        return {}
+    examples_by_pack = {}
+    for pack_dir in sorted(root.iterdir()):
+        if pack_dir.is_dir():
+            exdirs = sorted(p.name for p in pack_dir.iterdir() if p.is_dir())
+            examples_by_pack[pack_dir.name] = exdirs
+    return examples_by_pack
 
 
-def copy_example(example: str) -> Path:
+def copy_example(pack_example: str) -> Path:
     """Copy an example into the current working directory.
 
     Parameters
     ----------
-    example : str
-        Example directory name under the installed examples root.
+    pack_example : str
+        Pack and example name in the form ``<pack>/<exdir>``.
 
     Returns
     -------
@@ -81,15 +87,25 @@ def copy_example(example: str) -> Path:
 
     Raises
     ------
+    ValueError
+        If the format is invalid (missing pack or example).
     FileNotFoundError
         If the example directory does not exist.
     FileExistsError
         If the destination directory already exists.
     """
-    src = _installed_examples_dir() / example
+    if "/" not in pack_example or pack_example.count("/") != 1:
+        raise ValueError("Example must be specified as <pack>/<exdir>")
+    pack, exdir = pack_example.split("/", 1)
+    if not pack or not exdir:
+        raise ValueError(
+            f"Invalid format for example '{pack_example}'. "
+            "Must be '<pack>/<exdir>'"
+        )
+    src = _get_examples_dir() / pack / exdir
     if not src.exists() or not src.is_dir():
-        raise FileNotFoundError(f"Example not found: {example}")
-    dest = Path.cwd() / example
+        raise FileNotFoundError(f"Example not found: {pack_example}")
+    dest = Path.cwd() / exdir
     if dest.exists():
         raise FileExistsError(f"Destination {dest} already exists")
     copytree(src, dest)
@@ -163,7 +179,9 @@ def _build_parser() -> argparse.ArgumentParser:
         _parser=p_example
     )
     p_example_copy = sub_ex.add_parser("copy", help="Copy an example to CWD")
-    p_example_copy.add_argument("name", metavar="EXAMPLE", help="Example name")
+    p_example_copy.add_argument(
+        "name", metavar="EXAMPLE", help="Example name <pack>/<exdir>"
+    )
     p_example_copy.set_defaults(_parser=p_example)
     p_example.set_defaults(example_cmd=None)
 
@@ -339,10 +357,11 @@ def _cmd_example(ns: argparse.Namespace) -> int:
         print(f"Example copied to: {out}")
         return 0
     if ns.example_cmd == "list":
-        for g in list_examples():
-            print(g)
+        for pack, examples in map_pack_to_examples().items():
+            print(f"{pack}:")
+            for ex in examples:
+                print(f"  - {ex}")
         return 0
-
     plog.error("Unknown example subcommand.")
     ns._parser.print_help()
     return 2
