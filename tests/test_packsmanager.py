@@ -32,6 +32,10 @@ def test_available_examples(expected_dict):
             ), f"{ex} not found under pack {pack}."
 
 
-def test_print_info():
-    """Test that print_info runs without error."""
-    assert False
+def test_print_info(capsys):
+    """Test that print_info prints expected information to stdout."""
+    pkmg = PacksManager()
+    pkmg.print_info()
+    captured = capsys.readouterr()
+    output = captured.out.strip()
+    assert "Available packs" in output or "Installed packs" in output
