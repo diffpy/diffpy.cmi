@@ -68,6 +68,15 @@ class PacksManager:
             p.stem for p in self.packs_dir.glob("*.txt") if p.is_file()
         )
 
+    def available_examples(self):
+        """Finds all examples for each pack and builds a dict."""
+        return
+
+    def print_info(self):
+        """Pretty print available and installed packs and examples to
+        console."""
+        return
+
     def _resolve_pack_file(self, identifier: Union[str, Path]) -> Path:
         """Resolve a pack identifier to an absolute .txt path.
 
