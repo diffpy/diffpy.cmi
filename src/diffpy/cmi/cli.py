@@ -26,7 +26,7 @@ from diffpy.cmi.profilesmanager import ProfilesManager
 
 
 # Examples
-def _get_examples_dir() -> Path:
+def _get_examples_dir(root_path=None) -> Path:
     """Return the absolute path to the installed examples directory.
 
     Returns
@@ -39,7 +39,7 @@ def _get_examples_dir() -> Path:
     FileNotFoundError
         If the examples directory cannot be located in the installation.
     """
-    with get_package_dir() as pkgdir:
+    with get_package_dir(root_path) as pkgdir:
         pkg = Path(pkgdir).resolve()
         for c in (
             pkg / "docs" / "examples",
@@ -70,6 +70,74 @@ def map_pack_to_examples() -> dict[str, List[str]]:
             exdirs = sorted(p.name for p in pack_dir.iterdir() if p.is_dir())
             examples_by_pack[pack_dir.name] = exdirs
     return examples_by_pack
+
+
+def copy_examples(
+    examples: str | List[str],
+    target_dir: Optional[Path] = None,
+) -> List[Path]:
+    """Copy one or more examples to a target directory.
+
+    Parameters
+    ----------
+    examples : str or list of str
+        Example name(s): 'example1' or ['example1', 'example2']
+    target_dir : Path, optional
+        Target directory where examples should be copied.
+        Defaults to current working directory if not specified.
+    overwrite : bool, default False
+        If True, overwrite existing directories. If False, raise
+        FileExistsError when destination exists.
+
+    Returns
+    -------
+    list of Path
+        List of destination paths created.
+
+    Raises
+    ------
+    ValueError
+        If example name is ambiguous (exists in multiple packs).
+    FileNotFoundError
+        If example does not exist.
+    FileExistsError
+        If destination exists and overwrite=False.
+    """
+    return
+
+
+def copy_packs(
+    packs: str | List[str],
+    target_dir: Optional[Path] = None,
+) -> List[Path]:
+    """Copy all examples from one or more packs to a target directory.
+
+    Parameters
+    ----------
+    packs : str or list of str
+        Pack name(s). Can be:
+        - Single pack name: 'pack1'
+        - List of pack names: ['pack1', 'pack2']
+        - Special keyword: 'all' (copies all packs)
+    target_dir : Path, optional
+        Target directory where examples should be copied.
+        Defaults to current working directory if not specified.
+
+    Returns
+    -------
+    list of Path
+        List of destination paths created (all examples from the pack(s)).
+
+    Raises
+    ------
+    ValueError
+        If pack name is invalid.
+    FileNotFoundError
+        If pack does not exist.
+    FileExistsError
+        If any destination exists.
+    """
+    return
 
 
 def copy_example(pack_example: str) -> Path:
