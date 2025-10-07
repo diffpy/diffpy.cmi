@@ -4,6 +4,24 @@ from pathlib import Path
 import pytest
 
 from diffpy.cmi import cli
+from diffpy.cmi.packsmanager import PacksManager
+
+
+def test_print_info(temp_path, capsys):
+    pkmg = PacksManager()
+    actual = pkmg.available_examples(temp_path)
+    # pretty print the actual dict
+    pkmg.print_info(actual)
+    captured = capsys.readouterr()
+    output = captured.out.strip()
+    # check that output contains expected headers
+    assert "Available packs" in output or "Installed packs" in output
+
+
+@pytest.mark.parametrize()
+def test_copy_examples(dict, tmp_path):
+    cli.copy_examples(examples=dict, target_dir=tmp_path)
+    assert False
 
 
 def test_map_pack_to_examples_structure():
