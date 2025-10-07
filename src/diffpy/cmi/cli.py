@@ -73,21 +73,18 @@ def map_pack_to_examples() -> dict[str, List[str]]:
 
 
 def copy_examples(
-    examples: str | List[str],
+    examples: List[str],
     target_dir: Optional[Path] = None,
 ) -> List[Path]:
     """Copy one or more examples to a target directory.
 
     Parameters
     ----------
-    examples : str or list of str
-        Example name(s): 'example1' or ['example1', 'example2']
+    examples : list of str
+        Example name(s): ['example1'], ['pack1']
     target_dir : Path, optional
         Target directory where examples should be copied.
         Defaults to current working directory if not specified.
-    overwrite : bool, default False
-        If True, overwrite existing directories. If False, raise
-        FileExistsError when destination exists.
 
     Returns
     -------
@@ -102,40 +99,6 @@ def copy_examples(
         If example does not exist.
     FileExistsError
         If destination exists and overwrite=False.
-    """
-    return
-
-
-def copy_packs(
-    packs: str | List[str],
-    target_dir: Optional[Path] = None,
-) -> List[Path]:
-    """Copy all examples from one or more packs to a target directory.
-
-    Parameters
-    ----------
-    packs : str or list of str
-        Pack name(s). Can be:
-        - Single pack name: 'pack1'
-        - List of pack names: ['pack1', 'pack2']
-        - Special keyword: 'all' (copies all packs)
-    target_dir : Path, optional
-        Target directory where examples should be copied.
-        Defaults to current working directory if not specified.
-
-    Returns
-    -------
-    list of Path
-        List of destination paths created (all examples from the pack(s)).
-
-    Raises
-    ------
-    ValueError
-        If pack name is invalid.
-    FileNotFoundError
-        If pack does not exist.
-    FileExistsError
-        If any destination exists.
     """
     return
 
