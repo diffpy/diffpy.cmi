@@ -4,37 +4,43 @@ from diffpy.cmi.packsmanager import PacksManager
 
 
 @pytest.mark.parametrize(
-    "expected_dict",
+    "expected",
     [
         {
-            "pdf": [
-                "ch03NiModelling",
-                "ch06RefineCrystalStructureGen",
-                "ch07StructuralPhaseTransition",
-                "ch08NPRefinement",
+            # test with pack that has examples
+            "pack1": [
+                "ex1",
+                "ex2",
+                "ex3",
             ]
-        }
+        },
+        {
+            # test pack with no examples
+            "no_examples": []
+        },
     ],
 )
-def test_available_examples(expected_dict):
-    """Test that available_examples returns a dict."""
-    pkmg = PacksManager()
-    returned_dict = pkmg.available_examples()
-    expected_pack = list(expected_dict.keys())
-    returned_pack = list(returned_dict.keys())
-    for pack in expected_pack:
-        assert pack in returned_pack, f"{pack} not found in returned packs."
-        expected_examples = expected_dict[pack]
-        returned_examples = returned_dict.get(pack, [])
-        for ex in expected_examples:
-            assert (
-                ex in returned_examples
-            ), f"{ex} not found under pack {pack}."
+def test_available_examples(temp_path, expected):
+    for pack, examples in expected.items():
+        pack_dir = temp_path / pack
+        pack_dir.mkdir(parents=True, exist_ok=True)
+        for ex in examples:
+            ex_dir = pack_dir / ex
+            ex_dir.mkdir(parents=True, exist_ok=True)
+    pkmg = PacksManager(temp_path)
+    actual = pkmg.available_examples(temp_path)
+    assert actual == expected
 
 
-def test_print_info(capsys):
-    """Test that print_info prints expected information to stdout."""
-    pkmg = PacksManager()
+def test_available_examples_bad(temp_path):
+    pkmg = PacksManager(temp_path)
+    bad_path = temp_path / "nonexistent"
+    with pytest.raises(FileNotFoundError):
+        pkmg.available_examples(bad_path)
+
+
+def test_print_info(temp_path, capsys):
+    pkmg = PacksManager(temp_path)
     pkmg.print_info()
     captured = capsys.readouterr()
     output = captured.out.strip()
