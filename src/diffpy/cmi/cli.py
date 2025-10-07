@@ -39,7 +39,7 @@ def _get_examples_dir(root_path=None) -> Path:
     FileNotFoundError
         If the examples directory cannot be located in the installation.
     """
-    with get_package_dir(root_path) as pkgdir:
+    with get_package_dir() as pkgdir:
         pkg = Path(pkgdir).resolve()
         for c in (
             pkg / "docs" / "examples",
@@ -100,6 +100,12 @@ def copy_examples(
     FileExistsError
         If destination exists and overwrite=False.
     """
+    return
+
+
+def print_info(pack_examples_dict):
+    """Pretty print available and installed packs and examples to
+    console."""
     return
 
 

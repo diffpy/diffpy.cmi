@@ -68,13 +68,18 @@ class PacksManager:
             p.stem for p in self.packs_dir.glob("*.txt") if p.is_file()
         )
 
-    def available_examples(self):
-        """Finds all examples for each pack and builds a dict."""
-        return
+    def available_examples(self, root_path):
+        """Finds all examples for each pack and builds a dict.
 
-    def print_info(self):
-        """Pretty print available and installed packs and examples to
-        console."""
+        Parameters
+        ----------
+        root_path : Path
+            Root path to the examples directory.
+        Returns
+        -------
+        dict
+            A dictionary mapping pack names to lists of example names.
+        """
         return
 
     def _resolve_pack_file(self, identifier: Union[str, Path]) -> Path:
