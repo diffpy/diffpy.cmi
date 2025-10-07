@@ -79,6 +79,11 @@ class PacksManager:
         -------
         dict
             A dictionary mapping pack names to lists of example names.
+
+        Raises
+        ------
+        FileNotFoundError
+            If the provided root_path does not exist or is not a directory.
         """
         return
 
