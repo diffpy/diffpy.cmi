@@ -22,17 +22,31 @@ def tmp_examples(tmp_path_factory):
     yield tmp_examples
 
 
-def _build_example_structure(base_dir: Path):
-    """Helper to build a fake examples directory structure for
-    testing."""
-    packs = ["packA", "packB"]
-    examples_per_pack = ["example1", "example2"]
+def _build_examples_tree_helper(
+    base_dir: Path, structure: dict[str, dict[str, list[tuple[str, str]]]]
+):
+    """Build a nested examples directory structure based on a mapping.
 
-    for pack in packs:
-        for example in examples_per_pack:
-            example_path = base_dir / pack / example
-            example_path.mkdir(parents=True, exist_ok=True)
-            (example_path / "script.py").touch()
+    Parameters
+    ----------
+    base_dir : Path
+        The root temporary directory (e.g., from tmp_path_factory).
+    structure : dict
+        Mapping of case -> {pack: [(example_name, relative_script_path), ...]}.
+    """
+    for case_name, packs in structure.items():
+        for pack_name, examples in packs.items():
+            for example_name, script_relpath in examples:
+                script_path = (
+                    base_dir
+                    / case_name
+                    / pack_name
+                    / example_name
+                    / Path(script_relpath)
+                )
+                script_path.parent.mkdir(parents=True, exist_ok=True)
+                script_path.touch()
+    return base_dir
 
 
 @pytest.fixture(scope="session")
@@ -43,39 +57,16 @@ def example_cases(tmp_path_factory):
     Returns the path to that copy.
     """
     examples_dir = tmp_path_factory.mktemp("examples")
-    # case 1: pack with no examples
-    case1 = examples_dir / "case1" / "examples" / "empty_pack"
-    case1.mkdir(parents=True, exist_ok=True)
 
-    # Case 2: pack with multiple examples
-    case2_paths_and_files = [
-        ("case2/examples/full_pack/ex1/solutions/diffpy-cmi", "script1.py"),
-        ("case2/examples/full_pack/ex2/random/dir/path", "script2.py"),
-    ]
-    for dir_path, file_name in case2_paths_and_files:
-        full_path = examples_dir / dir_path
-        full_path.mkdir(parents=True, exist_ok=True)
-        (full_path / file_name).touch()
+    # case 1: pack with no examples
+    # case1_dict = {"case1": {"empty_pack": []}}
+    # _build_examples_tree_helper(examples_dir, case1_dict)
+    case1 = examples_dir / "case1" / "empty_pack"
+    case1.mkdir(parents=True, exist_ok=True)
+    # # Case 2: pack with multiple examples
 
     # Case 3: multiple packs with multiple examples
-    case3_paths_and_files = [
-        ("case3/examples/pack1/ex1/", "script1.py"),
-        ("case3/examples/pack2/ex1/", "script1.py"),
-    ]
-    for dir_path, file_name in case3_paths_and_files:
-        full_path = examples_dir / dir_path
-        full_path.mkdir(parents=True, exist_ok=True)
-        (full_path / file_name).touch()
 
-    base_case3 = examples_dir / "case3" / "examples"
-    packs = ["packA", "packB"]
-    examples_per_pack = ["example1", "example2"]
-
-    for pack in packs:
-        for example in examples_per_pack:
-            example_path = base_case3 / pack / example
-            example_path.mkdir(parents=True, exist_ok=True)
-            (example_path / "script.py").touch()
     # tmp_examples = tmpdir / "case3" / "examples"
     # tmp_examples = tmpdir / "case4" / "examples"
     yield examples_dir
