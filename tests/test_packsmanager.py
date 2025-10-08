@@ -66,6 +66,21 @@ def test_available_examples(input, expected, example_cases):
     print("actual:")
     pprint(actual)
     # assert that the keys are the same
-    assert actual.keys() == expected.keys()
+
+    assert (
+        actual.keys() == expected.keys()
+    ), f"Keys differ: expected {expected.keys()}, got {actual.keys()}"
     # if values of excepted are in actual assert true
     # assert actual == expected
+    for expected_pack, expected_tuple in expected.items():
+        assert expected_pack in actual, f"Missing pack: {expected_pack}"
+        for expected_name, expected_rel_path in expected_tuple:
+            matches = [
+                (name, path)
+                for name, path in actual[expected_pack]
+                if name == expected_name and expected_rel_path in str(path)
+            ]
+            assert matches, (
+                f"Expected example '{expected_name}' with path containing "
+                f"'{expected_rel_path}' not found in {actual[expected_pack]}"
+            )
