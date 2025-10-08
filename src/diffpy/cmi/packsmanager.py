@@ -28,7 +28,7 @@ from diffpy.cmi.log import plog
 __all__ = ["PacksManager"]
 
 
-def _installed_packs_dir() -> Path:
+def _installed_packs_dir(root_path=None) -> Path:
     """Locate requirements/packs/ for the installed package."""
     with get_package_dir() as pkgdir:
         pkg = Path(pkgdir).resolve()
@@ -53,8 +53,27 @@ class PacksManager:
         Defaults to `requirements/packs` under the installed package.
     """
 
-    def __init__(self) -> None:
-        self.packs_dir = _installed_packs_dir()
+    def __init__(self, root_path=None) -> None:
+        if root_path is None:
+            self.packs_dir = _installed_packs_dir(root_path)
+        else:
+            self.packs_dir = Path(root_path).resolve()
+        self.examples_dir = self._get_examples_dir()
+
+    def _get_examples_dir(self) -> Path:
+        """Return the absolute path to the installed examples directory.
+
+        Returns
+        -------
+        pathlib.Path
+            Directory containing shipped examples.
+
+        Raises
+        ------
+        FileNotFoundError
+            If the examples directory cannot be located in the installation.
+        """
+        return (self.packs_dir / ".." / ".." / "docs" / "examples").resolve()
 
     def available_packs(self) -> List[str]:
         """List all available packs.
