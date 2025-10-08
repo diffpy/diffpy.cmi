@@ -1,3 +1,5 @@
+from pprint import pprint
+
 import pytest
 
 from diffpy.cmi.packsmanager import PacksManager
@@ -23,8 +25,8 @@ from diffpy.cmi.packsmanager import PacksManager
             "case2",
             {
                 "full_pack": [
-                    ("example1", ["full_pack", "example1"]),
-                    ("example2", ["full_pack", "example2"]),
+                    ("example1", "case2/full_pack/example1"),
+                    ("example2", "case2/full_pack/example2"),
                 ]
             },
         ),
@@ -43,22 +45,28 @@ from diffpy.cmi.packsmanager import PacksManager
     ],
 )
 def test_available_examples(input, expected, example_cases):
-    test_path = example_cases / input
+    root_path = example_cases / input
     # print("test_path:", test_path)
-    for path in test_path.rglob("*"):
-        print(" -", path.relative_to(example_cases))
+    pkmg = PacksManager(root_path)
+    print()
+    # print("packsmananger_dir:", pkmg.examples_dir)
+    # print("conftest_dir:", root_path)
+    for path in root_path.rglob("*"):
+        # print(" -", path.relative_to(example_cases))
         if path.suffix:
             assert path.is_file(), f"{path} should be a file"
         else:
             assert path.is_dir(), f"{path} should be a directory"
-    pkmg = PacksManager(test_path)
-    assert pkmg.examples_dir == test_path
-    print("packs_dir:", pkmg.packs_dir)
-    print("examples_dir:", pkmg.examples_dir)
-    for path in pkmg.examples_dir.rglob("*"):
-        print(" +", path.relative_to(pkmg.examples_dir.parent))
+    assert pkmg.examples_dir == root_path
+    # for path in pkmg.examples_dir.rglob("*"):
+    # print(" +", path.relative_to(pkmg.examples_dir.parent))
 
-    # actual = pkmg.available_examples()
+    actual = pkmg.available_examples()
+    print("expected:")
+    pprint(expected)
+    print("actual:")
+    pprint(actual)
     # assert that the keys are the same
-    # assert actual.keys() == expected.keys()
+    assert actual.keys() == expected.keys()
+    # if values of excepted are in actual assert true
     # assert actual == expected

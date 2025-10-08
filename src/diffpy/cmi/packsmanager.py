@@ -43,29 +43,6 @@ def _installed_packs_dir(root_path=None) -> Path:
     )
 
 
-def _examples_dir(root_path=None) -> Path:
-    """Return the absolute path to the installed examples directory.
-
-    Returns
-    -------
-    pathlib.Path
-        Directory containing shipped examples.
-
-    Raises
-    ------
-    FileNotFoundError
-        If the examples directory cannot be located in the installation.
-    """
-    with get_package_dir() as pkgdir:
-        pkg = Path(pkgdir).resolve()
-        for c in (pkg.parents[2] / "docs" / "examples",):
-            if c.is_dir():
-                return c
-    raise FileNotFoundError(
-        "Could not locate docs/examples. Check your installation."
-    )
-
-
 class PacksManager:
     """Discovery, parsing, and installation for pack files.
 
@@ -74,15 +51,34 @@ class PacksManager:
     packs_dir : pathlib.Path
         Absolute path to the installed packs directory.
         Defaults to `requirements/packs` under the installed package.
+    examples_dir : pathlib.Path
+        Absolute path to the installed examples directory.
+        Defaults to `docs/examples` under the installed package.
     """
 
     def __init__(self, root_path=None) -> None:
         if root_path is None:
             self.packs_dir = _installed_packs_dir(root_path)
-            self.examples_dir = _examples_dir(root_path)
+            self.examples_dir = self._get_examples_dir()
+        # root_path option provided for testing
         else:
             self.packs_dir = Path(root_path).resolve()
             self.examples_dir = Path(root_path).resolve()
+
+    def _get_examples_dir(self) -> Path:
+        """Return the absolute path to the installed examples directory.
+
+        Returns
+        -------
+        pathlib.Path
+            Directory containing shipped examples.
+
+        Raises
+        ------
+        FileNotFoundError
+            If the examples directory cannot be located in the installation.
+        """
+        return (self.packs_dir / ".." / ".." / "docs" / "examples").resolve()
 
     def available_packs(self) -> List[str]:
         """List all available packs.
