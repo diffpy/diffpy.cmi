@@ -30,18 +30,21 @@ from diffpy.cmi.packsmanager import PacksManager
                 ]
             },
         ),
-        # # case 3: multiple packs.  Expect dict with multiple pack:tuple pairs
-        # (
-        #     "case3",
-        #     {
-        #         "pack1": [("ex1", "path1"), ("ex2", "path2")],
-        #         "pack2": [("ex3", "path3")],
-        #     },
-        # ),
-        # (   # case 4: no pack found. Expect {}
-        #     None,
-        #     {},
-        # )
+        # case 3: multiple packs.  Expect dict with multiple pack:tuple pairs
+        (
+            "case3",
+            {
+                "packA": [
+                    ("my_ex1", "case3/packA/my_ex1"),
+                    ("my_ex2", "case3/packA/my_ex2"),
+                ],
+                "packB": [("my_ex1", "case3/packB/my_ex1")],
+            },
+        ),
+        (  # case 4: no pack found. Expect {}
+            "case4",
+            {},
+        ),
     ],
 )
 def test_available_examples(input, expected, example_cases):
@@ -51,7 +54,7 @@ def test_available_examples(input, expected, example_cases):
     # print("packsmananger_dir:", pkmg.examples_dir)
     # print("root_path:", root_path)
     for path in root_path.rglob("*"):
-        # print(" -", path.relative_to(example_cases))
+        print(" -", path.relative_to(example_cases))
         if path.suffix:
             assert path.is_file(), f"{path} should be a file"
         else:
