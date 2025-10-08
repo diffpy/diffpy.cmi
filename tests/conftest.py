@@ -57,13 +57,14 @@ def example_cases(tmp_path_factory):
     Returns the path to that copy.
     """
     examples_dir = tmp_path_factory.mktemp("examples")
+
     # case 1: pack with no examples
     # case1_dict = {"case1": {"empty_pack": []}}
     # _build_examples_tree_helper(examples_dir, case1_dict)
     case1 = examples_dir / "case1" / "empty_pack"
     case1.mkdir(parents=True, exist_ok=True)
 
-    # # Case 2: pack with multiple examples
+    # Case 2: pack with multiple examples
     case2a = (
         examples_dir
         / "case2"

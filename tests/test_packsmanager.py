@@ -46,11 +46,10 @@ from diffpy.cmi.packsmanager import PacksManager
 )
 def test_available_examples(input, expected, example_cases):
     root_path = example_cases / input
-    # print("test_path:", test_path)
     pkmg = PacksManager(root_path)
     print()
     # print("packsmananger_dir:", pkmg.examples_dir)
-    # print("conftest_dir:", root_path)
+    # print("root_path:", root_path)
     for path in root_path.rglob("*"):
         # print(" -", path.relative_to(example_cases))
         if path.suffix:
