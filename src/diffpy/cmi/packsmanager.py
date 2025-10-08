@@ -43,6 +43,29 @@ def _installed_packs_dir(root_path=None) -> Path:
     )
 
 
+def _examples_dir(root_path=None) -> Path:
+    """Return the absolute path to the installed examples directory.
+
+    Returns
+    -------
+    pathlib.Path
+        Directory containing shipped examples.
+
+    Raises
+    ------
+    FileNotFoundError
+        If the examples directory cannot be located in the installation.
+    """
+    with get_package_dir() as pkgdir:
+        pkg = Path(pkgdir).resolve()
+        for c in (pkg.parents[2] / "docs" / "examples",):
+            if c.is_dir():
+                return c
+    raise FileNotFoundError(
+        "Could not locate docs/examples. Check your installation."
+    )
+
+
 class PacksManager:
     """Discovery, parsing, and installation for pack files.
 
@@ -56,24 +79,10 @@ class PacksManager:
     def __init__(self, root_path=None) -> None:
         if root_path is None:
             self.packs_dir = _installed_packs_dir(root_path)
+            self.examples_dir = _examples_dir(root_path)
         else:
             self.packs_dir = Path(root_path).resolve()
-        self.examples_dir = self._get_examples_dir()
-
-    def _get_examples_dir(self) -> Path:
-        """Return the absolute path to the installed examples directory.
-
-        Returns
-        -------
-        pathlib.Path
-            Directory containing shipped examples.
-
-        Raises
-        ------
-        FileNotFoundError
-            If the examples directory cannot be located in the installation.
-        """
-        return (self.packs_dir / ".." / ".." / "docs" / "examples").resolve()
+            self.examples_dir = Path(root_path).resolve()
 
     def available_packs(self) -> List[str]:
         """List all available packs.
@@ -87,7 +96,7 @@ class PacksManager:
             p.stem for p in self.packs_dir.glob("*.txt") if p.is_file()
         )
 
-    def available_examples(self, root_path):
+    def available_examples(self) -> dict[str, List[tuple[str, Path]]]:
         """Finds all examples for each pack and builds a dict.
 
         Parameters
@@ -104,7 +113,19 @@ class PacksManager:
         FileNotFoundError
             If the provided root_path does not exist or is not a directory.
         """
-        return
+        example_dir = self.examples_dir
+        examples_dict = {}
+        for pack_path in example_dir.iterdir():
+            if pack_path.is_dir():
+                pack_name = pack_path.stem
+                examples_dict[pack_name] = []
+                for example_path in pack_path.iterdir():
+                    if example_path.is_dir():
+                        example_name = example_path.stem
+                        examples_dict[pack_name].append(
+                            (example_name, example_path)
+                        )
+        return examples_dict
 
     def _resolve_pack_file(self, identifier: Union[str, Path]) -> Path:
         """Resolve a pack identifier to an absolute .txt path.

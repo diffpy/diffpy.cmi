@@ -57,16 +57,35 @@ def example_cases(tmp_path_factory):
     Returns the path to that copy.
     """
     examples_dir = tmp_path_factory.mktemp("examples")
-
     # case 1: pack with no examples
     # case1_dict = {"case1": {"empty_pack": []}}
     # _build_examples_tree_helper(examples_dir, case1_dict)
     case1 = examples_dir / "case1" / "empty_pack"
     case1.mkdir(parents=True, exist_ok=True)
+
     # # Case 2: pack with multiple examples
+    case2a = (
+        examples_dir
+        / "case2"
+        / "full_pack"
+        / "example1"
+        / "solution"
+        / "diffpy-cmi"
+    )  # full_pack, example1
+    case2a.mkdir(parents=True, exist_ok=True)
+    (case2a / "script1.py").touch()
+    case2b = (
+        examples_dir / "case2" / "full_pack" / "example2" / "random" / "path"
+    )  # full_pack, example2
+    case2b.mkdir(parents=True, exist_ok=True)
+    (case2b / "script1.py").touch()
+    (case2b / "script2.py").touch()
 
-    # Case 3: multiple packs with multiple examples
-
+    # # Case 3: multiple packs with multiple examples
+    # case3a = examples_dir / "case3" / "pack1" / "ex1" # pack1, ex1
+    # case3a.mkdir(parents=True, exist_ok=True)
+    # (case3b / "script1.py").touch()
+    # case3b = examples_dir /
     # tmp_examples = tmpdir / "case3" / "examples"
     # tmp_examples = tmpdir / "case4" / "examples"
     yield examples_dir
