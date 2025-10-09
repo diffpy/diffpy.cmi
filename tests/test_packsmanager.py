@@ -42,7 +42,7 @@ example_params = [
         "case4",
         {},
     ),
-    (  # case 5: multiple packs with the same example names
+    (  # case 5: multiple packs with duplicate example names
         # Expect dict with multiple pack:tuple pairs
         "case5",
         {
