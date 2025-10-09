@@ -30,7 +30,7 @@ __all__ = ["PacksManager"]
 
 def _installed_packs_dir(root_path=None) -> Path:
     """Locate requirements/packs/ for the installed package."""
-    with get_package_dir() as pkgdir:
+    with get_package_dir(root_path) as pkgdir:
         pkg = Path(pkgdir).resolve()
         for c in (
             pkg / "requirements" / "packs",
@@ -57,13 +57,8 @@ class PacksManager:
     """
 
     def __init__(self, root_path=None) -> None:
-        if root_path is None:
-            self.packs_dir = _installed_packs_dir(root_path)
-            self.examples_dir = self._get_examples_dir()
-        # root_path option provided for testing
-        else:
-            self.packs_dir = Path(root_path).resolve()
-            self.examples_dir = Path(root_path).resolve()
+        self.packs_dir = _installed_packs_dir(root_path)
+        self.examples_dir = self._get_examples_dir()
 
     def _get_examples_dir(self) -> Path:
         """Return the absolute path to the installed examples directory.

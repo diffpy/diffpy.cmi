@@ -22,8 +22,8 @@ example_params = [
         "case2",
         {
             "full_pack": [
-                ("example1", "case2/full_pack/example1"),
-                ("example2", "case2/full_pack/example2"),
+                ("ex1", "case2/docs/examples/full_pack/ex1"),
+                ("ex2", "case2/docs/examples/full_pack/ex2"),
             ]
         },
     ),
@@ -32,10 +32,10 @@ example_params = [
         "case3",
         {
             "packA": [
-                ("my_ex1", "case3/packA/my_ex1"),
-                ("my_ex2", "case3/packA/my_ex2"),
+                ("ex1", "case3/docs/examples/packA/ex1"),
+                ("ex2", "case3/docs/examples/packA/ex2"),
             ],
-            "packB": [("ex1", "case3/packB/ex1")],
+            "packB": [("ex3", "case3/docs/examples/packB/ex3")],
         },
     ),
     (  # case 4: no pack found. Expect {}
@@ -47,43 +47,45 @@ example_params = [
         "case5",
         {
             "packA": [
-                ("example", "case5/packA/example"),
+                ("ex1", "case5/docs/examples/packA/ex1"),
             ],
             "packB": [
-                ("example", "case5/packB/example"),
+                ("ex1", "case5/docs/examples/packB/ex1"),
             ],
         },
     ),
 ]
 
 
+def paths_match(expected, actual, root):
+    """Compare two (example_name, path) lists ignoring temp dir
+    differences."""
+    if len(expected) != len(actual):
+        return False
+    for (exp_name, exp_path), (act_name, act_path) in zip(expected, actual):
+        if exp_name != act_name:
+            return False
+        actual_rel_path = str(act_path.relative_to(root))
+        if actual_rel_path != exp_path:
+            return False
+    return True
+
+
 @pytest.mark.parametrize("input,expected", example_params)
 def test_available_examples(input, expected, example_cases):
-    tmp_ex_dir = example_cases / input
-    pkmg = PacksManager(tmp_ex_dir)
-    # Ensure the example directory is correctly set
-    assert pkmg.examples_dir == tmp_ex_dir
+    case_dir = example_cases / input
+    pkmg = PacksManager(case_dir)
     actual = pkmg.available_examples()
-    # Verify that the keys (pack names) are correct
-    assert set(actual.keys()) == set(expected.keys())
-    # Verify that each expected example exists in actual
-    for expected_pack, expected_list in expected.items():
-        actual_list = actual[expected_pack]
-        for (expected_exname, expected_path), (
-            actual_exname,
-            actual_path,
-        ) in zip(expected_list, actual_list):
-            # Checks example name and path
-            assert expected_exname == actual_exname
-            assert expected_path == str(actual_path.relative_to(example_cases))
+    assert actual.keys() == expected.keys()
+    for pack in expected:
+        assert paths_match(expected[pack], actual[pack], example_cases)
 
 
 @pytest.mark.parametrize("input,expected", example_params)
-def test_tmp_(input, expected, example_cases):
+def test_tmp_file_structure(input, expected, example_cases):
     example_path = example_cases / input
     for path in example_path.rglob("*"):
         if path.suffix:
-            # Checks temp files are files and not dirs
             assert path.is_file()
         else:
             assert path.is_dir()
