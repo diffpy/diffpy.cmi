@@ -31,7 +31,10 @@ def get_package_dir(root_path=None):
     context manager
         A context manager that yields a pathlib.Path to the package directory.
     """
-    resource = files(__name__)
+    if root_path is None:
+        resource = files(__name__)
+    else:
+        resource = root_path
     return as_file(resource)
 
 
