@@ -83,12 +83,33 @@ def example_cases(tmp_path_factory):
     (case2b / "script2.py").touch()
 
     # # Case 3: multiple packs with multiple examples
-    # case3a = examples_dir / "case3" / "pack1" / "ex1" # pack1, ex1
-    # case3a.mkdir(parents=True, exist_ok=True)
-    # (case3b / "script1.py").touch()
-    # case3b = examples_dir /
-    # tmp_examples = tmpdir / "case3" / "examples"
-    # tmp_examples = tmpdir / "case4" / "examples"
+    case3a = examples_dir / "case3" / "packA" / "my_ex1"  # packA, ex1
+    case3a.mkdir(parents=True, exist_ok=True)
+    (case3a / "script1.py").touch()
+    case3b = (
+        examples_dir / "case3" / "packA" / "my_ex2" / "solutions"
+    )  # packA, ex2
+    case3b.mkdir(parents=True, exist_ok=True)
+    (case3b / "script2.py").touch()
+    case3c = (
+        examples_dir / "case3" / "packB" / "ex1" / "more" / "random" / "path"
+    )  # packB, ex1
+    case3c.mkdir(parents=True, exist_ok=True)
+    (case3c / "script3.py").touch()
+    (case3c / "script4.py").touch()
+
+    # # Case 4: no pack found (empty directory)
+    case4 = examples_dir / "case4"
+    case4.mkdir(parents=True, exist_ok=True)
+
+    # Case 5: multiple packs with the same example names
+    case5a = examples_dir / "case5" / "packA" / "example" / "path1"
+    case5a.mkdir(parents=True, exist_ok=True)
+    (case5a / "script1.py").touch()
+    case5b = examples_dir / "case5" / "packB" / "example" / "path2"
+    case5b.mkdir(parents=True, exist_ok=True)
+    (case5b / "script2.py").touch()
+
     yield examples_dir
 
 
