@@ -111,11 +111,11 @@ class PacksManager:
         """
         example_dir = self.examples_dir
         examples_dict = {}
-        for pack_path in example_dir.iterdir():
+        for pack_path in sorted(example_dir.iterdir()):
             if pack_path.is_dir():
                 pack_name = pack_path.stem
                 examples_dict[pack_name] = []
-                for example_path in pack_path.iterdir():
+                for example_path in sorted(pack_path.iterdir()):
                     if example_path.is_dir():
                         example_name = example_path.stem
                         examples_dict[pack_name].append(
