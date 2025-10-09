@@ -9,6 +9,8 @@ example_params = [
     # 3) multiple packs.  Expect dict with multiple pack:tuple pairs
     # 4) no pack found. Expect {}
     # case 1: pack with no examples.  Expect {'empty_pack': []}
+    # 5) multiple packs with the same example names
+    # Expect dict with multiple pack:tuple pairs
     (
         "case1",
         {"empty_pack": []},
