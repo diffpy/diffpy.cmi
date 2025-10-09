@@ -84,4 +84,4 @@ def test_tmp_(input, expected, example_cases):
             # Checks temp files are files and not dirs
             assert path.is_file()
         else:
-            assert path.is_dir(), f"{path} should be a directory"
+            assert path.is_dir()
