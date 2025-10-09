@@ -22,33 +22,6 @@ def tmp_examples(tmp_path_factory):
     yield tmp_examples
 
 
-def _build_examples_tree_helper(
-    base_dir: Path, structure: dict[str, dict[str, list[tuple[str, str]]]]
-):
-    """Build a nested examples directory structure based on a mapping.
-
-    Parameters
-    ----------
-    base_dir : Path
-        The root temporary directory (e.g., from tmp_path_factory).
-    structure : dict
-        Mapping of case -> {pack: [(example_name, relative_script_path), ...]}.
-    """
-    for case_name, packs in structure.items():
-        for pack_name, examples in packs.items():
-            for example_name, script_relpath in examples:
-                script_path = (
-                    base_dir
-                    / case_name
-                    / pack_name
-                    / example_name
-                    / Path(script_relpath)
-                )
-                script_path.parent.mkdir(parents=True, exist_ok=True)
-                script_path.touch()
-    return base_dir
-
-
 @pytest.fixture(scope="session")
 def example_cases(tmp_path_factory):
     """Copy the entire examples/ tree into a temp directory once per
@@ -111,6 +84,14 @@ def example_cases(tmp_path_factory):
     (case5b / "script2.py").touch()
 
     yield examples_dir
+
+
+@pytest.fixture(scope="session")
+def copy_target_dir(tmp_path_factory):
+    """Create a temporary directory to serve as the target for copying
+    examples."""
+    target_dir = tmp_path_factory.mktemp("copy_target")
+    yield target_dir
 
 
 @pytest.fixture(scope="session", autouse=True)
