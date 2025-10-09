@@ -57,7 +57,7 @@ example_params = [
 ]
 
 
-def paths_match(expected, actual, root):
+def paths_and_names_match(expected, actual, root):
     """Compare two (example_name, path) lists ignoring temp dir
     differences."""
     if len(expected) != len(actual):
@@ -78,7 +78,9 @@ def test_available_examples(input, expected, example_cases):
     actual = pkmg.available_examples()
     assert actual.keys() == expected.keys()
     for pack in expected:
-        assert paths_match(expected[pack], actual[pack], example_cases)
+        assert paths_and_names_match(
+            expected[pack], actual[pack], example_cases
+        )
 
 
 @pytest.mark.parametrize("input,expected", example_params)
