@@ -1,10 +1,46 @@
 import os
 from pathlib import Path
+from shutil import copytree
 
 import pytest
 
 from diffpy.cmi import cli
 from diffpy.cmi.packsmanager import PacksManager
+
+
+@pytest.mark.parametrize(
+    "input,to_cwd,expected",
+    [
+        # PARAMS:
+        # input: list - list of example(s) and/or pack(s) to copy
+        # to_cwd: bool - whether to copy to cwd (default) or a target dir
+        # expected: list - path of copied example(s) and/or pack(s)
+        # 1a) user wants to copy one example to cwd
+        # 1b) user wants to copy one example to a target dir
+        (),
+        # 2a) user wants to copy multiple examples to cwd
+        # 2b) user wants to copy multiple examples to a target dir
+        (),
+        # 3a) user wants to copy all examples from a pack to cwd
+        # 3b) user wants to copy all examples from a pack to a target dir
+        (),
+        # 4a) user wants to copy all examples from multiple packs to cwd
+        # 4b) user wants to copy all examples from multiple packs to target dir
+        (),
+        # 5a) user wants to copy a combination of packs and examples to cwd
+        # 5b) user wants to copy a combination of packs and examples to target
+        (),
+        # 6a) user wants to copy all examples from all packs to cwd
+        # 6b) user wants to copy all examples from all packs to a target dir
+        (),
+    ],
+)
+def test_copy_examples(input, to_cwd, expected, example_cases, target_dir):
+    tmp_ex_dir = example_cases / input
+    copytree(tmp_ex_dir, target_dir)
+    # pkmg = PacksManager()
+    # actual = cli.copy_examples(str(target_dir))
+    assert False
 
 
 def test_print_info(temp_path, capsys):
@@ -18,12 +54,7 @@ def test_print_info(temp_path, capsys):
     assert "Available packs" in output or "Installed packs" in output
 
 
-@pytest.mark.parametrize()
-def test_copy_examples(dict, tmp_path):
-    cli.copy_examples(examples=dict, target_dir=tmp_path)
-    assert False
-
-
+# NOTE: double check and remove these test after new above tests are made
 def test_map_pack_to_examples_structure():
     """Test that map_pack_to_examples returns the right shape of
     data."""

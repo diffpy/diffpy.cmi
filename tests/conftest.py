@@ -87,11 +87,11 @@ def example_cases(tmp_path_factory):
 
 
 @pytest.fixture(scope="session")
-def copy_target_dir(tmp_path_factory):
+def target_dir(tmp_path_factory):
     """Create a temporary directory to serve as the target for copying
     examples."""
-    target_dir = tmp_path_factory.mktemp("copy_target")
-    yield target_dir
+    target_directory = tmp_path_factory.mktemp("copy_target")
+    yield target_directory
 
 
 @pytest.fixture(scope="session", autouse=True)
