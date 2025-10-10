@@ -2,6 +2,21 @@ import pytest
 
 from diffpy.cmi.packsmanager import PacksManager
 
+
+def paths_and_names_match(expected, actual, root):
+    """Compare two (example_name, path) lists ignoring temp dir
+    differences."""
+    if len(expected) != len(actual):
+        return False
+    for (exp_name, exp_path), (act_name, act_path) in zip(expected, actual):
+        if exp_name != act_name:
+            return False
+        actual_rel_path = str(act_path.relative_to(root))
+        if actual_rel_path != exp_path:
+            return False
+    return True
+
+
 example_params = [
     # 1) pack with no examples.  Expect {'empty_pack': []}
     # 2) pack with multiple examples.
@@ -55,20 +70,6 @@ example_params = [
         },
     ),
 ]
-
-
-def paths_and_names_match(expected, actual, root):
-    """Compare two (example_name, path) lists ignoring temp dir
-    differences."""
-    if len(expected) != len(actual):
-        return False
-    for (exp_name, exp_path), (act_name, act_path) in zip(expected, actual):
-        if exp_name != act_name:
-            return False
-        actual_rel_path = str(act_path.relative_to(root))
-        if actual_rel_path != exp_path:
-            return False
-    return True
 
 
 @pytest.mark.parametrize("input,expected", example_params)
