@@ -16,13 +16,29 @@
 import argparse
 from pathlib import Path
 from shutil import copytree
-from typing import List, Optional, Tuple
+from typing import Dict, List, Optional, Tuple
 
 from diffpy.cmi import __version__, get_package_dir
 from diffpy.cmi.conda import env_info
 from diffpy.cmi.log import plog, set_log_mode
 from diffpy.cmi.packsmanager import PacksManager
 from diffpy.cmi.profilesmanager import ProfilesManager
+
+
+def copy_examples(
+    examples_dict: Dict[str, List[Tuple[str, Path]]], target_dir: Path = None
+) -> None:
+    """Copy an example into the the target or current working directory.
+
+    Parameters
+    ----------
+    examples_dict : dict
+        Dictionary mapping pack name -> list of (example, path) tuples.
+    target_dir : pathlib.Path, optional
+        Target directory to copy examples into. Defaults to current
+        working directory.
+    """
+    return
 
 
 # Examples
