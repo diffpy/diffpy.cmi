@@ -4,7 +4,7 @@
 
 **Changed:**
 
-* <news item>
+* Change example dict build process.
 
 **Deprecated:**
 
