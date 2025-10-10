@@ -26,7 +26,7 @@ from diffpy.cmi.profilesmanager import ProfilesManager
 
 
 # Examples
-def _get_examples_dir(root_path=None) -> Path:
+def _get_examples_dir() -> Path:
     """Return the absolute path to the installed examples directory.
 
     Returns
@@ -70,43 +70,6 @@ def map_pack_to_examples() -> dict[str, List[str]]:
             exdirs = sorted(p.name for p in pack_dir.iterdir() if p.is_dir())
             examples_by_pack[pack_dir.name] = exdirs
     return examples_by_pack
-
-
-def copy_examples(
-    examples: List[str],
-    target_dir: Optional[Path] = None,
-) -> List[Path]:
-    """Copy one or more examples to a target directory.
-
-    Parameters
-    ----------
-    examples : list of str
-        Example name(s): ['example1'], ['pack1']
-    target_dir : Path, optional
-        Target directory where examples should be copied.
-        Defaults to current working directory if not specified.
-
-    Returns
-    -------
-    list of Path
-        List of destination paths created.
-
-    Raises
-    ------
-    ValueError
-        If example name is ambiguous (exists in multiple packs).
-    FileNotFoundError
-        If example does not exist.
-    FileExistsError
-        If destination exists and overwrite=False.
-    """
-    return
-
-
-def print_info(pack_examples_dict):
-    """Pretty print available and installed packs and examples to
-    console."""
-    return
 
 
 def copy_example(pack_example: str) -> Path:
