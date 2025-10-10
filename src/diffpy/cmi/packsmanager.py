@@ -67,11 +67,6 @@ class PacksManager:
         -------
         pathlib.Path
             Directory containing shipped examples.
-
-        Raises
-        ------
-        FileNotFoundError
-            If the examples directory cannot be located in the installation.
         """
         return (self.packs_dir / ".." / ".." / "docs" / "examples").resolve()
 
