@@ -28,9 +28,9 @@ from diffpy.cmi.log import plog
 __all__ = ["PacksManager"]
 
 
-def _installed_packs_dir() -> Path:
+def _installed_packs_dir(root_path=None) -> Path:
     """Locate requirements/packs/ for the installed package."""
-    with get_package_dir() as pkgdir:
+    with get_package_dir(root_path) as pkgdir:
         pkg = Path(pkgdir).resolve()
         for c in (
             pkg / "requirements" / "packs",
@@ -51,10 +51,29 @@ class PacksManager:
     packs_dir : pathlib.Path
         Absolute path to the installed packs directory.
         Defaults to `requirements/packs` under the installed package.
+    examples_dir : pathlib.Path
+        Absolute path to the installed examples directory.
+        Defaults to `docs/examples` under the installed package.
     """
 
-    def __init__(self) -> None:
-        self.packs_dir = _installed_packs_dir()
+    def __init__(self, root_path=None) -> None:
+        self.packs_dir = _installed_packs_dir(root_path)
+        self.examples_dir = self._get_examples_dir()
+
+    def _get_examples_dir(self) -> Path:
+        """Return the absolute path to the installed examples directory.
+
+        Returns
+        -------
+        pathlib.Path
+            Directory containing shipped examples.
+
+        Raises
+        ------
+        FileNotFoundError
+            If the examples directory cannot be located in the installation.
+        """
+        return (self.packs_dir / ".." / ".." / "docs" / "examples").resolve()
 
     def available_packs(self) -> List[str]:
         """List all available packs.
@@ -67,6 +86,37 @@ class PacksManager:
         return sorted(
             p.stem for p in self.packs_dir.glob("*.txt") if p.is_file()
         )
+
+    def available_examples(self) -> dict[str, List[tuple[str, Path]]]:
+        """Finds all examples for each pack and builds a dict.
+
+        Parameters
+        ----------
+        root_path : Path
+            Root path to the examples directory.
+        Returns
+        -------
+        dict
+            A dictionary mapping pack names to lists of example names.
+
+        Raises
+        ------
+        FileNotFoundError
+            If the provided root_path does not exist or is not a directory.
+        """
+        example_dir = self.examples_dir
+        examples_dict = {}
+        for pack_path in sorted(example_dir.iterdir()):
+            if pack_path.is_dir():
+                pack_name = pack_path.stem
+                examples_dict[pack_name] = []
+                for example_path in sorted(pack_path.iterdir()):
+                    if example_path.is_dir():
+                        example_name = example_path.stem
+                        examples_dict[pack_name].append(
+                            (example_name, example_path)
+                        )
+        return examples_dict
 
     def _resolve_pack_file(self, identifier: Union[str, Path]) -> Path:
         """Resolve a pack identifier to an absolute .txt path.
