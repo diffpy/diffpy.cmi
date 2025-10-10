@@ -4,7 +4,7 @@ from diffpy.cmi.packsmanager import PacksManager
 
 
 def paths_and_names_match(expected, actual, root):
-    """Compare two (example_name, path) lists ignoring temp dir
+    """Compare two tuples (example_name, path), ignoring temp dir
     differences."""
     if len(expected) != len(actual):
         return False
