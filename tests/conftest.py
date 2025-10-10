@@ -22,6 +22,84 @@ def tmp_examples(tmp_path_factory):
     yield tmp_examples
 
 
+@pytest.fixture(scope="session")
+def example_cases(tmp_path_factory):
+    """Copy the entire examples tree into a temp directory once per test
+    session.
+
+    Returns the path to that copy.
+    """
+    root_temp_dir = tmp_path_factory.mktemp("temp")
+
+    # case 1: pack with no examples
+    case1ex_dir = root_temp_dir / "case1" / "docs" / "examples"
+    case1 = case1ex_dir / "empty_pack"  # empty_pack
+    case1.mkdir(parents=True, exist_ok=True)
+    case1req_dir = root_temp_dir / "case1" / "requirements" / "packs"
+    case1req_dir.mkdir(parents=True, exist_ok=True)
+
+    # Case 2: pack with multiple examples
+    case2ex_dir = root_temp_dir / "case2" / "docs" / "examples"
+    case2a = (
+        case2ex_dir / "full_pack" / "ex1" / "solution" / "diffpy-cmi"
+    )  # full_pack, ex1
+    case2a.mkdir(parents=True, exist_ok=True)
+    (case2a / "script1.py").touch()
+    case2b = (
+        case2ex_dir / "full_pack" / "ex2" / "random" / "path"
+    )  # full_pack, ex2
+    case2b.mkdir(parents=True, exist_ok=True)
+    (case2b / "script1.py").touch()
+    (case2b / "script2.py").touch()
+    case2req_dir = root_temp_dir / "case2" / "requirements" / "packs"
+    case2req_dir.mkdir(parents=True, exist_ok=True)
+
+    # Case 3: multiple packs with multiple examples
+    case3ex_dir = root_temp_dir / "case3" / "docs" / "examples"
+    case3a = case3ex_dir / "packA" / "ex1"  # packA, ex1
+    case3a.mkdir(parents=True, exist_ok=True)
+    (case3a / "script1.py").touch()
+    case3b = case3ex_dir / "packA" / "ex2" / "solutions"  # packA, ex2
+    case3b.mkdir(parents=True, exist_ok=True)
+    (case3b / "script2.py").touch()
+    case3c = (
+        case3ex_dir / "packB" / "ex3" / "more" / "random" / "path"
+    )  # packB, ex3
+    case3c.mkdir(parents=True, exist_ok=True)
+    (case3c / "script3.py").touch()
+    (case3c / "script4.py").touch()
+    case3req_dir = root_temp_dir / "case3" / "requirements" / "packs"
+    case3req_dir.mkdir(parents=True, exist_ok=True)
+
+    # Case 4: no pack found (empty directory)
+    case4ex_dir = root_temp_dir / "case4" / "docs" / "examples"
+    case4 = case4ex_dir
+    case4.mkdir(parents=True, exist_ok=True)
+    case4req_dir = root_temp_dir / "case4" / "requirements" / "packs"
+    case4req_dir.mkdir(parents=True, exist_ok=True)
+
+    # Case 5: multiple packs with the same example names
+    case5ex_dir = root_temp_dir / "case5" / "docs" / "examples"
+    case5a = case5ex_dir / "packA" / "ex1" / "path1"  # packA, ex1
+    case5a.mkdir(parents=True, exist_ok=True)
+    (case5a / "script1.py").touch()
+    case5b = case5ex_dir / "packB" / "ex1" / "path2"  # packB, ex1
+    case5b.mkdir(parents=True, exist_ok=True)
+    (case5b / "script2.py").touch()
+    case5req_dir = root_temp_dir / "case5" / "requirements" / "packs"
+    case5req_dir.mkdir(parents=True, exist_ok=True)
+
+    yield root_temp_dir
+
+
+@pytest.fixture(scope="session")
+def target_dir(tmp_path_factory):
+    """Create a temporary directory to serve as the target for copying
+    examples."""
+    target_directory = tmp_path_factory.mktemp("copy_target")
+    yield target_directory
+
+
 @pytest.fixture(scope="session", autouse=True)
 def use_headless_matplotlib():
     """Force matplotlib to use a headless backend during tests."""
