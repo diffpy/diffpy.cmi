@@ -15,32 +15,9 @@
 """Complex modeling infrastructure:
 a modular framework for multi-modal modeling of scientific data."""
 
-from importlib.resources import as_file, files
-
-
-def get_package_dir(root_path=None):
-    """Get the package directory as a context manager.
-
-    Parameters
-    ----------
-    root_path : str, optional
-        Used for testing, overrides the files(__name__) call.
-
-    Returns
-    -------
-    context manager
-        A context manager that yields a pathlib.Path to the package directory.
-    """
-    if root_path is None:
-        resource = files(__name__)
-    else:
-        resource = root_path
-    return as_file(resource)
-
 
 __all__ = [
     "__version__",
-    "get_package_dir",
 ]
 
 # package version

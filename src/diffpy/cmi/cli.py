@@ -18,10 +18,10 @@ from pathlib import Path
 from shutil import copytree
 from typing import Dict, List, Optional, Tuple
 
-from diffpy.cmi import __version__, get_package_dir
+from diffpy.cmi import __version__
 from diffpy.cmi.conda import env_info
 from diffpy.cmi.log import plog, set_log_mode
-from diffpy.cmi.packsmanager import PacksManager
+from diffpy.cmi.packsmanager import PacksManager, get_package_dir
 from diffpy.cmi.profilesmanager import ProfilesManager
 
 
