@@ -25,6 +25,17 @@ from diffpy.cmi.packsmanager import PacksManager
 from diffpy.cmi.profilesmanager import ProfilesManager
 
 
+def print_info(pack_ex_dict: dict[str, List[Tuple[str, Path]]]) -> None:
+    """Print information about available examples and packs.
+
+    Parameters
+    ----------
+    pack_ex_dict : dict[str, List[Tuple[str, Path]]]
+        Dictionary mapping pack name -> list of (example name, example path).
+    """
+    return
+
+
 def copy_examples(
     examples_dict: Dict[str, List[Tuple[str, Path]]], target_dir: Path = None
 ) -> None:

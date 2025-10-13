@@ -4,6 +4,29 @@ from pathlib import Path
 import pytest
 
 from diffpy.cmi import cli
+from diffpy.cmi.packsmanager import PacksManager
+
+
+@pytest.mark.parametrize(
+    "input,expected",
+    [
+        ("case1", "captured output for case1"),
+        ("case2", "captured output for case2"),
+        ("case3", "captured output for case3"),
+        ("case4", "captured output for case4"),
+        ("case5", "captured output for case5"),
+    ],
+)
+def test_print_info(input, expected, example_cases, capsys):
+    case_dir = example_cases / input
+    pm = PacksManager(case_dir)
+    examples_dict = pm.available_examples()
+    cli.print_info(examples_dict)
+    # capture the outputs and compare to expected
+    captured = capsys.readouterr()
+    output = captured.out
+    assert output == expected
+    # assert False
 
 
 def test_map_pack_to_examples_structure():
