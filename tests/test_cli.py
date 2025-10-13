@@ -22,11 +22,10 @@ def test_print_info(input, expected, example_cases, capsys):
     pm = PacksManager(case_dir)
     examples_dict = pm.available_examples()
     cli.print_info(examples_dict)
-    # capture the outputs and compare to expected
     captured = capsys.readouterr()
     output = captured.out
     assert output == expected
-    # assert False
+    assert False
 
 
 def test_map_pack_to_examples_structure():
