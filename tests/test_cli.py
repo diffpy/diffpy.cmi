@@ -126,12 +126,10 @@ copy_scenarios = [
 @pytest.mark.parametrize(
     "case_name",
     ["case1", "case2", "case3", "case4", "case5"],
-    # ids=lambda x: x.upper(),
 )
 @pytest.mark.parametrize(
     "copy_type, target_type",
     copy_scenarios,
-    # ids=[f"{a}-{b}" for a, b in copy_scenarios],
 )
 def test_copy_examples(
     case_name, copy_type, target_type, example_cases, tmp_path
