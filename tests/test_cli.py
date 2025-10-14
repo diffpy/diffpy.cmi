@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 
 import pytest
@@ -25,7 +26,6 @@ from diffpy.cmi.packsmanager import PacksManager
 #                              each user input
 case_params = [
     (
-        "case1",  # empty pack
         [
             ["empty_pack"],  # 4) all examples from a pack (but pack is empty)
             ["all"],  # 6) all examples from all packs (but pack is empty)
@@ -36,7 +36,6 @@ case_params = [
         ],
     ),
     (
-        "case2",  # one pack with multiple examples
         [
             ["ex1"],  # 1) single example
             ["ex1", "ex2"],  # 2) multiple examples from same pack
@@ -63,7 +62,6 @@ case_params = [
         ],
     ),
     (
-        "case3",  # multiple packs with multiple examples
         [
             ["ex1"],  # 1) single example from packA
             ["ex1", "ex2"],  # 2) list of examples from same pack
@@ -102,7 +100,6 @@ case_params = [
         ],
     ),
     (
-        "case4",  # no packs (empty examples directory)
         [
             ["all"],  # 6) all examples from all packs (but examples exist)
         ],
@@ -111,7 +108,6 @@ case_params = [
         ],
     ),
     (
-        "case5",  # multiple packs containing examples with the same name
         [
             ["ex1"],  # 1) single example (ambiguous, should get both)
             [
@@ -145,20 +141,43 @@ case_params = [
 ]
 
 
-@pytest.mark.parametrize("target", ["cwd", "target"])
-@pytest.mark.parametrize("input,user_inputs,expected", case_params)
-def test_copy_examples(input, expected, user_inputs, target, example_cases):
-    case_dir = example_cases / input
+@pytest.mark.parametrize(
+    "case,target",
+    [
+        ("case1", None),
+        ("case1", "user_target"),
+        ("case2", None),
+        ("case2", "user_target"),
+        ("case3", None),
+        ("case3", "user_target"),
+        ("case4", None),
+        ("case4", "user_target"),
+        ("case5", None),
+        ("case5", "user_target"),
+    ],
+)
+@pytest.mark.parametrize("user_inputs,expected", case_params)
+def test_copy_examples(case, user_inputs, expected, target, example_cases):
+    cwd = example_cases / "cwd"
+    os.chdir(cwd)
+    case_dir = example_cases / case
     pm = PacksManager(root_path=case_dir)
     examples_dict = pm.available_examples()
-    if target == "target":
-        target_dir = case_dir / "target_dir"
+    if target is None:
+        target_dir = cwd
     else:
-        target_dir = case_dir
-    target_dir.mkdir(parents=True, exist_ok=True)
+        target_dir = case_dir / "user_target"
     for command in user_inputs:
-        copy_examples(examples_dict, user_input=command, target_dir=target_dir)
+        copy_examples(
+            examples_dict,
+            user_input=command,
+            target_dir=None if target is None else target_dir,
+        )
+    if expected:
         for exp_paths in expected:
             for path in exp_paths:
                 dest_file = target_dir / path
-                assert dest_file.exists(), f"{dest_file} missing"
+                assert dest_file.exists()
+    else:
+        empty_dir = list(target_dir.rglob("*"))
+        assert not empty_dir, f"Expected nothing, but found: {empty_dir}"
