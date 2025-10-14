@@ -187,7 +187,6 @@ def test_copy_examples(case, user_inputs, expected, target, example_cases):
     ],
 )
 def test_copy_examples_bad(bad_inputs, expected, case, example_cases):
-    """Test copy_examples with bad inputs."""
     case_dir = example_cases / case
     pm = PacksManager(root_path=case_dir)
     examples_dict = pm.available_examples()
