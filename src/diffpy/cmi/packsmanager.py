@@ -13,10 +13,10 @@
 #
 ##############################################################################
 
+from importlib.resources import as_file
 from pathlib import Path
 from typing import List, Union
 
-from diffpy.cmi import get_package_dir
 from diffpy.cmi.installer import (
     ParsedReq,
     install_requirements,
@@ -25,7 +25,27 @@ from diffpy.cmi.installer import (
 )
 from diffpy.cmi.log import plog
 
-__all__ = ["PacksManager"]
+__all__ = ["PacksManager", "get_package_dir"]
+
+
+def get_package_dir(root_path=None):
+    """Get the package directory as a context manager.
+
+    Parameters
+    ----------
+    root_path : str, optional
+        Used for testing, overrides the files(__name__) call.
+
+    Returns
+    -------
+    context manager
+        A context manager that yields a pathlib.Path to the package directory.
+    """
+    if root_path is None:
+        resource = Path(__file__).parents[0]
+    else:
+        resource = root_path
+    return as_file(resource)
 
 
 def _installed_packs_dir(root_path=None) -> Path:
