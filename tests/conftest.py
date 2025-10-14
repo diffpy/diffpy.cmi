@@ -30,7 +30,10 @@ def example_cases(tmp_path_factory):
     Returns the path to that copy.
     """
     root_temp_dir = tmp_path_factory.mktemp("temp")
-
+    cwd = root_temp_dir / "cwd"
+    cwd.mkdir(parents=True, exist_ok=True)
+    user_target = root_temp_dir / "user_target"
+    user_target.mkdir(parents=True, exist_ok=True)
     # case 1: pack with no examples
     case1ex_dir = root_temp_dir / "case1" / "docs" / "examples"
     case1 = case1ex_dir / "empty_pack"  # empty_pack
