@@ -174,21 +174,43 @@ def test_copy_examples(case, user_inputs, expected, target, example_cases):
         assert not empty_dir, f"Expected nothing, but found: {empty_dir}"
 
 
-# Test bad inputs to copy_examples
+# Test bad inputs to copy_examples on case3
 # These include:
 # 1) input not found (example or pack)
 # 2) mixed good and bad inputs
-@pytest.mark.parametrize("case", ["case1", "case2", "case3", "case4", "case5"])
+# 3) Path to directory already exists
 @pytest.mark.parametrize(
-    "bad_inputs, expected",
+    "bad_inputs, expected, path",
     [
-        (["bad_example"], ValueError),  # input not found (example or pack)
-        (["ex1", "bad_example"], ValueError),  # mixed good and bad inputs
+        (
+            ["bad_example"],
+            ValueError,
+            None,
+        ),  # input not found (example or pack)
+        (
+            ["ex1", "bad_example"],
+            ValueError,
+            None,
+        ),  # mixed good ex and bad inputs
+        (
+            ["packA", "bad_example"],
+            ValueError,
+            None,
+        ),  # mixed good pack and bad inputs
+        (
+            ["ex1"],
+            FileExistsError,
+            Path("docs/examples/"),
+        ),  # path to dir already exists
     ],
 )
-def test_copy_examples_bad(bad_inputs, expected, case, example_cases):
-    case_dir = example_cases / case
+def test_copy_examples_bad(bad_inputs, expected, path, example_cases):
+    case_dir = example_cases / "case3"
     pm = PacksManager(root_path=case_dir)
     examples_dict = pm.available_examples()
     with pytest.raises(expected):
-        copy_examples(examples_dict, user_input=bad_inputs)
+        copy_examples(
+            examples_dict,
+            user_input=bad_inputs,
+            target_dir=case_dir / path if path else None,
+        )
