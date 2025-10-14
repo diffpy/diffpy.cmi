@@ -172,3 +172,24 @@ def test_copy_examples(case, user_inputs, expected, target, example_cases):
     else:
         empty_dir = list(target_dir.rglob("*"))
         assert not empty_dir, f"Expected nothing, but found: {empty_dir}"
+
+
+# Test bad inputs to copy_examples
+# These include:
+# 1) input not found (example or pack)
+# 2) mixed good and bad inputs
+@pytest.mark.parametrize("case", ["case1", "case2", "case3", "case4", "case5"])
+@pytest.mark.parametrize(
+    "bad_inputs, expected",
+    [
+        (["bad_example"], ValueError),  # input not found (example or pack)
+        (["ex1", "bad_example"], ValueError),  # mixed good and bad inputs
+    ],
+)
+def test_copy_examples_bad(bad_inputs, expected, case, example_cases):
+    """Test copy_examples with bad inputs."""
+    case_dir = example_cases / case
+    pm = PacksManager(root_path=case_dir)
+    examples_dict = pm.available_examples()
+    with pytest.raises(expected):
+        copy_examples(examples_dict, user_input=bad_inputs)
