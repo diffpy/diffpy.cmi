@@ -26,6 +26,7 @@ from diffpy.cmi.packsmanager import PacksManager
 #                              each user input
 case_params = [
     (
+        "case1",  # case with empty pack
         [
             ["empty_pack"],  # 4) all examples from a pack (but pack is empty)
             ["all"],  # 6) all examples from all packs (but pack is empty)
@@ -36,6 +37,7 @@ case_params = [
         ],
     ),
     (
+        "case2",  # case with one pack with multiple examples
         [
             ["ex1"],  # 1) single example
             ["ex1", "ex2"],  # 2) multiple examples from same pack
@@ -62,6 +64,7 @@ case_params = [
         ],
     ),
     (
+        "case3",  # case with multiple packs with multiple examples
         [
             ["ex1"],  # 1) single example from packA
             ["ex1", "ex2"],  # 2) list of examples from same pack
@@ -100,6 +103,7 @@ case_params = [
         ],
     ),
     (
+        "case4",  # case with no packs (empty examples directory)
         [
             ["all"],  # 6) all examples from all packs (but examples exist)
         ],
@@ -108,6 +112,7 @@ case_params = [
         ],
     ),
     (
+        "case5",  # case with multiple packs with same example names
         [
             ["ex1"],  # 1) single example (ambiguous, should get both)
             [
@@ -141,22 +146,8 @@ case_params = [
 ]
 
 
-@pytest.mark.parametrize(
-    "case,target",
-    [
-        ("case1", None),
-        ("case1", "user_target"),
-        ("case2", None),
-        ("case2", "user_target"),
-        ("case3", None),
-        ("case3", "user_target"),
-        ("case4", None),
-        ("case4", "user_target"),
-        ("case5", None),
-        ("case5", "user_target"),
-    ],
-)
-@pytest.mark.parametrize("user_inputs,expected", case_params)
+@pytest.mark.parametrize("target", [None, "user_target"])
+@pytest.mark.parametrize("case,user_inputs,expected", case_params)
 def test_copy_examples(case, user_inputs, expected, target, example_cases):
     cwd = example_cases / "cwd"
     os.chdir(cwd)
