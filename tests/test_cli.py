@@ -212,5 +212,5 @@ def test_copy_examples_bad(bad_inputs, expected, path, example_cases):
         copy_examples(
             examples_dict,
             user_input=bad_inputs,
-            target_dir=case_dir / path if path else None,
+            target_dir=case_dir / path if path is not None else None,
         )
