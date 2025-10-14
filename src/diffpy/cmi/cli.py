@@ -26,7 +26,9 @@ from diffpy.cmi.profilesmanager import ProfilesManager
 
 
 def copy_examples(
-    examples_dict: Dict[str, List[Tuple[str, Path]]], target_dir: Path = None
+    examples_dict: Dict[str, List[Tuple[str, Path]]],
+    user_input: List[str],
+    target_dir: Path = None,
 ) -> None:
     """Copy an example into the the target or current working directory.
 
@@ -34,6 +36,8 @@ def copy_examples(
     ----------
     examples_dict : dict
         Dictionary mapping pack name -> list of (example, path) tuples.
+    user_input : list of str
+        List of user-specified pack(s) or example(s) to copy.
     target_dir : pathlib.Path, optional
         Target directory to copy examples into. Defaults to current
         working directory.
