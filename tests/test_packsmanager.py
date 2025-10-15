@@ -208,7 +208,7 @@ def test_copy_examples(input, expected_paths, example_cases):
         ("user_target", Path("user_target/packA/ex1/path1/script1.py")),
     ],
 )
-def test_copy_example_location(input, expected_path, example_cases):
+def test_copy_examples_location(input, expected_path, example_cases):
     examples_dir = example_cases / "case5"
     os.chdir(example_cases / "cwd")
     pm = PacksManager(root_path=examples_dir)
@@ -268,19 +268,19 @@ def test_copy_examples_bad(bad_inputs, expected, path, example_cases):
         (Path("nonexistent/path/target"), FileNotFoundError),  # doesn't exist
         (
             Path("docs/examples/packA/ex1/script4.py"),
-            ValueError,
+            NotADirectoryError,
         ),  # target is a file
         (
             Path("docs/examples/packA/ex1/script4.py/nested"),
-            ValueError,
+            NotADirectoryError,
         ),  # nested in file
     ],
 )
 def test_copy_examples_bad_target(bad_inputs, expected, example_cases):
     examples_dir = example_cases / "case3"
     pm = PacksManager(root_path=examples_dir)
-    with pytest.raises(NotADirectoryError):
+    with pytest.raises(expected):
         pm.copy_examples(
-            user_input=["packA"],
-            target_dir=examples_dir / "docs/examples/packA/ex1/script4.py",
+            user_input="packA",
+            target_dir=bad_inputs,
         )
