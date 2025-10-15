@@ -89,6 +89,15 @@ def example_cases(tmp_path_factory):
     case5b = case5ex_dir / "packB" / "ex1" / "path2"  # packB, ex1
     case5b.mkdir(parents=True, exist_ok=True)
     (case5b / "script2.py").touch()
+    case5c = case5ex_dir / "packA" / "ex2"  # packB, ex2
+    case5c.mkdir(parents=True, exist_ok=True)
+    (case5c / "script3.py").touch()
+    case5d = case5ex_dir / "packB" / "ex3"
+    case5d.mkdir(parents=True, exist_ok=True)
+    (case5d / "script4.py").touch()
+    case5e = case5ex_dir / "packB" / "ex4"
+    case5e.mkdir(parents=True, exist_ok=True)
+    (case5e / "script5.py").touch()
     case5req_dir = root_temp_dir / "case5" / "requirements" / "packs"
     case5req_dir.mkdir(parents=True, exist_ok=True)
 
