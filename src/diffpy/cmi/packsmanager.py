@@ -113,6 +113,24 @@ class PacksManager:
                         )
         return examples_dict
 
+    def copy_examples(
+        self,
+        user_input: Union[str, List[str]],
+        target_dir: Path = None,
+    ) -> List[Path]:
+        """Copy examples or packs into the target or current working
+        directory.
+
+        Parameters
+        ----------
+        user_input : str or list of str
+            User-specified pack(s), example(s), or "all" to copy all.
+        target_dir : pathlib.Path, optional
+            Target directory to copy examples into. Defaults to current
+            working directory.
+        """
+        return
+
     def _resolve_pack_file(self, identifier: Union[str, Path]) -> Path:
         """Resolve a pack identifier to an absolute .txt path.
 
