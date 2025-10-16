@@ -112,7 +112,7 @@ copy_params = [
     # 8) copy all examples from list of packs
     # 9) copy all examples from all packs
     (  # 1) copy one example, (ambiguous)
-        "ex1",
+        ["ex1"],
         [
             Path("packA/ex1/path1/script1.py"),
             Path("packB/ex1/path2/script2.py"),
@@ -134,7 +134,7 @@ copy_params = [
         ],
     ),
     (  # 4) copy one example (unambiguous)
-        "ex2",
+        ["ex2"],
         [
             Path("packA/ex2/script3.py"),
         ],
@@ -154,7 +154,7 @@ copy_params = [
         ],
     ),
     (  # 7) copy all examples from a pack
-        "packA",
+        ["packA"],
         [
             Path("packA/ex1/path1/script1.py"),
             Path("packA/ex2/script3.py"),
@@ -171,7 +171,7 @@ copy_params = [
         ],
     ),
     (  # 9) copy all examples from all packs
-        "all",
+        ["all"],
         [
             Path("packA/ex1/path1/script1.py"),
             Path("packA/ex2/script3.py"),
@@ -190,7 +190,7 @@ def test_copy_examples(input, expected_paths, example_cases):
     examples_dir = example_cases / "case5"
     pm = PacksManager(root_path=examples_dir)
     target_dir = example_cases / "user_target"
-    actual = pm.copy_examples(user_input=input, target_dir=target_dir)
+    actual = pm.copy_examples(examples_to_copy=input, target_dir=target_dir)
     expected = []
     for path in expected_paths:
         root_path = target_dir / path
@@ -212,7 +212,7 @@ def test_copy_examples_location(input, expected_path, example_cases):
     examples_dir = example_cases / "case5"
     os.chdir(example_cases / "cwd")
     pm = PacksManager(root_path=examples_dir)
-    paths = pm.copy_examples(user_input="packA", target_dir=input)
+    paths = pm.copy_examples(examples_to_copy=["packA"], target_dir=input)
     actual = paths[0]
     expected = example_cases / expected_path
     assert actual == expected
@@ -220,32 +220,38 @@ def test_copy_examples_location(input, expected_path, example_cases):
 
 # Test bad inputs to copy_examples on case3
 # These include:
-# 1) input not found (example or pack)
-# 2) mixed good and bad inputs
+# 1) Input not found (example or pack)
+# 2) Mixed good and bad inputs
 # 3) Path to directory already exists
+# 4) No input provided
 @pytest.mark.parametrize(
     "bad_inputs,expected,path",
     [
-        (
-            "bad_example",
+        (  # input not found (example or pack)
+            ["bad_example"],
             ValueError,
             None,
-        ),  # input not found (example or pack)
-        (
+        ),
+        (  # mixed good ex and bad inputs
             ["ex1", "bad_example"],
             ValueError,
             None,
-        ),  # mixed good ex and bad inputs
-        (
+        ),
+        (  # mixed good pack and bad inputs
             ["packA", "bad_example"],
             ValueError,
             None,
-        ),  # mixed good pack and bad inputs
-        (
-            "ex1",
+        ),
+        (  # path to dir already exists
+            ["ex1"],
             FileExistsError,
             Path("docs/examples/"),
-        ),  # path to dir already exists
+        ),
+        (  # No input provided
+            [],
+            ValueError,
+            None,
+        ),
     ],
 )
 def test_copy_examples_bad(bad_inputs, expected, path, example_cases):
@@ -253,7 +259,7 @@ def test_copy_examples_bad(bad_inputs, expected, path, example_cases):
     pm = PacksManager(root_path=examples_dir)
     with pytest.raises(expected):
         pm.copy_examples(
-            user_input=bad_inputs,
+            examples_to_copy=bad_inputs,
             target_dir=examples_dir / path if path is not None else None,
         )
 
@@ -281,6 +287,6 @@ def test_copy_examples_bad_target(bad_inputs, expected, example_cases):
     pm = PacksManager(root_path=examples_dir)
     with pytest.raises(expected):
         pm.copy_examples(
-            user_input="packA",
+            examples_to_copy="packA",
             target_dir=bad_inputs,
         )
