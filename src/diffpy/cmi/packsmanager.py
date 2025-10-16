@@ -115,7 +115,7 @@ class PacksManager:
 
     def copy_examples(
         self,
-        user_input: Union[str, List[str]],
+        examples_to_copy: List[str],
         target_dir: Path = None,
     ) -> List[Path]:
         """Copy examples or packs into the target or current working
@@ -123,7 +123,7 @@ class PacksManager:
 
         Parameters
         ----------
-        user_input : str or list of str
+        examples_to_copy : list of str
             User-specified pack(s), example(s), or "all" to copy all.
         target_dir : pathlib.Path, optional
             Target directory to copy examples into. Defaults to current
