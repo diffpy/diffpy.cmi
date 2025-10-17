@@ -117,7 +117,7 @@ class PacksManager:
         self,
         examples_to_copy: List[str],
         target_dir: Path = None,
-    ) -> List[Path]:
+    ) -> None:
         """Copy examples or packs into the target or current working
         directory.
 
