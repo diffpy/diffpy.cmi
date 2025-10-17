@@ -194,6 +194,11 @@ def test_copy_examples(input, expected_paths, example_cases):
     actual = list(target_dir.rglob("*"))
     expected = [target_dir / path for path in expected_paths]
     assert actual == expected
+    for path in expected_paths:
+        dest = target_dir / path
+        source = examples_dir / path
+        if dest.is_file() and source.is_file():
+            assert dest.read_text() == source.read_text()
 
 
 # Test default and targeted copy_example location on case5

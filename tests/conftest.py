@@ -34,6 +34,7 @@ def example_cases(tmp_path_factory):
     cwd.mkdir(parents=True, exist_ok=True)
     user_target = root_temp_dir / "user_target"
     user_target.mkdir(parents=True, exist_ok=True)
+
     # case 1: pack with no examples
     case1ex_dir = root_temp_dir / "case1" / "docs" / "examples"
     case1 = case1ex_dir / "empty_pack"  # empty_pack
@@ -47,13 +48,15 @@ def example_cases(tmp_path_factory):
         case2ex_dir / "full_pack" / "ex1" / "solution" / "diffpy-cmi"
     )  # full_pack, ex1
     case2a.mkdir(parents=True, exist_ok=True)
-    (case2a / "script1.py").touch()
+    (case2a / "script1.py").write_text(f"# {case2a.name} script1\n")
+
     case2b = (
         case2ex_dir / "full_pack" / "ex2" / "random" / "path"
     )  # full_pack, ex2
     case2b.mkdir(parents=True, exist_ok=True)
-    (case2b / "script1.py").touch()
-    (case2b / "script2.py").touch()
+    (case2b / "script1.py").write_text(f"# {case2b.name} script1\n")
+    (case2b / "script2.py").write_text(f"# {case2b.name} script2\n")
+
     case2req_dir = root_temp_dir / "case2" / "requirements" / "packs"
     case2req_dir.mkdir(parents=True, exist_ok=True)
 
@@ -61,16 +64,19 @@ def example_cases(tmp_path_factory):
     case3ex_dir = root_temp_dir / "case3" / "docs" / "examples"
     case3a = case3ex_dir / "packA" / "ex1"  # packA, ex1
     case3a.mkdir(parents=True, exist_ok=True)
-    (case3a / "script1.py").touch()
+    (case3a / "script1.py").write_text(f"# {case3a.name} script1\n")
+
     case3b = case3ex_dir / "packA" / "ex2" / "solutions"  # packA, ex2
     case3b.mkdir(parents=True, exist_ok=True)
-    (case3b / "script2.py").touch()
+    (case3b / "script2.py").write_text(f"# {case3b.name} script2\n")
+
     case3c = (
         case3ex_dir / "packB" / "ex3" / "more" / "random" / "path"
     )  # packB, ex3
     case3c.mkdir(parents=True, exist_ok=True)
-    (case3c / "script3.py").touch()
-    (case3c / "script4.py").touch()
+    (case3c / "script3.py").write_text(f"# {case3c.name} script3\n")
+    (case3c / "script4.py").write_text(f"# {case3c.name} script4\n")
+
     case3req_dir = root_temp_dir / "case3" / "requirements" / "packs"
     case3req_dir.mkdir(parents=True, exist_ok=True)
 
@@ -83,21 +89,27 @@ def example_cases(tmp_path_factory):
 
     # Case 5: multiple packs with the same example names
     case5ex_dir = root_temp_dir / "case5" / "docs" / "examples"
+
     case5a = case5ex_dir / "packA" / "ex1" / "path1"  # packA, ex1
     case5a.mkdir(parents=True, exist_ok=True)
-    (case5a / "script1.py").touch()
+    (case5a / "script1.py").write_text(f"# {case5a.name} script1\n")
+
     case5b = case5ex_dir / "packB" / "ex1" / "path2"  # packB, ex1
     case5b.mkdir(parents=True, exist_ok=True)
-    (case5b / "script2.py").touch()
-    case5c = case5ex_dir / "packA" / "ex2"  # packB, ex2
+    (case5b / "script2.py").write_text(f"# {case5b.name} script2\n")
+
+    case5c = case5ex_dir / "packA" / "ex2"  # packA, ex2
     case5c.mkdir(parents=True, exist_ok=True)
-    (case5c / "script3.py").touch()
+    (case5c / "script3.py").write_text(f"# {case5c.name} script3\n")
+
     case5d = case5ex_dir / "packB" / "ex3"
     case5d.mkdir(parents=True, exist_ok=True)
-    (case5d / "script4.py").touch()
+    (case5d / "script4.py").write_text(f"# {case5d.name} script4\n")
+
     case5e = case5ex_dir / "packB" / "ex4"
     case5e.mkdir(parents=True, exist_ok=True)
-    (case5e / "script5.py").touch()
+    (case5e / "script5.py").write_text(f"# {case5e.name} script5\n")
+
     case5req_dir = root_temp_dir / "case5" / "requirements" / "packs"
     case5req_dir.mkdir(parents=True, exist_ok=True)
 
