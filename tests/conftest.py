@@ -22,7 +22,7 @@ def tmp_examples(tmp_path_factory):
     yield tmp_examples
 
 
-@pytest.fixture(scope="session")
+@pytest.fixture(scope="function")
 def example_cases(tmp_path_factory):
     """Copy the entire examples tree into a temp directory once per test
     session.
