@@ -8,11 +8,11 @@
 
 **Deprecated:**
 
-* Deprecate Python 3.11
+* <news item>
 
 **Removed:**
 
-* <news item>
+* Remove support for Python 3.11
 
 **Fixed:**
 
