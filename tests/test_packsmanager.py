@@ -190,11 +190,9 @@ def test_copy_examples(input, expected_paths, example_cases):
     examples_dir = example_cases / "case5"
     pm = PacksManager(root_path=examples_dir)
     target_dir = example_cases / "user_target"
-    actual = pm.copy_examples(input, target_dir=target_dir)
-    expected = []
-    for path in expected_paths:
-        root_path = target_dir / path
-        expected.append(root_path)
+    pm.copy_examples(input, target_dir=target_dir)
+    actual = list(target_dir.rglob("*"))
+    expected = [target_dir / path for path in expected_paths]
     assert actual == expected
 
 
