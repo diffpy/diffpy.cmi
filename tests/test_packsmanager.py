@@ -1,4 +1,5 @@
 import os
+import re
 from pathlib import Path
 
 import pytest
@@ -230,29 +231,42 @@ def test_copy_examples_location(input, expected_path, example_cases):
 @pytest.mark.parametrize(
     "bad_inputs,expected,path",
     [
-        (  # input not found (example or pack)
+        (
+            # 1) Input not found (example or pack).
+            # Expected: Raise an error with the message.
             ["bad_example"],
-            ValueError,
+            "No examples or packs found for input: 'bad_example'",
             None,
         ),
-        (  # mixed good ex and bad inputs
+        (
+            # 2) Mixed good example and bad input.
+            # Expected: Raise an error with the message.
             ["ex1", "bad_example"],
-            ValueError,
+            "No examples or packs found for input: 'bad_example'",
             None,
         ),
-        (  # mixed good pack and bad inputs
+        (
+            # 3) Mixed good pack and bad input.
+            # Expected: Raise an error with the message.
             ["packA", "bad_example"],
-            ValueError,
+            "No examples or packs found for input: 'bad_example'",
             None,
         ),
-        (  # path to dir already exists
+        (
+            # 4) Path to directory already exists.
+            # Expected: Raise a warning with the message.
             ["ex1"],
-            FileExistsError,
+            "Target directory already exists. To overwrite use --force.",
             Path("docs/examples/"),
         ),
-        (  # No input provided
+        (
+            # 5) No input provided.
+            # Expected: Raise an error with the message.
             [],
-            ValueError,
+            (
+                "No input specified. "
+                "Provide at least one example or pack to copy."
+            ),
             None,
         ),
     ],
@@ -260,11 +274,9 @@ def test_copy_examples_location(input, expected_path, example_cases):
 def test_copy_examples_bad(bad_inputs, expected, path, example_cases):
     examples_dir = example_cases / "case3"
     pm = PacksManager(root_path=examples_dir)
-    with pytest.raises(expected):
-        pm.copy_examples(
-            bad_inputs,
-            target_dir=examples_dir / path if path is not None else None,
-        )
+    target_dir = None if path is None else examples_dir / path
+    with pytest.raises(Exception, match=re.escape(expected)):
+        pm.copy_examples(bad_inputs, target_dir=target_dir)
 
 
 # Test bad target_dir to copy_examples on case3
@@ -272,24 +284,33 @@ def test_copy_examples_bad(bad_inputs, expected, path, example_cases):
 # 2) target is a file
 # 3) target is nested in a file
 @pytest.mark.parametrize(
-    "bad_inputs,expected",
+    "bad_target,expected",
     [
-        (Path("nonexistent/path/target"), FileNotFoundError),  # doesn't exist
         (
+            # 1) Target doesn't exist.
+            # Expected: Raise an error that the target directory is missing.
+            Path("nonexistent/path/target"),
+            "Target directory does not exist",
+        ),
+        (
+            # 2) Target is a file.
+            # Expected: Raise an error that the target path is not a directory.
             Path("docs/examples/packA/ex1/script4.py"),
-            NotADirectoryError,
-        ),  # target is a file
+            "Target path is not a directory",
+        ),
         (
+            # 3) Target is nested in a file.
+            # Expected: Raise an error that the target path is not a directory.
             Path("docs/examples/packA/ex1/script4.py/nested"),
-            NotADirectoryError,
-        ),  # nested in file
+            "Target path is not a directory",
+        ),
     ],
 )
-def test_copy_examples_bad_target(bad_inputs, expected, example_cases):
+def test_copy_examples_bad_target(bad_target, expected, example_cases):
     examples_dir = example_cases / "case3"
     pm = PacksManager(root_path=examples_dir)
-    with pytest.raises(expected):
+    with pytest.raises(Exception, match=re.escape(expected)):
         pm.copy_examples(
             ["packA"],
-            target_dir=bad_inputs,
+            target_dir=bad_target,
         )
