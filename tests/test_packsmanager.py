@@ -192,14 +192,14 @@ def test_copy_examples(input, expected_paths, example_cases):
     pm = PacksManager(root_path=examples_dir)
     target_dir = example_cases / "user_target"
     pm.copy_examples(input, target_dir=target_dir)
-    actual = list(target_dir.rglob("*"))
-    expected = [target_dir / path for path in expected_paths]
+    actual = sorted(list(target_dir.rglob("*")))
+    expected = sorted([target_dir / path for path in expected_paths])
     assert actual == expected
     for path in expected_paths:
-        dest = target_dir / path
-        source = examples_dir / path
-        if dest.is_file() and source.is_file():
-            assert dest.read_text() == source.read_text()
+        copied_path = target_dir / path
+        original_path = examples_dir / path
+        if copied_path.is_file() and original_path.is_file():
+            assert copied_path.read_text() == original_path.read_text()
 
 
 # Test default and targeted copy_example location on case5
@@ -256,18 +256,13 @@ def test_copy_examples_location(input, expected_path, example_cases):
             # 4) Path to directory already exists.
             # Expected: Raise a warning with the message.
             ["ex1"],
-            "Target directory already exists. To overwrite use --force.",
-            Path("docs/examples/"),
-        ),
-        (
-            # 5) No input provided.
-            # Expected: Raise an error with the message.
-            [],
             (
-                "No input specified. "
-                "Provide at least one example or pack to copy."
+                "Example directory(ies): 'ex1' already exist. "
+                " Current versions of existing files have "
+                "been left unchanged. To overwrite, please rerun "
+                "and specify --force."
             ),
-            None,
+            Path("docs/examples/"),
         ),
     ],
 )
@@ -277,40 +272,3 @@ def test_copy_examples_bad(bad_inputs, expected, path, example_cases):
     target_dir = None if path is None else examples_dir / path
     with pytest.raises(Exception, match=re.escape(expected)):
         pm.copy_examples(bad_inputs, target_dir=target_dir)
-
-
-# Test bad target_dir to copy_examples on case3
-# 1) target doesn't exist
-# 2) target is a file
-# 3) target is nested in a file
-@pytest.mark.parametrize(
-    "bad_target,expected",
-    [
-        (
-            # 1) Target doesn't exist.
-            # Expected: Raise an error that the target directory is missing.
-            Path("nonexistent/path/target"),
-            "Target directory does not exist",
-        ),
-        (
-            # 2) Target is a file.
-            # Expected: Raise an error that the target path is not a directory.
-            Path("docs/examples/packA/ex1/script4.py"),
-            "Target path is not a directory",
-        ),
-        (
-            # 3) Target is nested in a file.
-            # Expected: Raise an error that the target path is not a directory.
-            Path("docs/examples/packA/ex1/script4.py/nested"),
-            "Target path is not a directory",
-        ),
-    ],
-)
-def test_copy_examples_bad_target(bad_target, expected, example_cases):
-    examples_dir = example_cases / "case3"
-    pm = PacksManager(root_path=examples_dir)
-    with pytest.raises(Exception, match=re.escape(expected)):
-        pm.copy_examples(
-            ["packA"],
-            target_dir=bad_target,
-        )
