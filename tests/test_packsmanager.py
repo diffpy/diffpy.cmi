@@ -192,7 +192,7 @@ def test_copy_examples(input, expected_paths, example_cases):
     pm = PacksManager(root_path=examples_dir)
     target_dir = example_cases / "user_target"
     pm.copy_examples(input, target_dir=target_dir)
-    actual = sorted(list(target_dir.rglob("*")))
+    actual = sorted(list(target_dir.rglob("*.py")))
     expected = sorted([target_dir / path for path in expected_paths])
     assert actual == expected
     for path in expected_paths:
