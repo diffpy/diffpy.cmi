@@ -12,7 +12,7 @@
 # See LICENSE.rst for license information.
 #
 ##############################################################################
-
+import shutil
 from importlib.resources import as_file
 from pathlib import Path
 from typing import List, Union
@@ -149,7 +149,70 @@ class PacksManager:
             Target directory to copy examples into. Defaults to current
             working directory.
         """
+        self._target_dir = target_dir.resolve() if target_dir else Path.cwd()
+
+        if "all" in examples_to_copy:
+            self._copy_all()
+            return
+
+        for item in examples_to_copy:
+            if item in self.available_examples():
+                self._copy_pack(item)
+            elif self._is_example_name(item):
+                self._copy_example(item)
+            else:
+                self._not_found_error(item)
+        del self._target_dir
         return
+
+    def _copy_all(self):
+        """Copy all packs and examples."""
+        for pack_name in self.available_examples():
+            self._copy_pack(pack_name)
+
+    def _copy_pack(self, pack_name):
+        """Copy all examples in a single pack."""
+        examples = self.available_examples().get(pack_name, [])
+        for ex_name, ex_path in examples:
+            self._copy_tree_to_target(pack_name, ex_name, ex_path)
+
+    def _copy_example(self, example_name):
+        """Copy a single example by its name."""
+        example_found = False
+        for pack_name, examples in self.available_examples().items():
+            for ex_name, ex_path in examples:
+                if ex_name == example_name:
+                    self._copy_tree_to_target(pack_name, ex_name, ex_path)
+                    example_found = True
+        if not example_found:
+            self._not_found_error(example_name)
+
+    def _is_example_name(self, name):
+        """Return True if the given name matches any known example."""
+        for pack_name, examples in self.available_examples().items():
+            for example_name, _ in examples:
+                if example_name == name:
+                    return True
+        return False
+
+    def _copy_tree_to_target(self, pack_name, example_name, src_path):
+        """Helper to handle the actual filesystem copy."""
+        dest_dir = self._target_dir / pack_name / example_name
+        if dest_dir.exists():
+            plog.warning(
+                f"Example directory(ies): '{dest_dir.stem}' already exist. "
+                " Current versions of existing files have "
+                "been left unchanged. To overwrite, please rerun "
+                "and specify --force."
+            )
+            return
+        dest_dir.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copytree(src_path, dest_dir)
+
+    def _not_found_error(self, name):
+        raise FileNotFoundError(
+            f"No examples or packs found for input: '{name}'"
+        )
 
     def _resolve_pack_file(self, identifier: Union[str, Path]) -> Path:
         """Resolve a pack identifier to an absolute .txt path.
