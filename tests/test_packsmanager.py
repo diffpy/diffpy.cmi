@@ -206,19 +206,45 @@ def test_copy_examples(input, expected_paths, example_cases):
 # input: str or None - path arg to copy_examples
 # expected: Path - expected relative path to copied example
 @pytest.mark.parametrize(
-    "input,expected_path",
+    "input,expected_paths",
     [
-        (None, Path("cwd/packA/ex1/path1/script1.py")),
-        ("user_target", Path("user_target/packA/ex1/path1/script1.py")),
+        (
+            None,
+            [
+                Path("cwd/packA/ex1/path1/script1.py"),
+                Path("cwd/packA/ex2/script3.py"),
+            ],
+        ),
+        # input is a target dir that doesn't exist yet
+        # expected target dir to be created and examples copied there
+        (
+            Path("user_target"),
+            [
+                Path("cwd/user_target/packA/ex1/path1/script1.py"),
+                Path("cwd/user_target/packA/ex2/script3.py"),
+            ],
+        ),
+        # input is a target dir that already exists
+        # expected examples copied into existing dir
+        (
+            Path("existing_target"),
+            [
+                Path("cwd/existing_target/packA/ex1/path1/script1.py"),
+                Path("cwd/existing_target/packA/ex2/script3.py"),
+            ],
+        ),
     ],
 )
-def test_copy_examples_location(input, expected_path, example_cases):
+def test_copy_examples_location(input, expected_paths, example_cases):
     examples_dir = example_cases / "case5"
     os.chdir(example_cases / "cwd")
     pm = PacksManager(root_path=examples_dir)
-    paths = pm.copy_examples(["packA"], target_dir=input)
-    actual = paths[0]
-    expected = example_cases / expected_path
+    pm.copy_examples(["packA"], target_dir=input)
+    target_directory = (
+        Path.cwd() if input is None else example_cases / "cwd" / input
+    )
+    actual = sorted(target_directory.rglob("*.py"))
+    expected = [example_cases / path for path in expected_paths]
     assert actual == expected
 
 
