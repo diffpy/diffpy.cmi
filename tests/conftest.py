@@ -32,8 +32,8 @@ def example_cases(tmp_path_factory):
     root_temp_dir = tmp_path_factory.mktemp("temp")
     cwd = root_temp_dir / "cwd"
     cwd.mkdir(parents=True, exist_ok=True)
-    user_target = root_temp_dir / "user_target"
-    user_target.mkdir(parents=True, exist_ok=True)
+    existing_dir = cwd / "existing_target"
+    existing_dir.mkdir(parents=True, exist_ok=True)
 
     # case 1: pack with no examples
     case1ex_dir = root_temp_dir / "case1" / "docs" / "examples"
