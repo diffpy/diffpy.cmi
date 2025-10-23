@@ -161,7 +161,9 @@ class PacksManager:
             elif self._is_example_name(item):
                 self._copy_example(item)
             else:
-                self._not_found_error(item)
+                raise FileNotFoundError(
+                    f"No examples or packs found for input: '{item}'"
+                )
         del self._target_dir
         return
 
@@ -185,7 +187,9 @@ class PacksManager:
                     self._copy_tree_to_target(pack_name, ex_name, ex_path)
                     example_found = True
         if not example_found:
-            self._not_found_error(example_name)
+            raise FileNotFoundError(
+                f"No examples or packs found for input: '{example_name}'"
+            )
 
     def _is_example_name(self, name):
         """Return True if the given name matches any known example."""
@@ -208,11 +212,6 @@ class PacksManager:
             return
         dest_dir.parent.mkdir(parents=True, exist_ok=True)
         shutil.copytree(src_path, dest_dir)
-
-    def _not_found_error(self, name):
-        raise FileNotFoundError(
-            f"No examples or packs found for input: '{name}'"
-        )
 
     def _resolve_pack_file(self, identifier: Union[str, Path]) -> Path:
         """Resolve a pack identifier to an absolute .txt path.
