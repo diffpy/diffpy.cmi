@@ -192,7 +192,7 @@ def test_copy_examples(input, expected_paths, example_cases):
     pm = PacksManager(root_path=examples_dir)
     target_dir = example_cases / "user_target"
     pm.copy_examples(input, target_dir=target_dir)
-    actual = sorted(list(target_dir.rglob("*.py")))
+    actual = sorted(target_dir.rglob("*.py"))
     expected = sorted([target_dir / path for path in expected_paths])
     assert actual == expected
     for path in expected_paths:
@@ -244,7 +244,7 @@ def test_copy_examples_location(input, expected_paths, example_cases):
         Path.cwd() if input is None else example_cases / "cwd" / input
     )
     actual = sorted(target_directory.rglob("*.py"))
-    expected = [example_cases / path for path in expected_paths]
+    expected = sorted([example_cases / path for path in expected_paths])
     assert actual == expected
 
 
@@ -298,3 +298,22 @@ def test_copy_examples_bad(bad_inputs, expected, path, example_cases):
     target_dir = None if path is None else examples_dir / path
     with pytest.raises(Exception, match=re.escape(expected)):
         pm.copy_examples(bad_inputs, target_dir=target_dir)
+
+
+def test_copy_examples_force(example_cases):
+    examples_dir = example_cases / "case3"
+    pm = PacksManager(root_path=examples_dir)
+    target_dir = examples_dir / "docs" / "examples"
+    pm.copy_examples(["packA"], target_dir=target_dir, force=True)
+    expected_paths = [
+        Path("packA/ex1/script1.py"),
+        Path("packA/ex2/solution/script2.py"),
+    ]
+    actual = sorted(target_dir.rglob("*.py"))
+    expected = sorted([target_dir / path for path in expected_paths])
+    assert actual == expected
+    for path in expected_paths:
+        copied_path = target_dir / path
+        original_path = examples_dir / path
+        if copied_path.is_file() and original_path.is_file():
+            assert copied_path.read_text() == original_path.read_text()
