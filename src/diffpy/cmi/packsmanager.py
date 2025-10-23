@@ -137,6 +137,7 @@ class PacksManager:
         self,
         examples_to_copy: List[str],
         target_dir: Path = None,
+        force: bool = False,
     ) -> None:
         """Copy examples or packs into the target or current working
         directory.
@@ -148,8 +149,11 @@ class PacksManager:
         target_dir : pathlib.Path, optional
             Target directory to copy examples into. Defaults to current
             working directory.
+        force : bool, optional
+            If ``True``, overwrite existing files. Defaults to ``False``.
         """
         self._target_dir = target_dir.resolve() if target_dir else Path.cwd()
+        self._force = force
 
         if "all" in examples_to_copy:
             self._copy_all()
@@ -165,6 +169,7 @@ class PacksManager:
                     f"No examples or packs found for input: '{item}'"
                 )
         del self._target_dir
+        del self._force
         return
 
     def _copy_all(self):
