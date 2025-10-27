@@ -13,6 +13,7 @@
 #
 ##############################################################################
 import shutil
+import warnings
 from importlib.resources import as_file
 from pathlib import Path
 from typing import List, Union
@@ -150,7 +151,9 @@ class PacksManager:
             Target directory to copy examples into. Defaults to current
             working directory.
         force : bool, optional
-            If ``True``, overwrite existing files. Defaults to ``False``.
+            Defaults to ``False``. If ``True``, existing files are
+            overwritten and directories are merged
+            (extra files in the target are preserved).
         """
         self._target_dir = target_dir.resolve() if target_dir else Path.cwd()
         self._force = force
@@ -207,16 +210,16 @@ class PacksManager:
     def _copy_tree_to_target(self, pack_name, example_name, src_path):
         """Helper to handle the actual filesystem copy."""
         dest_dir = self._target_dir / pack_name / example_name
-        if dest_dir.exists():
-            plog.warning(
-                f"Example directory(ies): '{dest_dir.stem}' already exist. "
-                " Current versions of existing files have "
-                "been left unchanged. To overwrite, please rerun "
-                "and specify --force."
-            )
-            return
         dest_dir.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copytree(src_path, dest_dir)
+        if dest_dir.exists() and not self._force:
+            warn_message = (
+                f"Example directory(ies): '{dest_dir.stem}' already exist. "
+                "Current versions of existing files have been left unchanged. "
+                "To overwrite, please rerun and specify --force."
+            )
+            warnings.warn(warn_message, UserWarning)
+            return
+        shutil.copytree(src_path, dest_dir, dirs_exist_ok=self._force)
 
     def _resolve_pack_file(self, identifier: Union[str, Path]) -> Path:
         """Resolve a pack identifier to an absolute .txt path.

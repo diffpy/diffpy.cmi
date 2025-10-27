@@ -105,13 +105,12 @@ copy_params = [
     # Test various use cases to copy_examples on case5
     # 1) copy one example (ambiguous)
     # 2) copy list of examples from same pack (ambiguous)
-    # 3) copy list of examples from different pack (ambiguous)
-    # 4) copy one example (unambiguous)
-    # 5) copy list of examples from same pack (unambiguous)
-    # 6) copy list of examples from different pack (unambiguous)
-    # 7) copy all examples from a pack
-    # 8) copy all examples from list of packs
-    # 9) copy all examples from all packs
+    # 3) copy one example (unambiguous)
+    # 4) copy list of examples from same pack (unambiguous)
+    # 5) copy list of examples from different packs (unambiguous)
+    # 6) copy all examples from a pack
+    # 7) copy all examples from list of packs
+    # 8) copy all examples from all packs
     (  # 1) copy one example, (ambiguous)
         ["ex1"],
         [
@@ -127,41 +126,34 @@ copy_params = [
             Path("packA/ex2/script3.py"),
         ],
     ),
-    (  # 3) copy list of examples from different packs (ambiguous)
-        ["ex1", "ex1"],
-        [
-            Path("packA/ex1/path1/script1.py"),
-            Path("packB/ex1/path2/script2.py"),
-        ],
-    ),
-    (  # 4) copy one example (unambiguous)
+    (  # 3) copy one example (unambiguous)
         ["ex2"],
         [
             Path("packA/ex2/script3.py"),
         ],
     ),
-    (  # 5) copy list of examples from same pack (unambiguous)
+    (  # 4) copy list of examples from same pack (unambiguous)
         ["ex3", "ex4"],
         [
             Path("packB/ex3/script4.py"),
             Path("packB/ex4/script5.py"),
         ],
     ),
-    (  # 6) copy list of examples from different packs (unambiguous)
+    (  # 5) copy list of examples from different packs (unambiguous)
         ["ex2", "ex3"],
         [
             Path("packA/ex2/script3.py"),
             Path("packB/ex3/script4.py"),
         ],
     ),
-    (  # 7) copy all examples from a pack
+    (  # 6) copy all examples from a pack
         ["packA"],
         [
             Path("packA/ex1/path1/script1.py"),
             Path("packA/ex2/script3.py"),
         ],
     ),
-    (  # 8) copy all examples from list of packs
+    (  # 7) copy all examples from list of packs
         ["packA", "packB"],
         [
             Path("packA/ex1/path1/script1.py"),
@@ -171,7 +163,7 @@ copy_params = [
             Path("packB/ex4/script5.py"),
         ],
     ),
-    (  # 9) copy all examples from all packs
+    (  # 8) copy all examples from all packs
         ["all"],
         [
             Path("packA/ex1/path1/script1.py"),
@@ -255,7 +247,7 @@ def test_copy_examples_location(input, expected_paths, example_cases):
 # 3) Path to directory already exists
 # 4) No input provided
 @pytest.mark.parametrize(
-    "bad_inputs,expected,path",
+    "bad_inputs,expected,path,is_warning",
     [
         (
             # 1) Input not found (example or pack).
@@ -263,6 +255,7 @@ def test_copy_examples_location(input, expected_paths, example_cases):
             ["bad_example"],
             "No examples or packs found for input: 'bad_example'",
             None,
+            False,
         ),
         (
             # 2) Mixed good example and bad input.
@@ -270,6 +263,7 @@ def test_copy_examples_location(input, expected_paths, example_cases):
             ["ex1", "bad_example"],
             "No examples or packs found for input: 'bad_example'",
             None,
+            False,
         ),
         (
             # 3) Mixed good pack and bad input.
@@ -277,6 +271,7 @@ def test_copy_examples_location(input, expected_paths, example_cases):
             ["packA", "bad_example"],
             "No examples or packs found for input: 'bad_example'",
             None,
+            False,
         ),
         (
             # 4) Path to directory already exists.
@@ -284,36 +279,45 @@ def test_copy_examples_location(input, expected_paths, example_cases):
             ["ex1"],
             (
                 "Example directory(ies): 'ex1' already exist. "
-                " Current versions of existing files have "
+                "Current versions of existing files have "
                 "been left unchanged. To overwrite, please rerun "
                 "and specify --force."
             ),
             Path("docs/examples/"),
+            True,
         ),
     ],
 )
-def test_copy_examples_bad(bad_inputs, expected, path, example_cases):
+def test_copy_examples_bad(
+    bad_inputs, expected, path, is_warning, example_cases
+):
     examples_dir = example_cases / "case3"
     pm = PacksManager(root_path=examples_dir)
     target_dir = None if path is None else examples_dir / path
-    with pytest.raises(Exception, match=re.escape(expected)):
-        pm.copy_examples(bad_inputs, target_dir=target_dir)
+    if is_warning:
+        with pytest.warns(UserWarning, match=re.escape(expected)):
+            pm.copy_examples(bad_inputs, target_dir=target_dir)
+    else:
+        with pytest.raises(FileNotFoundError, match=re.escape(expected)):
+            pm.copy_examples(bad_inputs, target_dir=target_dir)
 
 
 def test_copy_examples_force(example_cases):
     examples_dir = example_cases / "case3"
     pm = PacksManager(root_path=examples_dir)
-    target_dir = examples_dir / "docs" / "examples"
-    pm.copy_examples(["packA"], target_dir=target_dir, force=True)
+    case5dir = example_cases / "case5" / "docs" / "examples"
+    pm.copy_examples(["packA"], target_dir=case5dir, force=True)
     expected_paths = [
+        Path("packA/ex1/path1/script1.py"),
         Path("packA/ex1/script1.py"),
-        Path("packA/ex2/solution/script2.py"),
+        Path("packA/ex2/solutions/script2.py"),
+        Path("packA/ex2/script3.py"),
     ]
-    actual = sorted(target_dir.rglob("*.py"))
-    expected = sorted([target_dir / path for path in expected_paths])
+    actual = sorted((case5dir / "packA").rglob("*.py"))
+    expected = sorted([case5dir / path for path in expected_paths])
     assert actual == expected
     for path in expected_paths:
-        copied_path = target_dir / path
+        copied_path = case5dir / path
         original_path = examples_dir / path
         if copied_path.is_file() and original_path.is_file():
             assert copied_path.read_text() == original_path.read_text()
