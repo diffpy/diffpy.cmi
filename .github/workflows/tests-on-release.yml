@@ -1,0 +1,20 @@
+name: Full Tests on Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  tests-on-release:
+    uses: scikit-package/release-scripts/.github/workflows/_tests-on-pr.yml@v0
+    with:
+      project: diffpy.cmi
+      c_extension: false
+      headless: false
+      run: |
+        echo "Running examples"
+        export RUN_EXAMPLES=1
+        pytest --cov
+    secrets:
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
