@@ -3,11 +3,12 @@ import runpy
 
 import pytest
 
-# Run example scripts only on release
+# Run example scripts only on release.
 if not os.getenv("RUN_EXAMPLES"):
     pytest.skip("Skipping test_examples.py", allow_module_level=True)
 
 
+# To run this test locally, run `RUN_EXAMPLES=1 pytest`
 def test_all_examples(tmp_examples):
     """Run all example scripts to ensure they execute without error."""
     scripts = list(tmp_examples.rglob("**/solutions/diffpy-cmi/*.py"))
