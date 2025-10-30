@@ -28,8 +28,8 @@ To install ``diffpy.cmi``, create a new conda environment or activate an existin
 .. code-block:: bash
 
     conda create -n diffpy.cmi-env
-    conda install -c conda-forge diffpy.cmi
     conda activate diffpy.cmi-env
+    conda install -c conda-forge diffpy.cmi
 
 To confirm that the installation was successful, type
 
