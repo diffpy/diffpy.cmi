@@ -1,4 +1,11 @@
+import os
 import runpy
+
+import pytest
+
+# Run example scripts only on release
+if not os.getenv("RUN_EXAMPLES"):
+    pytest.skip("Skipping test_examples.py", allow_module_level=True)
 
 
 def test_all_examples(tmp_examples):
