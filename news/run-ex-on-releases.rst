@@ -1,10 +1,10 @@
 **Added:**
 
-* <news item>
+* Add workflow to run ``examples/validate_examples.py`` manually.
 
 **Changed:**
 
-* Changed workflow so that ``test_examples.py`` runs on release.
+* Changed workflow so that ``validate_examples.py`` is ran only on manual triggers.
 
 **Deprecated:**
 
