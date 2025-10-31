@@ -13,10 +13,11 @@
 #
 ##############################################################################
 import shutil
-import warnings
 from importlib.resources import as_file
 from pathlib import Path
 from typing import List, Union
+
+from rich.console import Console
 
 from diffpy.cmi.installer import (
     ParsedReq,
@@ -80,6 +81,7 @@ class PacksManager:
     def __init__(self, root_path=None) -> None:
         self.packs_dir = _installed_packs_dir(root_path)
         self.examples_dir = self._get_examples_dir()
+        self.console = Console()
 
     def _get_examples_dir(self) -> Path:
         """Return the absolute path to the installed examples directory.
@@ -207,19 +209,59 @@ class PacksManager:
                     return True
         return False
 
-    def _copy_tree_to_target(self, pack_name, example_name, src_path):
-        """Helper to handle the actual filesystem copy."""
-        dest_dir = self._target_dir / pack_name / example_name
-        dest_dir.parent.mkdir(parents=True, exist_ok=True)
-        if dest_dir.exists() and not self._force:
-            warn_message = (
-                f"Example directory(ies): '{dest_dir.stem}' already exist. "
-                "Current versions of existing files have been left unchanged. "
-                "To overwrite, please rerun and specify --force."
+    def _copy_tree_to_target(self, pack_name, example_name, example_origin):
+        """Copy an example folder from source to the user's target
+        directory."""
+        target_dir = self._target_dir / pack_name / example_name
+        target_dir.parent.mkdir(parents=True, exist_ok=True)
+        if target_dir.exists() and self._force:
+            self._overwrite_example(
+                example_origin, target_dir, pack_name, example_name
             )
-            warnings.warn(warn_message, UserWarning)
             return
-        shutil.copytree(src_path, dest_dir, dirs_exist_ok=self._force)
+        if target_dir.exists():
+            self._copy_missing_files(example_origin, target_dir)
+            print(
+                f"WARNING: Example '{pack_name}/{example_name}' "
+                "already exists at the specified target directory. "
+                "Existing files were left unchanged; "
+                "new or missing files were copied. To overwrite everything, "
+                "rerun with --force."
+            )
+            return
+        self._copy_new_example(
+            example_origin, target_dir, pack_name, example_name
+        )
+
+    def _overwrite_example(
+        self, example_origin, target, pack_name, example_name
+    ):
+        """Delete target and copy example."""
+        shutil.rmtree(target)
+        shutil.copytree(example_origin, target)
+        self.console.print(
+            f"[green]Overwriting example '{pack_name}/{example_name}'.[/]"
+        )
+
+    def _copy_missing_files(self, example_origin, target):
+        """Copy only files and directories that are missing in the
+        target."""
+        for example_item in example_origin.rglob("*"):
+            rel_path = example_item.relative_to(example_origin)
+            target_item = target / rel_path
+            if example_item.is_dir():
+                target_item.mkdir(parents=True, exist_ok=True)
+            elif example_item.is_file() and not target_item.exists():
+                target_item.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copy2(example_item, target_item)
+
+    def _copy_new_example(
+        self, example_origin, target, pack_name, example_name
+    ):
+        shutil.copytree(example_origin, target)
+        self.console.print(
+            f"[green]Copied example '{pack_name}/{example_name}'.[/]"
+        )
 
     def _resolve_pack_file(self, identifier: Union[str, Path]) -> Path:
         """Resolve a pack identifier to an absolute .txt path.
