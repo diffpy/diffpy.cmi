@@ -6,6 +6,10 @@ labels: "release"
 assignees: ""
 ---
 
+### Run diffpy.cmi example scripts
+
+- [ ] Manually trigger the `run-examples.yml` workflow to run all example scripts.
+
 ### PyPI/GitHub rc-release preparation checklist:
 
 - [ ] All PRs/issues attached to the release are merged.
