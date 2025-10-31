@@ -12,7 +12,6 @@ jobs:
       c_extension: false
       headless: false
       run: |
-        export PYTEST_ADDOPTS="--ignore=tests/test_examples.py"
         set -Eeuo pipefail
         echo "Test cmds"
         cmi -h
