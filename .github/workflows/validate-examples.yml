@@ -1,0 +1,52 @@
+name: Validate Examples
+
+on:
+  workflow_dispatch:
+
+jobs:
+  validate-examples:
+    defaults:
+      run:
+        shell: bash -l {0}
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Initialize miniconda
+        uses: conda-incubator/setup-miniconda@v3
+        with:
+          activate-environment: test
+          channels: conda-forge
+          auto-update-conda: true
+          auto-activate-base: false
+          python-version: 3.13
+
+      - name: Conda config
+        run: >-
+          conda config --set always_yes yes
+          --set changeps1 no
+
+      - name: Install dependencies
+        run: |
+          conda install --file requirements/conda.txt
+          conda install --file requirements/tests.txt
+
+          if [ -d requirements/packs ]; then
+            for f in requirements/packs/*.txt; do
+              if [ -f "$f" ]; then
+                echo "Installing dependencies from $f"
+                conda install --file "$f"
+              fi
+            done
+          fi
+
+          python -m pip install . --no-deps
+
+      - name: Run example scripts
+        run: |
+          set -Eeuo pipefail
+          echo "Running example scripts"
+          pytest tests/validate_examples.py -v --cov
