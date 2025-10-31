@@ -278,10 +278,11 @@ def test_copy_examples_location(input, expected_paths, example_cases):
             # Expected: Raise a warning with the message.
             ["ex1"],
             (
-                "Example directory(ies): 'ex1' already exist. "
-                "Current versions of existing files have "
-                "been left unchanged. To overwrite, please rerun "
-                "and specify --force."
+                "WARNING: Example 'packA/ex1' already exists at "
+                "the specified target directory. "
+                "Existing files were left unchanged; new or missing "
+                "files were copied. "
+                "To overwrite everything, rerun with --force."
             ),
             Path("docs/examples/"),
             True,
@@ -289,14 +290,16 @@ def test_copy_examples_location(input, expected_paths, example_cases):
     ],
 )
 def test_copy_examples_bad(
-    bad_inputs, expected, path, is_warning, example_cases
+    bad_inputs, expected, path, is_warning, example_cases, capsys
 ):
     examples_dir = example_cases / "case3"
     pm = PacksManager(root_path=examples_dir)
     target_dir = None if path is None else examples_dir / path
     if is_warning:
-        with pytest.warns(UserWarning, match=re.escape(expected)):
-            pm.copy_examples(bad_inputs, target_dir=target_dir)
+        pm.copy_examples(bad_inputs, target_dir=target_dir)
+        captured = capsys.readouterr()
+        actual = captured.out
+        assert re.search(re.escape(expected), actual)
     else:
         with pytest.raises(FileNotFoundError, match=re.escape(expected)):
             pm.copy_examples(bad_inputs, target_dir=target_dir)
