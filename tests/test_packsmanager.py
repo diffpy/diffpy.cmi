@@ -302,17 +302,32 @@ def test_copy_examples_bad(
             pm.copy_examples(bad_inputs, target_dir=target_dir)
 
 
-def test_copy_examples_force(example_cases):
+@pytest.mark.parametrize(
+    "expected_paths,force",
+    [
+        (
+            [
+                Path("packA/ex1/script1.py"),
+                Path("packA/ex2/solutions/script2.py"),
+            ],
+            True,
+        ),
+        (
+            [
+                Path("packA/ex1/path1/script1.py"),
+                Path("packA/ex1/script1.py"),
+                Path("packA/ex2/solutions/script2.py"),
+                Path("packA/ex2/script3.py"),
+            ],
+            False,
+        ),
+    ],
+)
+def test_copy_examples_force(example_cases, expected_paths, force):
     examples_dir = example_cases / "case3"
     pm = PacksManager(root_path=examples_dir)
     case5dir = example_cases / "case5" / "docs" / "examples"
-    pm.copy_examples(["packA"], target_dir=case5dir, force=True)
-    expected_paths = [
-        Path("packA/ex1/path1/script1.py"),
-        Path("packA/ex1/script1.py"),
-        Path("packA/ex2/solutions/script2.py"),
-        Path("packA/ex2/script3.py"),
-    ]
+    pm.copy_examples(["packA"], target_dir=case5dir, force=force)
     actual = sorted((case5dir / "packA").rglob("*.py"))
     expected = sorted([case5dir / path for path in expected_paths])
     assert actual == expected
