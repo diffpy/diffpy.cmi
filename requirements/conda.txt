@@ -4,3 +4,4 @@ PyYAML
 diffpy.utils
 diffpy.srfit
 diffpy.structure
+rich
