@@ -309,14 +309,16 @@ def test_copy_examples_bad(
     "expected_paths,force",
     [
         (
-            [
+            [  # UC1: copy examples to target dir with overwrite
+                # expected: Existing files are overwritten and new files copied
                 Path("packA/ex1/script1.py"),
                 Path("packA/ex2/solutions/script2.py"),
             ],
             True,
         ),
         (
-            [
+            [  # UC2: copy examples to target dir without overwrite
+                # expected: Existing files are left unchanged; new files copied
                 Path("packA/ex1/path1/script1.py"),
                 Path("packA/ex1/script1.py"),
                 Path("packA/ex2/solutions/script2.py"),
