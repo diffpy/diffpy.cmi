@@ -219,7 +219,7 @@ class PacksManager:
         if target_dir.exists():
             self._copy_missing_files(example_origin, target_dir)
             print(
-                f"\033[33mWARNING:\033[0m Example '{pack_name}/{example_name}'"
+                f"WARNING: Example '{pack_name}/{example_name}'"
                 " already exists at the specified target directory. "
                 "Existing files were left unchanged; "
                 "new or missing files were copied. To overwrite everything, "
@@ -237,7 +237,7 @@ class PacksManager:
         shutil.rmtree(target)
         shutil.copytree(example_origin, target)
         print(
-            f"\033[32mOverwriting example '{pack_name}/{example_name}'.\033[0m"
+            f"Overwriting example '{pack_name}/{example_name}'."
         )
 
     def _copy_missing_files(self, example_origin, target):
@@ -256,7 +256,7 @@ class PacksManager:
         self, example_origin, target, pack_name, example_name
     ):
         shutil.copytree(example_origin, target)
-        print(f"\033[32mCopied example '{pack_name}/{example_name}'.\033[0m")
+        print(f"Copied example '{pack_name}/{example_name}'.")
 
     def _resolve_pack_file(self, identifier: Union[str, Path]) -> Path:
         """Resolve a pack identifier to an absolute .txt path.
