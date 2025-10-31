@@ -1,20 +1,18 @@
-name: Full Tests on Release
+name: Run Example Scripts
 
 on:
-  push:
-    tags:
-      - "v*"
+  workflow_dispatch:
 
 jobs:
-  tests-on-release:
+  run-examples:
     uses: scikit-package/release-scripts/.github/workflows/_tests-on-pr.yml@v0
     with:
       project: diffpy.cmi
       c_extension: false
       headless: false
       run: |
-        echo "Running examples"
-        export RUN_EXAMPLES=1
-        pytest --cov
+        set -Eeuo pipefail
+        echo "Running example scripts"
+        pytest --cov tests/test_examples.py -v
     secrets:
       CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
