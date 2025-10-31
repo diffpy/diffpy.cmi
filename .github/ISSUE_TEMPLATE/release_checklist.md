@@ -8,7 +8,7 @@ assignees: ""
 
 ### Run diffpy.cmi example scripts
 
-- [ ] Manually trigger the `run-examples.yml` workflow to run all example scripts.
+- [ ] Manually trigger the `validate-examples.yml` workflow to run all example scripts.
 
 ### PyPI/GitHub rc-release preparation checklist:
 
