@@ -17,8 +17,6 @@ from importlib.resources import as_file
 from pathlib import Path
 from typing import List, Union
 
-from rich.console import Console
-
 from diffpy.cmi.installer import (
     ParsedReq,
     install_requirements,
@@ -81,7 +79,6 @@ class PacksManager:
     def __init__(self, root_path=None) -> None:
         self.packs_dir = _installed_packs_dir(root_path)
         self.examples_dir = self._get_examples_dir()
-        self.console = Console()
 
     def _get_examples_dir(self) -> Path:
         """Return the absolute path to the installed examples directory.
@@ -222,8 +219,8 @@ class PacksManager:
         if target_dir.exists():
             self._copy_missing_files(example_origin, target_dir)
             print(
-                f"WARNING: Example '{pack_name}/{example_name}' "
-                "already exists at the specified target directory. "
+                f"\033[33mWARNING:\033[0m Example '{pack_name}/{example_name}'"
+                " already exists at the specified target directory. "
                 "Existing files were left unchanged; "
                 "new or missing files were copied. To overwrite everything, "
                 "rerun with --force."
@@ -239,8 +236,8 @@ class PacksManager:
         """Delete target and copy example."""
         shutil.rmtree(target)
         shutil.copytree(example_origin, target)
-        self.console.print(
-            f"[green]Overwriting example '{pack_name}/{example_name}'.[/]"
+        print(
+            f"\033[32mOverwriting example '{pack_name}/{example_name}'.\033[0m"
         )
 
     def _copy_missing_files(self, example_origin, target):
@@ -259,9 +256,7 @@ class PacksManager:
         self, example_origin, target, pack_name, example_name
     ):
         shutil.copytree(example_origin, target)
-        self.console.print(
-            f"[green]Copied example '{pack_name}/{example_name}'.[/]"
-        )
+        print(f"\033[32mCopied example '{pack_name}/{example_name}'.\033[0m")
 
     def _resolve_pack_file(self, identifier: Union[str, Path]) -> Path:
         """Resolve a pack identifier to an absolute .txt path.
