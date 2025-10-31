@@ -236,9 +236,7 @@ class PacksManager:
         """Delete target and copy example."""
         shutil.rmtree(target)
         shutil.copytree(example_origin, target)
-        print(
-            f"Overwriting example '{pack_name}/{example_name}'."
-        )
+        print(f"Overwriting example '{pack_name}/{example_name}'.")
 
     def _copy_missing_files(self, example_origin, target):
         """Copy only files and directories that are missing in the
