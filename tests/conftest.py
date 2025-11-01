@@ -1,25 +1,8 @@
 import json
-import shutil
 from pathlib import Path
 
 import matplotlib
 import pytest
-
-PROJECT_ROOT = Path(__file__).resolve().parents[1]
-EXAMPLES_ROOT = PROJECT_ROOT / "docs" / "examples"
-
-
-@pytest.fixture(scope="session")
-def tmp_examples(tmp_path_factory):
-    """Copy the entire examples/ tree into a temp directory once per
-    test session.
-
-    Returns the path to that copy.
-    """
-    tmpdir = tmp_path_factory.mktemp("examples")
-    tmp_examples = tmpdir / "examples"
-    shutil.copytree(EXAMPLES_ROOT, tmp_examples)
-    yield tmp_examples
 
 
 @pytest.fixture(scope="function")
