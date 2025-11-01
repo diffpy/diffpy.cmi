@@ -12,7 +12,7 @@
 # See LICENSE.rst for license information.
 #
 ##############################################################################
-
+import shutil
 from importlib.resources import as_file
 from pathlib import Path
 from typing import List, Union
@@ -132,6 +132,129 @@ class PacksManager:
                             (example_name, example_path)
                         )
         return examples_dict
+
+    def copy_examples(
+        self,
+        examples_to_copy: List[str],
+        target_dir: Path = None,
+        force: bool = False,
+    ) -> None:
+        """Copy examples or packs into the target or current working
+        directory.
+
+        Parameters
+        ----------
+        examples_to_copy : list of str
+            User-specified pack(s), example(s), or "all" to copy all.
+        target_dir : pathlib.Path, optional
+            Target directory to copy examples into. Defaults to current
+            working directory.
+        force : bool, optional
+            Defaults to ``False``. If ``True``, existing files are
+            overwritten and directories are merged
+            (extra files in the target are preserved).
+        """
+        self._target_dir = target_dir.resolve() if target_dir else Path.cwd()
+        self._force = force
+
+        if "all" in examples_to_copy:
+            self._copy_all()
+            return
+
+        for item in examples_to_copy:
+            if item in self.available_examples():
+                self._copy_pack(item)
+            elif self._is_example_name(item):
+                self._copy_example(item)
+            else:
+                raise FileNotFoundError(
+                    f"No examples or packs found for input: '{item}'"
+                )
+        del self._target_dir
+        del self._force
+        return
+
+    def _copy_all(self):
+        """Copy all packs and examples."""
+        for pack_name in self.available_examples():
+            self._copy_pack(pack_name)
+
+    def _copy_pack(self, pack_name):
+        """Copy all examples in a single pack."""
+        examples = self.available_examples().get(pack_name, [])
+        for ex_name, ex_path in examples:
+            self._copy_tree_to_target(pack_name, ex_name, ex_path)
+
+    def _copy_example(self, example_name):
+        """Copy a single example by its name."""
+        example_found = False
+        for pack_name, examples in self.available_examples().items():
+            for ex_name, ex_path in examples:
+                if ex_name == example_name:
+                    self._copy_tree_to_target(pack_name, ex_name, ex_path)
+                    example_found = True
+        if not example_found:
+            raise FileNotFoundError(
+                f"No examples or packs found for input: '{example_name}'"
+            )
+
+    def _is_example_name(self, name):
+        """Return True if the given name matches any known example."""
+        for pack_name, examples in self.available_examples().items():
+            for example_name, _ in examples:
+                if example_name == name:
+                    return True
+        return False
+
+    def _copy_tree_to_target(self, pack_name, example_name, example_origin):
+        """Copy an example folder from source to the user's target
+        directory."""
+        target_dir = self._target_dir / pack_name / example_name
+        target_dir.parent.mkdir(parents=True, exist_ok=True)
+        if target_dir.exists() and self._force:
+            self._overwrite_example(
+                example_origin, target_dir, pack_name, example_name
+            )
+            return
+        if target_dir.exists():
+            self._copy_missing_files(example_origin, target_dir)
+            print(
+                f"WARNING: Example '{pack_name}/{example_name}'"
+                " already exists at the specified target directory. "
+                "Existing files were left unchanged; "
+                "new or missing files were copied. To overwrite everything, "
+                "rerun with --force."
+            )
+            return
+        self._copy_new_example(
+            example_origin, target_dir, pack_name, example_name
+        )
+
+    def _overwrite_example(
+        self, example_origin, target, pack_name, example_name
+    ):
+        """Delete target and copy example."""
+        shutil.rmtree(target)
+        shutil.copytree(example_origin, target)
+        print(f"Overwriting example '{pack_name}/{example_name}'.")
+
+    def _copy_missing_files(self, example_origin, target):
+        """Copy only files and directories that are missing in the
+        target."""
+        for example_item in example_origin.rglob("*"):
+            rel_path = example_item.relative_to(example_origin)
+            target_item = target / rel_path
+            if example_item.is_dir():
+                target_item.mkdir(parents=True, exist_ok=True)
+            elif example_item.is_file() and not target_item.exists():
+                target_item.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copy2(example_item, target_item)
+
+    def _copy_new_example(
+        self, example_origin, target, pack_name, example_name
+    ):
+        shutil.copytree(example_origin, target)
+        print(f"Copied example '{pack_name}/{example_name}'.")
 
     def _resolve_pack_file(self, identifier: Union[str, Path]) -> Path:
         """Resolve a pack identifier to an absolute .txt path.
