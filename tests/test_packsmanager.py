@@ -278,7 +278,7 @@ def test_copy_examples_location(input, expected_paths, example_cases):
             # Expected: Raise a warning with the message.
             ["ex1"],
             (
-                "\033[33mWARNING:\033[0m Example 'packA/ex1' already exists at"
+                "WARNING: Example 'packA/ex1' already exists at"
                 " the specified target directory. "
                 "Existing files were left unchanged; new or missing "
                 "files were copied. "
