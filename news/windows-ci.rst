@@ -1,6 +1,6 @@
 **Added:**
 
-* Add support for Python 3.14
+* <news item>
 
 **Changed:**
 
@@ -12,11 +12,11 @@
 
 **Removed:**
 
-* Remove support for Python 3.11
+* <news item>
 
 **Fixed:**
 
-* <news item>
+* Fixed how paths are handled in tests for different operating systems.
 
 **Security:**
 
