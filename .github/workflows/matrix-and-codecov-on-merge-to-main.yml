@@ -17,7 +17,7 @@ jobs:
       project: diffpy.cmi
       c_extension: false
       headless: false
-      python_versions: "3.13"
+      python_versions: "3.12, 3.13"
       run: |
         set -Eeuo pipefail
         echo "Test cmds"
