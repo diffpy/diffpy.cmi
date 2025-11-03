@@ -15,8 +15,9 @@ def paths_and_names_match(expected, actual, root):
     for (exp_name, exp_path), (act_name, act_path) in zip(expected, actual):
         if exp_name != act_name:
             return False
-        actual_rel_path = str(act_path.relative_to(root))
-        if actual_rel_path != exp_path:
+        actual_rel_path = act_path.relative_to(root).as_posix()
+        expected_path_norm = Path(exp_path).as_posix()
+        if actual_rel_path != expected_path_norm:
             return False
     return True
 
