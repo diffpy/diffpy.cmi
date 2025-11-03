@@ -12,11 +12,11 @@
 
 **Removed:**
 
-* Removed matrix testing for Python 3.14.
+* <news item>
 
 **Fixed:**
 
-* <news item>
+* Fixed how paths are handled in tests for different operating systems.
 
 **Security:**
 
