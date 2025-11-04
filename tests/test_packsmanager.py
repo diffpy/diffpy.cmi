@@ -1,7 +1,6 @@
 import os
 import re
 import subprocess
-import venv
 from pathlib import Path
 
 import pytest
@@ -373,11 +372,24 @@ def test_print_info(packs_to_install, expected, example_cases, capsys):
     case5dir = example_cases / "case5"
     env_dir = case5dir / "fake_env"
     req_dir = case5dir / "requirements" / "packs"
-    venv.EnvBuilder(with_pip=True).create(env_dir)
+    subprocess.run(
+        ["conda", "create", "-y", "-p", str(env_dir)],
+        check=True,
+        capture_output=True,
+        text=True,
+    )
     for pack in packs_to_install:
         req_file = req_dir / f"{pack.lower()}.txt"
         subprocess.run(
-            [str(env_dir / "bin" / "pip"), "install", "-r", str(req_file)],
+            [
+                "conda",
+                "install",
+                "-y",
+                "--file",
+                str(req_file),
+                "-p",
+                str(env_dir),
+            ],
             check=True,
             capture_output=True,
             text=True,
