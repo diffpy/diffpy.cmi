@@ -256,6 +256,10 @@ class PacksManager:
         shutil.copytree(example_origin, target)
         print(f"Copied example '{pack_name}/{example_name}'.")
 
+    def print_info(self) -> None:
+        """Print information about available packs and examples."""
+        return
+
     def _resolve_pack_file(self, identifier: Union[str, Path]) -> Path:
         """Resolve a pack identifier to an absolute .txt path.
 
