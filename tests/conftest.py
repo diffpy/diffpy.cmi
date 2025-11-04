@@ -96,6 +96,11 @@ def example_cases(tmp_path_factory):
     case5req_dir = root_temp_dir / "case5" / "requirements" / "packs"
     case5req_dir.mkdir(parents=True, exist_ok=True)
 
+    fake_env = root_temp_dir / "case5" / "fake_env"
+    fake_env.mkdir(parents=True, exist_ok=True)
+    (case5req_dir / "packA.txt").write_text("requests")
+    (case5req_dir / "packB.txt").write_text("attrs")
+
     yield root_temp_dir
 
 

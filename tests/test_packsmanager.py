@@ -1,5 +1,6 @@
 import os
 import re
+import subprocess
 from pathlib import Path
 
 import pytest
@@ -342,3 +343,59 @@ def test_copy_examples_force(example_cases, expected_paths, force):
         original_path = examples_dir / path
         if copied_path.is_file() and original_path.is_file():
             assert copied_path.read_text() == original_path.read_text()
+
+
+install_params = [
+    (  # input: install requirements for packA
+        # expected: print_info output showing packA installed but not packB
+        ("packA",),
+        """Installed Packs:
+  packA
+
+Available Packs to Install:
+  packB
+
+Examples:
+  packA:
+   - ex1
+   - ex2
+  packB:
+   - ex1
+   - ex3
+   - ex4""",
+    ),
+]
+
+
+@pytest.mark.parametrize("packs_to_install,expected", install_params)
+def test_print_info(packs_to_install, expected, example_cases, capsys):
+    case5dir = example_cases / "case5"
+    env_dir = case5dir / "fake_env"
+    req_dir = case5dir / "requirements" / "packs"
+    subprocess.run(
+        ["conda", "create", "-y", "-p", str(env_dir)],
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    for pack in packs_to_install:
+        req_file = req_dir / f"{pack}.txt"
+        subprocess.run(
+            [
+                "conda",
+                "install",
+                "-y",
+                "--file",
+                str(req_file),
+                "-p",
+                str(env_dir),
+            ],
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+    pm = PacksManager(root_path=case5dir)
+    pm.print_info()
+    captured = capsys.readouterr()
+    actual = captured.out
+    assert actual.strip() == expected.strip()
