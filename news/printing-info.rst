@@ -1,6 +1,6 @@
 **Added:**
 
-* Added test for ``print_info`` function.
+* Added ``print_info`` function.
 
 **Changed:**
 
