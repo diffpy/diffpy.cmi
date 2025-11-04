@@ -351,16 +351,16 @@ install_params = [
         # expected: print_info output showing packA installed but not packB
         ("packA",),
         """Installed Packs:
-  packA
+  packa
 
 Available Packs to Install:
-  packB
+  packb
 
 Examples:
-  packA:
+  packa:
    - ex1
    - ex2
-  packB:
+  packb:
    - ex1
    - ex3
    - ex4""",
@@ -369,9 +369,10 @@ Examples:
 
 
 @pytest.mark.parametrize("packs_to_install,expected", install_params)
-def test_print_info(packs_to_install, expected, temp_dir_print_info, capsys):
-    env_dir = temp_dir_print_info / "fake_env"
-    req_dir = temp_dir_print_info / "requirements" / "packs"
+def test_print_info(packs_to_install, expected, example_cases, capsys):
+    case5dir = example_cases / "case5"
+    env_dir = case5dir / "fake_env"
+    req_dir = case5dir / "requirements" / "packs"
     venv.EnvBuilder(with_pip=True).create(env_dir)
     for pack in packs_to_install:
         req_file = req_dir / f"{pack.lower()}.txt"
@@ -381,7 +382,7 @@ def test_print_info(packs_to_install, expected, temp_dir_print_info, capsys):
             capture_output=True,
             text=True,
         )
-    pm = PacksManager(root_path=temp_dir_print_info)
+    pm = PacksManager(root_path=case5dir)
     pm.print_info()
     captured = capsys.readouterr()
     actual = captured.out
