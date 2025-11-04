@@ -351,16 +351,16 @@ install_params = [
         # expected: print_info output showing packA installed but not packB
         ("packA",),
         """Installed Packs:
-  packa
+  packA
 
 Available Packs to Install:
-  packb
+  packB
 
 Examples:
-  packa:
+  packA:
    - ex1
    - ex2
-  packb:
+  packB:
    - ex1
    - ex3
    - ex4""",
