@@ -6,6 +6,26 @@ import pytest
 
 
 @pytest.fixture(scope="function")
+def temp_dir_print_info(tmp_path_factory):
+    root_temp_dir = tmp_path_factory.mktemp("temp")
+    examples_dir = root_temp_dir / "docs" / "examples"
+    packs_dir = root_temp_dir / "requirements" / "packs"
+    packs_dir.mkdir(parents=True, exist_ok=True)
+    fake_env = root_temp_dir / "fake_env"
+    fake_env.mkdir(parents=True, exist_ok=True)
+
+    (packs_dir / "packa.txt").write_text("packaging")
+    (packs_dir / "packb.txt").write_text("matplotlib")
+    (examples_dir / "packA" / "ex1").mkdir(parents=True, exist_ok=True)
+    (examples_dir / "packA" / "ex2").mkdir(parents=True, exist_ok=True)
+    (examples_dir / "packB" / "ex1").mkdir(parents=True, exist_ok=True)
+    (examples_dir / "packB" / "ex3").mkdir(parents=True, exist_ok=True)
+    (examples_dir / "packB" / "ex4").mkdir(parents=True, exist_ok=True)
+
+    yield root_temp_dir
+
+
+@pytest.fixture(scope="function")
 def example_cases(tmp_path_factory):
     """Copy the entire examples tree into a temp directory once per test
     session.
