@@ -1,5 +1,7 @@
 import os
 import re
+import subprocess
+import venv
 from pathlib import Path
 
 import pytest
@@ -342,3 +344,45 @@ def test_copy_examples_force(example_cases, expected_paths, force):
         original_path = examples_dir / path
         if copied_path.is_file() and original_path.is_file():
             assert copied_path.read_text() == original_path.read_text()
+
+
+install_params = [
+    (  # input: install requirements for packA
+        # expected: print_info output showing packA installed but not packB
+        ("packA",),
+        """Installed Packs:
+  packA
+
+Available Packs to Install:
+  packB
+
+Examples:
+  packA:
+   - ex1
+   - ex2
+  packB:
+   - ex1
+   - ex3
+   - ex4""",
+    ),
+]
+
+
+@pytest.mark.parametrize("packs_to_install,expected", install_params)
+def test_print_info(packs_to_install, expected, temp_dir_print_info, capsys):
+    env_dir = temp_dir_print_info / "fake_env"
+    req_dir = temp_dir_print_info / "requirements" / "packs"
+    venv.EnvBuilder(with_pip=True).create(env_dir)
+    for pack in packs_to_install:
+        req_file = req_dir / f"{pack.lower()}.txt"
+        subprocess.run(
+            [str(env_dir / "bin" / "pip"), "install", "-r", str(req_file)],
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+    pm = PacksManager(root_path=temp_dir_print_info)
+    pm.print_info()
+    captured = capsys.readouterr()
+    actual = captured.out
+    assert actual.strip() == expected.strip()
