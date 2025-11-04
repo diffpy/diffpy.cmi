@@ -350,18 +350,18 @@ class PacksManager:
 
     def print_info(self) -> None:
         """Print information about available packs and examples."""
-        uninstall_packs = []
+        uninstalled_packs = []
         installed_packs = []
         for pack in self.available_packs():
             if self.check_pack(pack):
                 installed_packs.append(pack)
             else:
-                uninstall_packs.append(pack)
+                uninstalled_packs.append(pack)
         print("Installed Packs:")
         for pack in installed_packs:
             print(f"  {pack}")
         print("\nAvailable Packs to Install:")
-        for pack in uninstall_packs:
+        for pack in uninstalled_packs:
             print(f"  {pack}")
         print("\nExamples:")
         examples_dict = self.available_examples()
