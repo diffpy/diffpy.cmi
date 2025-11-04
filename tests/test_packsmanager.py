@@ -379,7 +379,7 @@ def test_print_info(packs_to_install, expected, example_cases, capsys):
         text=True,
     )
     for pack in packs_to_install:
-        req_file = req_dir / f"{pack.lower()}.txt"
+        req_file = req_dir / f"{pack}.txt"
         subprocess.run(
             [
                 "conda",
