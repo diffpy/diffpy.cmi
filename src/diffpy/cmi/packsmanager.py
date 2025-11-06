@@ -136,7 +136,7 @@ class PacksManager:
     def copy_examples(
         self,
         examples_to_copy: List[str],
-        target_dir: Path = None,
+        target_dir: Union[Path | str] = None,
         force: bool = False,
     ) -> None:
         """Copy examples or packs into the target or current working
@@ -154,6 +154,8 @@ class PacksManager:
             overwritten and directories are merged
             (extra files in the target are preserved).
         """
+        if isinstance(target_dir, str):
+            target_dir = Path(target_dir)
         self._target_dir = target_dir.resolve() if target_dir else Path.cwd()
         self._force = force
 
@@ -348,24 +350,48 @@ class PacksManager:
         else:
             plog.error("Pack '%s' installation failed.", path.stem)
 
-    def print_info(self) -> None:
-        """Print information about available packs and examples."""
-        uninstalled_packs = []
-        installed_packs = []
+    def print_packs(self) -> None:
+        """Print information about available packs."""
+        uninstalled_packs, installed_packs = [], []
         for pack in self.available_packs():
             if self.check_pack(pack):
                 installed_packs.append(pack)
             else:
                 uninstalled_packs.append(pack)
         print("Installed Packs:")
+        print("----------------")
         for pack in installed_packs:
-            print(f"  {pack}")
-        print("\nAvailable Packs to Install:")
-        for pack in uninstalled_packs:
-            print(f"  {pack}")
+            if not installed_packs:
+                print("  (none)")
+            else:
+                print(f"  {pack}")
+        print("\nAvailable Packs:")
+        print("----------------")
+        if not uninstalled_packs:
+            print("  (all packs installed)")
+        else:
+            for pack in uninstalled_packs:
+                print(f"  {pack}")
+
+    def print_examples(self) -> None:
+        """Print information about available examples."""
         print("\nExamples:")
+        print("---------")
         examples_dict = self.available_examples()
         for pack, examples in examples_dict.items():
             print(f"  {pack}:")
             for ex_name, _ in examples:
                 print(f"   - {ex_name}")
+
+    def print_info(self) -> None:
+        """Print information about available packs, profiles, and
+        examples."""
+        # packs
+        self.print_packs()
+        # profiles
+        from diffpy.cmi.profilesmanager import ProfilesManager
+
+        prm = ProfilesManager()
+        prm.print_profiles()
+        # examples
+        self.print_examples()
