@@ -15,9 +15,11 @@ jobs:
         set -Eeuo pipefail
         echo "Test cmds"
         cmi -h
+        cmi info
+        cmi info packs
+        cmi info profiles
+        cmi info examples
         cmi env
-        cmi pack list
-        cmi profile list
         cmi install plotting
         if [ "${RUNNER_OS}" != "Windows" ]; then
           conda list | grep -i ipympl

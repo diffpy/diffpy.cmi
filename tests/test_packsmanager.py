@@ -350,12 +350,15 @@ install_params = [
         # expected: print_info output showing packA installed but not packB
         ("packA",),
         """Installed Packs:
+----------------
   packA
 
-Available Packs to Install:
+Available Packs:
+----------------
   packB
 
 Examples:
+---------
   packA:
    - ex1
    - ex2
@@ -368,20 +371,12 @@ Examples:
 
 
 @pytest.mark.parametrize("packs_to_install,expected", install_params)
-def test_print_info(packs_to_install, expected, example_cases, capsys):
-    case5dir = example_cases / "case5"
-    env_dir = case5dir / "fake_env"
-    req_dir = case5dir / "requirements" / "packs"
-    # Handle Windows path format
-    env_dir_str = env_dir.as_posix()
+def test_print_packs_and_examples(
+    packs_to_install, expected, example_cases, capsys, conda_env
+):
+    env_dir_str = Path(conda_env).as_posix()
     shell = os.name == "nt"
-    subprocess.run(
-        ["conda", "create", "-y", "-p", env_dir_str],
-        check=True,
-        capture_output=True,
-        text=True,
-        shell=shell,
-    )
+    req_dir = example_cases / "case5" / "requirements" / "packs"
     for pack in packs_to_install:
         req_file = (req_dir / f"{pack}.txt").as_posix()
         subprocess.run(
@@ -391,8 +386,9 @@ def test_print_info(packs_to_install, expected, example_cases, capsys):
             text=True,
             shell=shell,
         )
-    pm = PacksManager(root_path=case5dir)
-    pm.print_info()
+    pm = PacksManager(root_path=example_cases / "case5")
+    pm.print_packs()
+    pm.print_examples()
     captured = capsys.readouterr()
     actual = captured.out
     assert actual.strip() == expected.strip()
