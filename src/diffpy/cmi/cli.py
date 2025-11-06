@@ -15,107 +15,18 @@
 
 import argparse
 from pathlib import Path
-from shutil import copytree
 from typing import List, Optional, Tuple
 
 from diffpy.cmi import __version__
 from diffpy.cmi.conda import env_info
 from diffpy.cmi.log import plog, set_log_mode
-from diffpy.cmi.packsmanager import PacksManager, get_package_dir
+from diffpy.cmi.packsmanager import PacksManager
 from diffpy.cmi.profilesmanager import ProfilesManager
-
-
-# Examples
-def _get_examples_dir() -> Path:
-    """Return the absolute path to the installed examples directory.
-
-    Returns
-    -------
-    pathlib.Path
-        Directory containing shipped examples.
-
-    Raises
-    ------
-    FileNotFoundError
-        If the examples directory cannot be located in the installation.
-    """
-    with get_package_dir() as pkgdir:
-        pkg = Path(pkgdir).resolve()
-        for c in (
-            pkg / "docs" / "examples",
-            pkg.parents[2] / "docs" / "examples",
-        ):
-            if c.is_dir():
-                return c
-    raise FileNotFoundError(
-        "Could not locate requirements/packs. Check your installation."
-    )
-
-
-def map_pack_to_examples() -> dict[str, List[str]]:
-    """Return a dictionary mapping pack name -> list of example
-    subdirectories.
-
-    Returns
-    -------
-    dict:
-        pack name -> list of example subdirectory names
-    """
-    root = _get_examples_dir()
-    if not root.exists():
-        return {}
-    examples_by_pack = {}
-    for pack_dir in sorted(root.iterdir()):
-        if pack_dir.is_dir():
-            exdirs = sorted(p.name for p in pack_dir.iterdir() if p.is_dir())
-            examples_by_pack[pack_dir.name] = exdirs
-    return examples_by_pack
-
-
-def copy_example(pack_example: str) -> Path:
-    """Copy an example into the current working directory.
-
-    Parameters
-    ----------
-    pack_example : str
-        Pack and example name in the form ``<pack>/<exdir>``.
-
-    Returns
-    -------
-    pathlib.Path
-        Destination path created under the current working directory.
-
-    Raises
-    ------
-    ValueError
-        If the format is invalid (missing pack or example).
-    FileNotFoundError
-        If the example directory does not exist.
-    FileExistsError
-        If the destination directory already exists.
-    """
-    if "/" not in pack_example or pack_example.count("/") != 1:
-        raise ValueError("Example must be specified as <pack>/<exdir>")
-    pack, exdir = pack_example.split("/", 1)
-    if not pack or not exdir:
-        raise ValueError(
-            f"Invalid format for example '{pack_example}'. "
-            "Must be '<pack>/<exdir>'"
-        )
-    src = _get_examples_dir() / pack / exdir
-    if not src.exists() or not src.is_dir():
-        raise FileNotFoundError(f"Example not found: {pack_example}")
-    dest = Path.cwd() / exdir
-    if dest.exists():
-        raise FileExistsError(f"Destination {dest} already exists")
-    copytree(src, dest)
-    return dest
 
 
 # Manual
 def open_manual_and_exit() -> None:
-    """Open the installed manual or fall back to the online version,
-    then exit.
+    """Open the manual in a web browser and exit.
 
     Notes
     -----
@@ -123,17 +34,7 @@ def open_manual_and_exit() -> None:
     """
     import webbrowser
 
-    v = __version__.split(".post")[0]
-    webdocbase = "https://www.diffpy.org/doc/cmi/" + v
-    with get_package_dir() as packagedir:
-        localpath = Path(packagedir) / "docs" / "build" / "html" / "index.html"
-    url = (
-        localpath.resolve().as_uri()
-        if localpath.is_file()
-        else f"{webdocbase}/index.html"
-    )
-    if not localpath.is_file():
-        plog.info("Manual files not found, falling back to online version.")
+    url = "https://www.diffpy.org/products/diffpycmi"
     plog.info("Opening manual at %s", url)
     webbrowser.open(url)
     raise SystemExit(0)
@@ -160,65 +61,33 @@ def _build_parser() -> argparse.ArgumentParser:
         "-v", "--verbose", action="store_true", help="Enable debug logging."
     )
     p.add_argument(
-        "-V", "--version", action="version", version=f"%(prog)s {__version__}"
+        "-V",
+        "--version",
+        action="version",
+        version=f"diffpy.cmi {__version__}",
     )
     p.add_argument(
         "--manual", action="store_true", help="Open manual and exit."
     )
-    p.set_defaults(_parser=p)
-
+    p.set_defaults()
     sub = p.add_subparsers(dest="cmd", metavar="<command>")
-
     # example
-    p_example = sub.add_parser("example", help="List or copy an example")
-    p_example.set_defaults(_parser=p_example)
-    sub_ex = p_example.add_subparsers(
-        dest="example_cmd", metavar="<example|list>"
+    p_info = sub.add_parser(
+        "info", help="Show info about packs, profiles, and examples."
     )
-    sub_ex.add_parser("list", help="List examples").set_defaults(
-        _parser=p_example
-    )
-    p_example_copy = sub_ex.add_parser("copy", help="Copy an example to CWD")
-    p_example_copy.add_argument(
-        "name", metavar="EXAMPLE", help="Example name <pack>/<exdir>"
-    )
-    p_example_copy.set_defaults(_parser=p_example)
-    p_example.set_defaults(example_cmd=None)
-
-    # pack
-    p_pack = sub.add_parser("pack", help="List packs or show a pack file")
-    p_pack.set_defaults(_parser=p_pack)
-    sub_pack = p_pack.add_subparsers(dest="pack_cmd", metavar="<name|list>")
-    sub_pack.add_parser(
-        "list", help="List packs (Installed vs Available)"
-    ).set_defaults(_parser=p_pack)
-    p_pack_show = sub_pack.add_parser(
-        "show", help="Show a pack (by base name)"
-    )
-    p_pack_show.add_argument("name", metavar="PACK", help="Pack base name")
-    p_pack_show.set_defaults(_parser=p_pack)
-    p_pack.set_defaults(pack_cmd=None)
-
-    # profile
-    p_prof = sub.add_parser(
-        "profile", help="List profiles or show a profile file"
-    )
-    p_prof.set_defaults(_parser=p_prof)
-    sub_prof = p_prof.add_subparsers(dest="profile_cmd", metavar="<name|list>")
-    sub_prof.add_parser(
-        "list", help="List profiles (Installed vs Available)"
-    ).set_defaults(_parser=p_prof)
-    p_prof_show = sub_prof.add_parser(
-        "show", help="Show a profile (by base name)"
-    )
-    p_prof_show.add_argument(
-        "name", metavar="PROFILE", help="Profile base name"
-    )
-    p_prof_show.set_defaults(_parser=p_prof)
-    p_prof.set_defaults(profile_cmd=None)
-
+    p_info.set_defaults()
+    sub_info = p_info.add_subparsers(dest="info_cmd", metavar="<command>")
+    sub_info.add_parser(
+        "packs", help="Show available and installed packs."
+    ).set_defaults()
+    sub_info.add_parser(
+        "profiles", help="Show available and installed profiles."
+    ).set_defaults()
+    sub_info.add_parser(
+        "examples", help="Show available examples to copy."
+    ).set_defaults()
     # install (multiple targets)
-    p_install = sub.add_parser("install", help="Install packs/profiles")
+    p_install = sub.add_parser("install", help="Install packs/profiles.")
     p_install.add_argument(
         "targets",
         nargs="*",
@@ -233,65 +102,38 @@ def _build_parser() -> argparse.ArgumentParser:
         help="Default conda channel for packages \
             without explicit per-line channel.",
     )
-    p_install.set_defaults(_parser=p_install)
+    p_install.set_defaults()
 
+    p_copy = sub.add_parser(
+        "copy",
+        help="Copy example directories.",
+        description="Copy example directories to the current "
+        "or specified location.",
+        usage="cmi copy [-h] [-t DIR] [-f] <commands>...",
+    )
+    p_copy.add_argument(
+        "name",
+        nargs="+",
+        help="Example name(s) to copy. Use `cmi info examples` to list.",
+    )
+    p_copy.add_argument(
+        "-t",
+        "--target-dir",
+        dest="target_dir",
+        metavar="DIR",
+        help="Target directory to copy examples into. "
+        "Defaults to current working directory.",
+    )
+    p_copy.add_argument(
+        "-f",
+        "--force",
+        action="store_true",
+        help="Force overwrite existing files and merge directories.",
+    )
+    p_copy.set_defaults(func=_cmd_copy)
     # env
     sub.add_parser("env", help="Show basic conda environment info")
-
     return p
-
-
-# Helpers
-def _installed_pack_path(mgr: PacksManager, name: str) -> Path:
-    """Return the absolute path to an installed pack file.
-
-    Parameters
-    ----------
-    mgr : PacksManager
-        Packs manager instance.
-    name : str
-        Pack basename (without ``.txt``).
-
-    Returns
-    -------
-    pathlib.Path
-        Absolute path to the pack file.
-
-    Raises
-    ------
-    FileNotFoundError
-        If the pack cannot be found.
-    """
-    path = mgr.packs_dir / f"{name}.txt"
-    if not path.is_file():
-        raise FileNotFoundError(f"Pack not found: {name} ({path})")
-    return path
-
-
-def _installed_profile_path(name: str) -> Path:
-    """Return the absolute path to an installed profile file by
-    basename.
-
-    Parameters
-    ----------
-    name : str
-        Profile basename (without extension).
-
-    Returns
-    -------
-    pathlib.Path
-        Absolute path to the profile file.
-
-    Raises
-    ------
-    FileNotFoundError
-        If the profile cannot be found under the installed profiles directory.
-    """
-    base = ProfilesManager().profiles_dir
-    for cand in (base / f"{name}.yml", base / f"{name}.yaml"):
-        if cand.is_file():
-            return cand
-    raise FileNotFoundError(f"Profile not found: {name} (under {base})")
 
 
 def _resolve_target_for_install(s: str) -> Tuple[str, Path]:
@@ -328,131 +170,7 @@ def _resolve_target_for_install(s: str) -> Tuple[str, Path]:
         return "pack", pack_path
     if profile_path:
         return "profile", profile_path
-
     raise FileNotFoundError(f"No installed pack or profile named '{s}' found.")
-
-
-def _cmd_example(ns: argparse.Namespace) -> int:
-    """Handle `cmi example` subcommands.
-
-    Parameters
-    ----------
-    ns : argparse.Namespace
-        Parsed arguments for the example subparser.
-
-    Returns
-    -------
-    int
-        Exit code (``0`` on success; non-zero on failure).
-    """
-    if ns.example_cmd in (None, "copy"):
-        name = getattr(ns, "name", None)
-        if not name:
-            plog.error(
-                "Missing example name. Use `cmi example list` to see options."
-            )
-            ns._parser.print_help()
-            return 1
-        out = copy_example(name)
-        print(f"Example copied to: {out}")
-        return 0
-    if ns.example_cmd == "list":
-        for pack, examples in map_pack_to_examples().items():
-            print(f"{pack}:")
-            for ex in examples:
-                print(f"  - {ex}")
-        return 0
-    plog.error("Unknown example subcommand.")
-    ns._parser.print_help()
-    return 2
-
-
-def _cmd_pack(ns: argparse.Namespace) -> int:
-    """Handle `cmi pack` subcommands.
-
-    Parameters
-    ----------
-    ns : argparse.Namespace
-        Parsed arguments for the pack subparser.
-
-    Returns
-    -------
-    int
-        Exit code (``0`` on success; non-zero on failure).
-    """
-    mgr = PacksManager()
-    if ns.pack_cmd == "list":
-        names = mgr.available_packs()
-        installed, available = [], []
-        for nm in names:
-            (installed if mgr.check_pack(nm) else available).append(nm)
-
-        def dump(title: str, arr: List[str]) -> None:
-            print(title + ":")
-            if not arr:
-                print("  (none)")
-            else:
-                for n in arr:
-                    print(f"  - {n}")
-
-        dump("Installed", installed)
-        dump("Available to install", available)
-        return 0
-
-    name = getattr(ns, "name", None) or getattr(ns, "pack_cmd", None)
-    if not name or name == "show":
-        plog.error("Usage: cmi pack <name>  (or: cmi pack show <name>)")
-        ns._parser.print_help()
-        return 1
-
-    path = _installed_pack_path(mgr, name)
-    print(f"# pack: {name}\n# path: {path}\n")
-    print(path.read_text(encoding="utf-8"))
-    return 0
-
-
-def _cmd_profile(ns: argparse.Namespace) -> int:
-    """Handle `cmi profile` subcommands.
-
-    Parameters
-    ----------
-    ns : argparse.Namespace
-        Parsed arguments for the profile subparser.
-
-    Returns
-    -------
-    int
-        Exit code (``0`` on success; non-zero on failure).
-    """
-    if ns.profile_cmd == "list":
-        pm = ProfilesManager()
-        names = pm.list_profiles()
-        installed, available = [], []
-        for nm in names:
-            (installed if pm.check_profile(nm) else available).append(nm)
-
-        def dump(title: str, arr: List[str]) -> None:
-            print(title + ":")
-            if not arr:
-                print("  (none)")
-            else:
-                for n in arr:
-                    print(f"  - {n}")
-
-        dump("Installed", installed)
-        dump("Available to install", available)
-        return 0
-
-    name = getattr(ns, "name", None) or getattr(ns, "profile_cmd", None)
-    if not name or name == "show":
-        plog.error("Usage: cmi profile <name>  (or: cmi profile show <name>)")
-        ns._parser.print_help()
-        return 1
-
-    path = _installed_profile_path(name)
-    print(f"# profile: {name}\n# path: {path}\n")
-    print(path.read_text(encoding="utf-8"))
-    return 0
 
 
 def _cmd_install(ns: argparse.Namespace) -> int:
@@ -475,7 +193,6 @@ def _cmd_install(ns: argparse.Namespace) -> int:
         )
         ns._parser.print_help()
         return 1
-
     rc = 0
     mgr = PacksManager()
     pm = ProfilesManager()
@@ -523,6 +240,71 @@ def _cmd_env(_: argparse.Namespace) -> int:
     return 0
 
 
+def _cmd_info(ns: argparse.Namespace) -> int:
+    """Handle `cmi info` subcommands.
+
+    Parameters
+    ----------
+    ns : argparse.Namespace
+        Parsed arguments for the info subparser.
+
+    Returns
+    -------
+    int
+        Exit code (``0`` on success; non-zero on failure).
+    """
+    packsmanager = PacksManager()
+    profilemanager = ProfilesManager()
+    if ns.info_cmd is None:
+        packsmanager.print_info()
+        print("\nINFO: Run `cmi info -h` for more options.")
+        return 0
+    if ns.info_cmd == "packs":
+        packsmanager.print_packs()
+        return 0
+    if ns.info_cmd == "profiles":
+        profilemanager.print_profiles()
+        return 0
+    if ns.info_cmd == "examples":
+        packsmanager.print_examples()
+        return 0
+    ns._parser.print_help()
+    return 2
+
+
+def _cmd_copy(ns: argparse.Namespace) -> int:
+    """Handle `cmi copy` subcommand for copying example directories.
+
+    Parameters
+    ----------
+    ns : argparse.Namespace
+        Parsed arguments for the copy subparser.
+
+    Returns
+    -------
+    int
+        Exit code (``0`` on success; non-zero on failure).
+    """
+    names = getattr(ns, "name", None)
+    target_dir = getattr(ns, "target_dir", None)
+    force = getattr(ns, "force", False)
+
+    if not names:
+        plog.error(
+            "Missing example name(s). Use `cmi info examples` to see options."
+        )
+        ns._parser.print_help()
+        return 1
+
+    try:
+        pkm = PacksManager()
+        pkm.copy_examples(names, target_dir=target_dir, force=force)
+        return 0
+    except FileNotFoundError as e:
+        plog.error("%s", e)
+        return 1
+
+
 def main(argv: Optional[List[str]] = None) -> int:
     """Run the CMI CLI.
 
@@ -538,27 +320,20 @@ def main(argv: Optional[List[str]] = None) -> int:
     """
     parser = _build_parser()
     ns = parser.parse_args(argv)
-
     set_log_mode(ns.verbose)
-
     if ns.manual:
         open_manual_and_exit()
-
     if ns.cmd is None:
         parser.print_help()
         return 2
-
-    if ns.cmd == "example":
-        return _cmd_example(ns)
-    if ns.cmd == "pack":
-        return _cmd_pack(ns)
-    if ns.cmd == "profile":
-        return _cmd_profile(ns)
+    if ns.cmd == "info":
+        return _cmd_info(ns)
+    if ns.cmd == "copy":
+        return _cmd_copy(ns)
     if ns.cmd == "install":
         return _cmd_install(ns)
     if ns.cmd == "env":
         return _cmd_env(ns)
-
     plog.error("Unknown command: %s", ns.cmd)
     return 2
 
