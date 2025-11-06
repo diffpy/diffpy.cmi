@@ -146,7 +146,7 @@ class PacksManager:
         ----------
         examples_to_copy : list of str
             User-specified pack(s), example(s), or "all" to copy all.
-        target_dir : pathlib.Path, optional
+        target_dir : pathlib.Path or str, optional
             Target directory to copy examples into. Defaults to current
             working directory.
         force : bool, optional
