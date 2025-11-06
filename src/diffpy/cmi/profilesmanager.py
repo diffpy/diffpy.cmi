@@ -149,7 +149,7 @@ class ProfilesManager:
         name = data.get("name") or path.stem
         return Profile(name=name, packs=packs, extras=extras, source=path)
 
-    def list_profiles(self) -> List[str]:
+    def available_profiles(self) -> List[str]:
         """Return available installed profiles by basename.
 
         Returns
@@ -198,3 +198,26 @@ class ProfilesManager:
             plog.error("Profile '%s' installation failed.", prof.name)
 
         return exit_code
+
+    def print_profiles(self) -> None:
+        """Print available and installed profiles."""
+        installed_profiles, uninstalled_profiles = [], []
+        for profile_name in self.available_profiles():
+            if self.check_profile(profile_name):
+                installed_profiles.append(profile_name)
+            else:
+                uninstalled_profiles.append(profile_name)
+        print("\nInstalled Profiles:")
+        print("-------------------")
+        if not installed_profiles:
+            print("  (none)")
+        else:
+            for profile in installed_profiles:
+                print(f"  {profile}")
+        print("\nAvailable Profiles:")
+        print("-------------------")
+        if not uninstalled_profiles:
+            print("  (all profiles installed)")
+        else:
+            for profile in uninstalled_profiles:
+                print(f"  {profile}")
