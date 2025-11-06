@@ -52,10 +52,24 @@ def _build_parser() -> argparse.ArgumentParser:
     p = argparse.ArgumentParser(
         prog="cmi",
         description=(
-            "Welcome to diffpy.cmi, a complex modeling infrastructure "
-            "for multi-modal analysis of scientific data.\n\n"
+            """\
+Welcome to diffpy.cmi, a complex modeling infrastructure for
+multi-modal analysis of scientific data.
+
+Diffpy.cmi is designed as an extensible complex modeling
+infrastructure. Users and developers can readily integrate
+novel data types and constraints into custom workflows. While
+widely used for advanced analysis of structural data, the
+framework is general and can be applied to any problem where
+model parameters are refined to fit calculated quantities to
+data.
+
+Diffpy.cmi is comprised of modular units called 'packs' and
+'profiles' that facilitate tailored installations for specific
+scientific applications. Run 'cmi info -h' for more details.
+"""
         ),
-        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+        formatter_class=argparse.RawDescriptionHelpFormatter,
     )
     p.add_argument(
         "-v", "--verbose", action="store_true", help="Enable debug logging."
@@ -67,13 +81,32 @@ def _build_parser() -> argparse.ArgumentParser:
         version=f"diffpy.cmi {__version__}",
     )
     p.add_argument(
-        "--manual", action="store_true", help="Open manual and exit."
+        "--manual",
+        action="store_true",
+        help="Open online documentation and exit.",
     )
     p.set_defaults()
     sub = p.add_subparsers(dest="cmd", metavar="<command>")
     # example
     p_info = sub.add_parser(
-        "info", help="Show info about packs, profiles, and examples."
+        "info",
+        help=("Prints info about packs, profiles, and examples.\n "),
+        description=(
+            """
+Definitions:
+pack:       A collection of data processing routines, models, and examples.
+            For example, the 'pdf' pack contains packages used for modeling
+            and refinement of the Atomic Pair Distribution Function (PDF).
+
+profile:    A set of pre-defined packs or configurations for a specific
+            scientific workflow. Profiles can be installed or customized
+            for different use cases.
+
+examples:   Example scripts or folders that can be copied locally using
+            'cmi copy <example_name>'.
+    """
+        ),
+        formatter_class=argparse.RawDescriptionHelpFormatter,
     )
     p_info.set_defaults()
     sub_info = p_info.add_subparsers(dest="info_cmd", metavar="<command>")
