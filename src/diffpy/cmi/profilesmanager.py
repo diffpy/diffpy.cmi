@@ -45,6 +45,19 @@ class Profile:
         Extra requirement lines (scripts or packages).
     source : path-like
         Absolute path to the YAML file that defined the profile.
+
+    Profile Format
+    --------------
+    All profile `.yaml` files must have the following structure::
+
+        packs:
+            - <pack_name>
+
+        extras:
+            - <additional_package_name>
+
+    The file name is the profile identifier used for installing profiles.
+    See `requirements/profiles/all.yml` for an example.
     """
 
     name: str
