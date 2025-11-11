@@ -20,12 +20,3 @@ all
 packs: ``core``, ``pdf``, ``plotting``
 
 extras: ``ipykernel``
-
-
-====
-blah
-====
-
-packs: ``thing``
-
-extras: ``ipykernel``

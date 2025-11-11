@@ -1,5 +1,5 @@
 ======================
-Tutorials
+Examples by pack
 ======================
 
 .. toctree::

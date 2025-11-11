@@ -113,7 +113,7 @@ Table of contents
     :maxdepth: 1
     :caption: EXAMPLES & MORE
 
-    tutorials/index
+    Examples <tutorials/index>
 
 .. toctree::
     :maxdepth: 1

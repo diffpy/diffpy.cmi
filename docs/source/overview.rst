@@ -32,7 +32,7 @@ While its most commonly used functionality is in atomic pair distribution functi
     :width: 500px
     :align: center
 
-To make ``diffpy.cmi`` easy to use and extend, we organize functionality into **Packs** and **Profiles**, allowing users to contribute their own modules and workflows seamlessly.
+To make ``diffpy.cmi`` easy to use, we organize functionality into **Packs** and **Profiles**, allowing users to contribute their own modules and workflows seamlessly.
 
 .. _whats-a-pack:
 
@@ -47,9 +47,8 @@ For example, the ``pdf`` pack is designed to handle pair distribution function (
 ``diffpy.srreal`` and ``pyobjcryst``.
 
 
-===========
 Why Packs?
-===========
+-----------
 
 ``diffpy.cmi`` is designed to be a centeralized place for all regression tasks. If a user wants to use ``diffpy.cmi`` for one specific regression task
 and not another, they can do so without having to install unnecessary packages. This design limits version conflicts between packages
@@ -57,9 +56,8 @@ that may arise if all packages were bundled together.
 
 Overall, having a modular way to add new functionality is essential in keeping the codebase maintainable and user-friendly!
 
-=========================
 How to contribute a Pack
-=========================
+-------------------------
 
 Have you built a new workflow you'd like to implement into ``diffpy.cmi``?
 We would love to **highlight your extension or application!**
@@ -89,16 +87,14 @@ adapted to their specific needs. Profiles are designed to be simpler than packs,
 
 For example, the profile ``all`` contains the ``plotting`` and ``pdf`` packs. Additionally, it contains the package ``ipykernel`` to enable Jupyter Notebook support.
 
-===================
 Why Profiles?
-===================
+-------------------
 
 Profiles are useful because they allow users to quickly set up and run modeling workflows without needing to configure each component individually.
 Running a simple command ``cmi install <profile_name>`` will install all necessary packs and dependencies for that profile.
 
-============================
 How to contribute a Profile
-============================
+---------------------------
 
 Have you built a new modeling workflow that you'd like to share with the community?
 We would love to **highlight your extension or application!**

@@ -2,6 +2,8 @@
 pdf
 ===
 
+To copy an example to your current working directory, use the command ``cmi copy <example-name>``.
+
 Available Examples
 ------------------
 - ch03NiModelling
@@ -12,7 +14,7 @@ Available Examples
 - ch11ClusterXYZ
 
 Ni PDF Fitting Tutorial
-^^^^^^^^^^^^^^^^^^^^^^^
+-----------------------
 
 The atomic pair distribution function (PDF) provides a powerful route to understanding the local atomic structure of materials in real space.
 Despite its utility, PDF fitting and analysis can be challenging.
