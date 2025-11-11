@@ -34,7 +34,7 @@ def open_manual_and_exit() -> None:
     """
     import webbrowser
 
-    url = "https://www.diffpy.org/products/diffpycmi"
+    url = "diffpy.org/diffpy.cmi"
     plog.info("Opening manual at %s", url)
     webbrowser.open(url)
     raise SystemExit(0)
