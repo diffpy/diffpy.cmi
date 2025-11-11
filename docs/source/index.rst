@@ -14,7 +14,7 @@ diffpy.cmi is a community-driven project that supports Unix, Linux, macOS, and W
 
 .. image:: ./img/diffpycmi_screenshot.png
     :alt: codecov-in-pr-comment
-    :width: 400px
+    :width: 600px
     :align: center
 
 =======================================
@@ -22,24 +22,35 @@ Community Use and Extensible Modeling
 =======================================
 
 One of the key strengths of ``diffpy.cmi`` is its modular design, which allows the integration and fitting of *any* data type, not just PDFs.
-While its current core functionality is in PDF modeling and multi-dataset fitting, **we actively encourage and support community-developed modules and workflows for any data types you see fit!**
+While its most commonly used functionality is in PDF modeling and multi-dataset fitting, **we actively encourage and support community-developed modules and workflows for any data types you see fit!**
 
 .. image:: ./img/cmi_problem_types.png
     :alt: codecov-in-pr-comment
     :width: 500px
     :align: center
 
-Have you built a new workflow you'd like to implement into ``diffpy.cmi``?
-We would love to **highlight your extension or application!**
-
-1. **Share your work:** Please `open an issue or a pull request <https://github.com/diffpy/diffpy.cmi>`_ to share your work and help us expand the platform.
-2. **Be recognized:** Community contributions and new use cases will be showcased and credited here.
+To make ``diffpy.cmi`` easy to use and easy to contribute to, we've developed the concepts of **Packs** and **Profiles**.
+Please see below for more information on these concepts and how you can contribute your own extensions to the community!
 
 ===============
 Getting started
 ===============
 
-To get started, please visit the :ref:`Getting started <getting-started>` page.
+To get started, please visit the :ref:`Getting started <installation>` page.
+
+
+.. image:: ./img/pdfprimer.png
+    :alt: codecov-in-pr-comment
+    :width: 150px
+    :align: right
+
+For detailed instructions and in-depth examples of modeling Pair Distribution Function data with ``diffpy.cmi``, we highly recommend the book,
+
+*Atomic Pair Distribution Function Analysis: A Primer* by Simon J. L. Billinge and Kirsten M. Ø. Jensen (Oxford University Press, 2023).
+
+To purchase this book, please visit `this link <https://www.amazon.com/Atomic-Pair-Distribution-Function-Analysis/dp/0198885806>`_.
+
+
 
 =======
 Authors
@@ -76,14 +87,41 @@ If you use ``diffpy.cmi`` in a scientific publication, we would like you to cite
 =================
 Table of contents
 =================
-.. toctree::
-   :maxdepth: 2
 
-   getting-started
-   Tutorials <tutorials/index>
-   Package API <api/diffpy.cmi>
-   release
-   license
+.. toctree::
+    :maxdepth: 1
+    :caption: WHAT IS DIFFPY.CMI?
+
+    Overview <overview.rst>
+
+.. toctree::
+    :maxdepth: 1
+    :caption: GETTING STARTED
+
+    Installation <installation>
+    Command-Line Interface <cli-commands>
+    Package API <api/diffpy.cmi>
+
+.. toctree::
+    :maxdepth: 1
+    :caption: AVAILABLE PACKS & PROFILES
+
+    Packs <available-packs>
+    Profiles <available-profiles>
+
+.. toctree::
+    :maxdepth: 1
+    :caption: EXAMPLES & MORE
+
+    tutorials/index
+
+.. toctree::
+    :maxdepth: 1
+    :caption: REFERENCE
+
+    Release notes <release>
+    License <license>
+
 
 =======
 Indices

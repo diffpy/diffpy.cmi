@@ -13,10 +13,13 @@
 # All configuration values have a default; values that are commented out
 # serve to show the default.
 
+import re
 import sys
 import time
 from importlib.metadata import version
 from pathlib import Path
+
+import yaml
 
 # Attempt to import the version dynamically from GitHub tag.
 try:
@@ -148,6 +151,7 @@ html_context = {
 #
 html_theme_options = {
     "navigation_with_keys": "true",
+    "logo_only": True,
 }
 
 # Add any paths that contain custom themes here, relative to this directory.
@@ -321,3 +325,238 @@ texinfo_documents = [
 
 # Example configuration for intersphinx: refer to the Python standard library.
 # intersphinx_mapping = {'http://docs.python.org/': None}
+
+
+def generate_tutorial_docs():
+    """Generate or update per-pack tutorial .rst files and index.
+
+    Structure:
+    docs/source/tutorials/
+        index.rst          <- lists all <pack>.rst files
+        core.rst
+        pdf.rst
+        etc.
+
+    Rules:
+      - Each <pack>.rst lists its examples and a note block for user tutorials.
+      - Rebuilding docs is idempotent (no duplication).
+      - index.rst always matches the current set of packs.
+    """
+    root = Path(__file__).parent.parent  # docs/
+    examples_dir = root / "examples"
+    tutorials_dir = (
+        Path(__file__).parent / "tutorials"
+    )  # docs/source/tutorials/
+    tutorials_dir.mkdir(parents=True, exist_ok=True)
+
+    packs = sorted([p for p in examples_dir.iterdir() if p.is_dir()])
+
+    # --- Generate or update tutorials/index.rst ---
+    index_rst = tutorials_dir / "index.rst"
+    index_header = """Tutorials
+---------
+
+This page provides tutorials and example workflows
+for each ``diffpy.cmi`` pack.
+
+.. toctree::
+   :maxdepth: 1
+
+"""
+    toctree_entries = "\n".join(f"   {pack.name}" for pack in packs) + "\n"
+
+    desired_index = index_header + toctree_entries
+
+    if not index_rst.exists() or index_rst.read_text() != desired_index:
+        index_rst.write_text(desired_index)
+        print(f"Updated {index_rst}")
+    else:
+        print(f"{index_rst} is up to date.")
+
+    # --- Generate or update each <pack>.rst file ---
+    for pack in packs:
+        pack_name = pack.name
+        pack_rst = tutorials_dir / f"{pack_name}.rst"
+
+        # Collect example folders
+        example_dirs = sorted([d for d in pack.iterdir() if d.is_dir()])
+        example_list = (
+            "\n".join(f"- **{ex.name}**" for ex in example_dirs)
+            or "_No examples found._"
+        )
+
+        pack_header = f"{pack_name}\n{'-' * len(pack_name)}\n\n"
+        examples_header = (
+            "**Available Examples**\n"
+            f"{'=' * len('**Available Examples**')}\n\n"
+        )
+        examples_block = f"{examples_header}{example_list}\n\n"
+
+        if not pack_rst.exists():
+            note = (
+                ".. note::\n"
+                "   Add more tutorial material below this section.\n\n"
+            )
+            pack_rst.write_text(pack_header + examples_block + note)
+            print(f"Created {pack_rst}")
+            continue
+
+        content = pack_rst.read_text()
+
+        # Replace old examples section if it exists
+        pattern = re.compile(
+            r"(\*\*Available Examples\*\*[\s\S]*?)(?=\n\n\.\. note::|\Z)",
+            re.MULTILINE,
+        )
+        if pattern.search(content):
+            updated = pattern.sub(examples_block.strip() + "\n\n", content)
+        else:
+            # Insert examples section after header if missing
+            header_pattern = re.compile(rf"^{pack_name}\n-+\n\n", re.MULTILINE)
+            if header_pattern.search(content):
+                updated = header_pattern.sub(
+                    pack_header + examples_block, content
+                )
+            else:
+                updated = pack_header + examples_block + content
+
+        if updated != content:
+            pack_rst.write_text(updated)
+            print(f"Updated {pack_rst}")
+        else:
+            print(f"No changes needed in {pack_rst}")
+
+
+generate_tutorial_docs()
+
+
+def generate_available_packs_rst():
+    """Generate or update docs/source/available-packs.rst with pack
+    dependencies."""
+    root = Path(__file__).parent.parent.parent
+    packs_dir = root / "requirements" / "packs"
+    source_dir = root / "docs" / "source"
+    cmi_rst = source_dir / "available-packs.rst"
+
+    header = """Packs
+-----
+
+This page lists the dependencies required by each ``diffpy.cmi`` pack.
+
+"""
+    pack_files = sorted(packs_dir.glob("*.txt"))
+    if cmi_rst.exists():
+        content = cmi_rst.read_text()
+        existing_packs = set(
+            re.findall(
+                r"^=+\n([A-Za-z0-9_\-]+)\n=+", content, flags=re.MULTILINE
+            )
+        )
+    else:
+        cmi_rst.write_text(header)
+        content = header
+        existing_packs = set()
+    new_sections = []
+    for pack_file in pack_files:
+        pack_name = pack_file.stem
+        if pack_name in existing_packs:
+            continue
+        dependencies = [
+            line.strip()
+            for line in pack_file.read_text().splitlines()
+            if line.strip()
+        ]
+        if dependencies:
+            deps_list = "\n".join(f"- ``{dep}``" for dep in dependencies)
+        else:
+            deps_list = "_No dependencies listed._"
+        underline = "=" * len(pack_name)
+        section = f"""\n{underline}
+{pack_name}
+{underline}
+{deps_list}
+
+"""
+        new_sections.append(section)
+    if new_sections:
+        with open(cmi_rst, "a") as f:
+            f.writelines(new_sections)
+        print(f"Appended {len(new_sections)} new pack(s) to {cmi_rst}")
+    else:
+        print("No new packs found. available-packs.rst is up to date.")
+
+
+generate_available_packs_rst()
+
+
+def generate_available_profiles_rst():
+    """Generate or update docs/source/available-profiles.rst listing all
+    profiles.
+
+    - If available-profiles.rst doesn't exist: create it with all profiles
+      listed.
+    - If it exists: append only new profiles (those not already present).
+    """
+    root = Path(__file__).parent.parent.parent
+    profiles_dir = root / "requirements" / "profiles"
+    source_dir = root / "docs" / "source"
+    rst_file = source_dir / "available-profiles.rst"
+
+    header = """Profiles
+--------
+
+This page lists the packs and extra dependencies
+required by each ``diffpy.cmi`` profile.
+
+"""
+    source_dir.mkdir(parents=True, exist_ok=True)
+    if rst_file.exists():
+        content = rst_file.read_text()
+        existing_profiles = set(
+            re.findall(
+                r"^=+\n([A-Za-z0-9_\-]+)\n=+", content, flags=re.MULTILINE
+            )
+        )
+    else:
+        rst_file.write_text(header)
+        content = header
+        existing_profiles = set()
+    profile_files = sorted(profiles_dir.glob("*.yml"))
+    new_sections = []
+    for profile_file in profile_files:
+        profile_name = profile_file.stem
+        if profile_name in existing_profiles:
+            continue  # skip existing profiles
+        data = yaml.safe_load(profile_file.read_text())
+        packs = data.get("packs", [])
+        extras = data.get("extras", [])
+        packs_str = (
+            ", ".join(f"``{pack}``" for pack in packs)
+            if packs
+            else "_No packs listed_"
+        )
+        extras_str = (
+            ", ".join(f"``{extra}``" for extra in extras)
+            if extras
+            else "_No extras listed_"
+        )
+        underline = "=" * len(profile_name)
+        section = f"""\n{underline}
+{profile_name}
+{underline}
+
+packs: {packs_str}
+
+extras: {extras_str}
+
+"""
+        new_sections.append(section)
+    if new_sections:
+        with open(rst_file, "a") as f:
+            f.writelines(new_sections)
+        print(f"Appended {len(new_sections)} new profile(s) to {rst_file}")
+    else:
+        print("No new profiles found. available-profiles.rst is up to date.")
+
+
+generate_available_profiles_rst()
