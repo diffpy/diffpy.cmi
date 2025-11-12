@@ -23,8 +23,6 @@ Now, open up a new Python script and start by importing the necessary modules,
 
 .. code-block:: python
 
-    from __future__ import print_function
-
     import matplotlib.pyplot as plt
     import numpy as np
     from scipy.optimize import leastsq
