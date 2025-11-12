@@ -115,6 +115,7 @@ Table of contents
 
     Installation <installation>
     Command-Line Interface <cli-commands>
+    Tutorial diffpy.cmi Script <writing-script>
     Package API <api/diffpy.cmi>
 
 .. toctree::
