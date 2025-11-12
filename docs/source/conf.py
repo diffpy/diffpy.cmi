@@ -13,13 +13,10 @@
 # All configuration values have a default; values that are commented out
 # serve to show the default.
 
-import re
 import sys
 import time
 from importlib.metadata import version
 from pathlib import Path
-
-import yaml
 
 # Attempt to import the version dynamically from GitHub tag.
 try:
@@ -325,135 +322,3 @@ texinfo_documents = [
 
 # Example configuration for intersphinx: refer to the Python standard library.
 # intersphinx_mapping = {'http://docs.python.org/': None}
-
-
-def generate_available_packs_rst():
-    """Generate or update docs/source/available-packs.rst with pack
-    dependencies."""
-    root = Path(__file__).parent.parent.parent
-    packs_dir = root / "requirements" / "packs"
-    source_dir = root / "docs" / "source"
-    cmi_rst = source_dir / "available-packs.rst"
-
-    header = """Packs
------
-
-This page lists the dependencies required by each ``diffpy.cmi`` pack.
-
-"""
-    pack_files = sorted(packs_dir.glob("*.txt"))
-    if cmi_rst.exists():
-        content = cmi_rst.read_text()
-        existing_packs = set(
-            re.findall(
-                r"^=+\n([A-Za-z0-9_\-]+)\n=+", content, flags=re.MULTILINE
-            )
-        )
-    else:
-        cmi_rst.write_text(header)
-        content = header
-        existing_packs = set()
-    new_sections = []
-    for pack_file in pack_files:
-        pack_name = pack_file.stem
-        if pack_name in existing_packs:
-            continue
-        dependencies = [
-            line.strip()
-            for line in pack_file.read_text().splitlines()
-            if line.strip()
-        ]
-        if dependencies:
-            deps_list = "\n".join(f"- ``{dep}``" for dep in dependencies)
-        else:
-            deps_list = "_No dependencies listed._"
-        underline = "=" * len(pack_name)
-        section = f"""\n{underline}
-{pack_name}
-{underline}
-{deps_list}
-
-"""
-        new_sections.append(section)
-    if new_sections:
-        with open(cmi_rst, "a") as f:
-            f.writelines(new_sections)
-        print(f"Appended {len(new_sections)} new pack(s) to {cmi_rst}")
-    else:
-        print("No new packs found. available-packs.rst is up to date.")
-
-
-generate_available_packs_rst()
-
-
-def generate_available_profiles_rst():
-    """Generate or update docs/source/available-profiles.rst listing all
-    profiles.
-
-    - If available-profiles.rst doesn't exist: create it with all profiles
-      listed.
-    - If it exists: append only new profiles (those not already present).
-    """
-    root = Path(__file__).parent.parent.parent
-    profiles_dir = root / "requirements" / "profiles"
-    source_dir = root / "docs" / "source"
-    rst_file = source_dir / "available-profiles.rst"
-
-    header = """Profiles
---------
-
-This page lists the packs and extra dependencies
-required by each ``diffpy.cmi`` profile.
-
-"""
-    source_dir.mkdir(parents=True, exist_ok=True)
-    if rst_file.exists():
-        content = rst_file.read_text()
-        existing_profiles = set(
-            re.findall(
-                r"^=+\n([A-Za-z0-9_\-]+)\n=+", content, flags=re.MULTILINE
-            )
-        )
-    else:
-        rst_file.write_text(header)
-        content = header
-        existing_profiles = set()
-    profile_files = sorted(profiles_dir.glob("*.yml"))
-    new_sections = []
-    for profile_file in profile_files:
-        profile_name = profile_file.stem
-        if profile_name in existing_profiles:
-            continue  # skip existing profiles
-        data = yaml.safe_load(profile_file.read_text())
-        packs = data.get("packs", [])
-        extras = data.get("extras", [])
-        packs_str = (
-            ", ".join(f"``{pack}``" for pack in packs)
-            if packs
-            else "_No packs listed_"
-        )
-        extras_str = (
-            ", ".join(f"``{extra}``" for extra in extras)
-            if extras
-            else "_No extras listed_"
-        )
-        underline = "=" * len(profile_name)
-        section = f"""\n{underline}
-{profile_name}
-{underline}
-
-packs: {packs_str}
-
-extras: {extras_str}
-
-"""
-        new_sections.append(section)
-    if new_sections:
-        with open(rst_file, "a") as f:
-            f.writelines(new_sections)
-        print(f"Appended {len(new_sections)} new profile(s) to {rst_file}")
-    else:
-        print("No new profiles found. available-profiles.rst is up to date.")
-
-
-generate_available_profiles_rst()
