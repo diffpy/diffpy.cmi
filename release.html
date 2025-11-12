@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Release notes &mdash; diffpy.cmi 3.1.0rc1 documentation</title>
+  <title>Release notes &mdash; diffpy.cmi 3.1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
@@ -15,7 +15,7 @@
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=0b8af8e2"></script>
+      <script src="_static/documentation_options.js?v=0ffc2956"></script>
       <script src="_static/doctools.js?v=9bcbadda"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="_static/clipboard.min.js?v=a7894cd8"></script>
@@ -69,7 +69,8 @@
 <p class="caption" role="heading"><span class="caption-text">REFERENCE</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Release notes</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#id1">0.0.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id1">3.1.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">0.0.1</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
@@ -102,7 +103,45 @@
   <section id="release-notes">
 <span id="index-0"></span><h1>Release notes<a class="headerlink" href="#release-notes" title="Link to this heading"></a></h1>
 <section id="id1">
-<h2>0.0.1<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
+<h2>3.1.0<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
+<p><strong>Added:</strong></p>
+<ul class="simple">
+<li><p>Add test for <code class="docutils literal notranslate"><span class="pre">copy_examples</span></code>.</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">print_info</span></code> function.</p></li>
+<li><p>Add workflow to run <code class="docutils literal notranslate"><span class="pre">examples/validate_examples.py</span></code> manually.</p></li>
+<li><p>Add modules <code class="docutils literal notranslate"><span class="pre">cli</span></code>, <code class="docutils literal notranslate"><span class="pre">conda</span></code>, <code class="docutils literal notranslate"><span class="pre">installer</span></code>, <code class="docutils literal notranslate"><span class="pre">log</span></code>, <code class="docutils literal notranslate"><span class="pre">packsmanager</span></code>, <code class="docutils literal notranslate"><span class="pre">profilesmanager</span></code>.</p></li>
+<li><p>Add cmi cli commands for managing/installing profiles and packs; example and manual commands.</p></li>
+<li><p>Add <cite>all.yml</cite> for profile installation demonstration.</p></li>
+<li><p>Add <cite>_tests.yml</cite> profile for profile post-steps demonstration.</p></li>
+<li><p>Add test for building examples dict.</p></li>
+<li><p>Add tests that run PDF example scripts</p></li>
+<li><p>Add example for installing pdf pack and add example scripts.</p></li>
+<li><p>Add line fitting example.</p></li>
+<li><p>Add functionality for copying examples.</p></li>
+<li><p>Add temp dir fixture for testing.</p></li>
+<li><p>Add BG stylesheets for plotting.</p></li>
+<li><p>Add tutorial on <cite>linefit</cite> to documentation.</p></li>
+<li><p>Add installation instructions for packs.</p></li>
+<li><p>Add diffpy.cmi as entrypoint.</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">print_profiles</span></code> function.</p></li>
+<li><p>Add comprehensive documentation highlighting new cli changes.</p></li>
+</ul>
+<p><strong>Changed:</strong></p>
+<ul class="simple">
+<li><p>Changed workflow so that <code class="docutils literal notranslate"><span class="pre">validate_examples.py</span></code> is ran only on manual triggers.</p></li>
+<li><p>Update names to skpkg standard.</p></li>
+<li><p>Change requirements dir for packs and profiles management.</p></li>
+<li><p>Change example dict build process.</p></li>
+<li><p>Changed the cli syntax.</p></li>
+<li><p>change examples directory structure to insert the name of the <a href="#id2"><span class="problematic" id="id3">``</span></a>pack” that the examples exemplify.</p></li>
+</ul>
+<p><strong>Fixed:</strong></p>
+<ul class="simple">
+<li><p>Fixed how paths are handled in tests for different operating systems.</p></li>
+</ul>
+</section>
+<section id="id4">
+<h2>0.0.1<a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
 <p><strong>Added:</strong></p>
 <ul class="simple">
 <li><p>Add CLI to return diffpy.cmi version and help page.</p></li>
