@@ -11,6 +11,7 @@ assignees: ""
 - [ ] Fork and clone this repository and cd to the top level by running `cd diffpy.cmi`.
 - [ ] Create a requirements file by running `touch requirements/profiles/<your-profile-name>.yml`. List all packs used in this profile under the header `packs:` in a bulleted list. All additional packages used (if any) should be listed under `extras:` in a similar fashion (see [this file](https://github.com/diffpy/diffpy.cmi/blob/main/requirements/profiles/all.yml) for reference). If no additional packages are required, add the `extras:` header but leave the entries empty.
 - [ ] List your profile and its dependencies under `docs/source/available-profiles.rst` using the same format as the other profiles. In this same file, add a description of your profile (1-2 sentences is recommended).
+- [ ] Give yourself credit by listing your name and contributors to the profile you've created!
 
 ## Local testing
 

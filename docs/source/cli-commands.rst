@@ -2,6 +2,8 @@
 
 .. index:: cli-commands
 
+.. _cli-commands:
+
 CMI Command-Line Interface (CLI)
 --------------------------------
 

@@ -1,6 +1,6 @@
 **Added:**
 
-* Added comprehensive documentation highlighting new cli changes.
+* Add comprehensive documentation highlighting new cli changes.
 
 **Changed:**
 

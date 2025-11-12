@@ -10,6 +10,8 @@ core
 
 The ``core`` pack provides the essential building blocks for creating and running regression workflows in ``diffpy.cmi``.
 
+This pack was created by members of the Billinge Group and the DiffPy community.
+
 - ``packaging``
 - ``PyYAML``
 - ``diffpy.utils``
@@ -21,6 +23,8 @@ pdf
 ===
 
 The ``pdf`` pack is designed to handle pair distribution function (PDF) modeling and analysis.
+
+This pack was created by members of the Billinge Group and the DiffPy community.
 
 - ``diffpy.srreal``
 - ``pyobjcryst``

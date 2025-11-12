@@ -8,9 +8,15 @@
 
 ``diffpy.cmi`` - Complex modeling infrastructure: a modular framework for multi-modal modeling of scientific data.
 
-diffpy.cmi is designed as an extensible complex modeling infrastructure. Users and developers can readily integrate novel data types and constraints into custom workflows. While widely used for advanced analysis of structural data, the framework is general and can be applied to any problem where model parameters are refined to fit calculated quantities to data.
+``diffpy.cmi`` is designed as an extensible complex modeling infrastructure.
+Users and developers can readily integrate novel data types and constraints into custom workflows.
+While widely used for advanced analysis of structural data, the framework is general and can be applied to any problem where
+model parameters are refined to fit data.
 
-diffpy.cmi is a community-driven project that supports Unix, Linux, macOS, and Windows platforms. It is designed to be used in Python scripts enabling flexible scripting and automation for advanced and reproducible workflows. Users are encouraged to leverage the software for their modeling needs and to contribute feedback, use cases, and extensions through the project community.
+``diffpy.cmi`` is a community-driven project that supports Unix, Linux, macOS, and Windows platforms.
+It is designed to be used in Python scripts enabling flexible scripting and automation for advanced and reproducible workflows.
+Users are encouraged to leverage the software for their modeling needs and to contribute feedback,
+use cases, and extensions through the project community.
 
 .. image:: ./img/diffpycmi_screenshot.png
     :alt: codecov-in-pr-comment
@@ -18,25 +24,34 @@ diffpy.cmi is a community-driven project that supports Unix, Linux, macOS, and W
     :align: center
 
 =======================================
-Community Use and Extensible Modeling
+The power of diffpy.cmi
 =======================================
 
-One of the key strengths of ``diffpy.cmi`` is its modular design, which allows the integration and fitting of *any* data type, not just PDFs.
-While its most commonly used functionality is in PDF modeling and multi-dataset fitting, **we actively encourage and support community-developed modules and workflows for any data types you see fit!**
+``diffpy.cmi`` is designed to be a **generalized regression engine** for any data type, enabling researchers to fit, analyze, and combine multiple sources of information in a unified framework.
+
+.. raw:: html
+
+    <div style="border: 4px solid #555; border-radius: 8px; padding: 10px; margin: 1em 0; text-align: center; background-color: #f8f8f8;">
+        <strong>diffpy.cmi can be used to fit ANY type of data!</strong>
+    </div>
+
+One of the key strengths of ``diffpy.cmi`` is its modular design, which allows the integration and fitting of *any* data type.
+While its most commonly used functionality is in pair distribution function (PDF) modeling and multi-dataset fitting,
+**we actively encourage and support community-developed modules and workflows for any data types you see fit!**
 
 .. image:: ./img/cmi_problem_types.png
     :alt: codecov-in-pr-comment
     :width: 500px
     :align: center
 
-To make ``diffpy.cmi`` easy to use and easy to contribute to, we've developed the concepts of **Packs** and **Profiles**.
-Please see below for more information on these concepts and how you can contribute your own extensions to the community!
+To make ``diffpy.cmi`` easy to use, we organize functionality into **Packs** and **Profiles**, allowing users to contribute their own modules and workflows seamlessly.
+Please see the :ref:`overview <overview>` for more information on these concepts and how you can contribute your own extensions to the community!
 
 ===============
 Getting started
 ===============
 
-To get started, please visit the :ref:`Getting started <installation>` page.
+To get started, please visit the :ref:`Getting started <installation>` section.
 
 
 .. image:: ./img/pdfprimer.png
@@ -63,7 +78,7 @@ https://github.com/diffpy/diffpy.cmi/graphs/contributors.
 Installation
 ============
 
-See the `README <https://github.com/diffpy/diffpy.cmi#installation>`_
+See the :ref:`installation` page or the `README <https://github.com/diffpy/diffpy.cmi#installation>`_
 file included with the distribution.
 
 ================
