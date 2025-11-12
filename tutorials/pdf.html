@@ -1,0 +1,475 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>pdf &mdash; diffpy.cmi 3.1.0rc0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../_static/wrap_table.css?v=dc09091b" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=a2ca8c84"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../_static/copybutton.js?v=cca77546"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Release notes" href="../release.html" />
+    <link rel="prev" title="core" href="core.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html">
+            
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">WHAT IS DIFFPY.CMI?</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">Overview</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">GETTING STARTED</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli-commands.html">Command-Line Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../writing-script.html">Tutorial diffpy.cmi Script</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/diffpy.cmi.html">Package API</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">AVAILABLE PACKS &amp; PROFILES</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../available-packs.html">Packs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../available-profiles.html">Profiles</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">EXAMPLES &amp; MORE</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="core.html">core</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">pdf</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#available-examples">Available Examples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ni-pdf-fitting-tutorial">Ni PDF Fitting Tutorial</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#structural-parameters">Structural parameters</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dataset-parameters">Dataset parameters</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#bulk-ni-pdf-fitting">Bulk Ni PDF fitting</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">REFERENCE</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../release.html">Release notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">License</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">diffpy.cmi</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Examples by pack</a></li>
+      <li class="breadcrumb-item active">pdf</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/diffpy/diffpy.cmi/blob/main/doc/source/tutorials/pdf.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="pdf">
+<h1>pdf<a class="headerlink" href="#pdf" title="Link to this heading"></a></h1>
+<p>To copy an example to your current working directory, use the command <code class="docutils literal notranslate"><span class="pre">cmi</span> <span class="pre">copy</span> <span class="pre">&lt;example-name&gt;</span></code>.</p>
+<section id="available-examples">
+<h2>Available Examples<a class="headerlink" href="#available-examples" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>ch03NiModelling</p></li>
+<li><p>ch05Fit2Phase</p></li>
+<li><p>ch06RefineCrystalStructureGen</p></li>
+<li><p>ch07StructuralPhaseTransitions</p></li>
+<li><p>ch08NPRefinement</p></li>
+<li><p>ch11ClusterXYZ</p></li>
+</ul>
+</section>
+<section id="ni-pdf-fitting-tutorial">
+<h2>Ni PDF Fitting Tutorial<a class="headerlink" href="#ni-pdf-fitting-tutorial" title="Link to this heading"></a></h2>
+<p>The atomic pair distribution function (PDF) provides a powerful route to understanding the local atomic structure of materials in real space.
+Despite its utility, PDF fitting and analysis can be challenging.
+The process of understand PDFs requires time, care, and the development of intuition to connect structural models to experimental data.
+Hopefully by the end of this tutorial series, PDF fitting will go from being a mysterious black box to a powerful tool in your structural analysis.</p>
+<p>Example usage of <code class="docutils literal notranslate"><span class="pre">diffpy.cmi</span></code> can be found at <a class="reference external" href="https://github.com/diffpy/pdfttp_data">this GitHub repo</a>.</p>
+<section id="structural-parameters">
+<span id="id1"></span><h3>Structural parameters<a class="headerlink" href="#structural-parameters" title="Link to this heading"></a></h3>
+<p>Before we start fitting PDFs, lets first understand the parameters that will be refined on and what they mean.
+It is important to understand these parameters as they will help you gain better insight into the fitting process and
+how to interpret the results.</p>
+<table class="wrap-text docutils align-default">
+<colgroup>
+<col style="width: 16.7%" />
+<col style="width: 50.0%" />
+<col style="width: 16.7%" />
+<col style="width: 16.7%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>PDF Parameter</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Refineable?</p></th>
+<th class="head"><p>Structural or Instrumental?</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">a</span></code>, <code class="docutils literal notranslate"><span class="pre">b</span></code>, <code class="docutils literal notranslate"><span class="pre">c</span></code></p></td>
+<td><p>Lattice parameters of the crystal structure.</p></td>
+<td><p>Yes</p></td>
+<td><p>Structural</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">alpha</span></code>, <code class="docutils literal notranslate"><span class="pre">beta</span></code>, <code class="docutils literal notranslate"><span class="pre">gamma</span></code></p></td>
+<td><p>Angles between lattice vectors</p></td>
+<td><p>Yes</p></td>
+<td><p>Structural</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">delta1</span></code></p></td>
+<td><p>Constant (r-independent) peak broadening parameter accounting for uniform broadening of PDF peaks due to static disorder or residual instrumental effects.</p></td>
+<td><p>Yes</p></td>
+<td><p>Both</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">delta2</span></code></p></td>
+<td><p>Correlated motion parameter accounting for r-dependent broadening (increases with r) of PDF peaks due to correlated atomic motion.</p></td>
+<td><p>Yes</p></td>
+<td><p>Structural</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">biso</span></code> or <code class="docutils literal notranslate"><span class="pre">Uiso</span></code></p></td>
+<td><p>Isotropic atomic displacement parameter (ADP); models thermal vibration/disorder for each atom type. (note: <code class="docutils literal notranslate"><span class="pre">biso=8*pi^2*Uiso</span></code>)</p></td>
+<td><p>Yes</p></td>
+<td><p>Structural</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">uij</span></code></p></td>
+<td><p>Anisotropic ADPs constrained by space group symmetry.</p></td>
+<td><p>Yes</p></td>
+<td><p>Structural</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">dscale</span></code></p></td>
+<td><p>Correction factor for background or density mismatch.</p></td>
+<td><p>Sometimes; often fixed</p></td>
+<td><p>Instrumental</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">sratio</span></code></p></td>
+<td><p>Ratio of coherent to incoherent scattering, used in some models.</p></td>
+<td><p>Sometimes</p></td>
+<td><p>Instrumental</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="dataset-parameters">
+<span id="id2"></span><h3>Dataset parameters<a class="headerlink" href="#dataset-parameters" title="Link to this heading"></a></h3>
+<table class="wrap-text docutils align-default">
+<colgroup>
+<col style="width: 16.7%" />
+<col style="width: 50.0%" />
+<col style="width: 16.7%" />
+<col style="width: 16.7%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>PDF Parameter</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Refineable?</p></th>
+<th class="head"><p>Structural or Instrumental?</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">scale</span></code></p></td>
+<td><p>Overall scaling factor between calculated and observed PDFs; sets the absolute intensity.</p></td>
+<td><p>Yes</p></td>
+<td><p>Instrumental</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">qdamp</span></code></p></td>
+<td><p>Damping of PDF peaks due to limited experimental Q-range. Typically affects high-r ripples and overall peak amplitudes.</p></td>
+<td><p>Yes</p></td>
+<td><p>Instrumental</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">qbroad</span></code></p></td>
+<td><p>Instrumental or sample-related broadening of PDF peaks. This is due to the fact that diffraction peaks have different widths as a function of Q.</p></td>
+<td><p>Yes</p></td>
+<td><p>Instrumental</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">qmin</span></code></p></td>
+<td><p>Minimum Q included in the fit; sets the lower bound of the fourier transform (converting S(Q) to G(r)).</p></td>
+<td><p>No, from experiment/setup</p></td>
+<td><p>Instrumental</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">qmax</span></code></p></td>
+<td><p>Maximum Q included in the fit; sets the upper bound of the fourier transform (converting S(Q) to G(r)).</p></td>
+<td><p>No, from experiment/setup</p></td>
+<td><p>Instrumental</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">rmin</span></code></p></td>
+<td><p>Minimum r (distance) included in the fit; sets the lower bound of the fitting range.</p></td>
+<td><p>No, from experiment/setup</p></td>
+<td><p>Instrumental</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">rmax</span></code></p></td>
+<td><p>Maximum r (distance) included in the fit; sets the upper bound of the fitting range.</p></td>
+<td><p>No, from experiment/setup</p></td>
+<td><p>Instrumental (unless fitting to nanoparticles)</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="bulk-ni-pdf-fitting">
+<h3>Bulk Ni PDF fitting<a class="headerlink" href="#bulk-ni-pdf-fitting" title="Link to this heading"></a></h3>
+<p>Although it is easier (and recommended) to fit PDFs of bulk homogeneous materials in <a class="reference external" href="https://github.com/diffpy/diffpy.pdfgui">PDFgui</a>,
+fitting a bulk PDF in <code class="docutils literal notranslate"><span class="pre">diffpy.cmi</span></code> will provide you with a deeper insight into the fitting process. Additionally, this pedagogical
+example will help you build up confidence in using <code class="docutils literal notranslate"><span class="pre">diffpy.cmi</span></code>.</p>
+<p>For bulk PDFs, we highly recommend using PDFgui. PDFgui is a great stepping stone before using <code class="docutils literal notranslate"><span class="pre">diffpy.cmi</span></code>.
+If you don’t know how to use PDFgui, please see this
+<a class="reference external" href="https://www.diffpy.org/diffpy.pdfgui/tutorial.html#lesson-1-creating-simple-fit-of-ni-pdf">PDFgui tutorial</a>
+to fit the same Ni PDF with PDFgui.</p>
+<div class="admonition-data-download admonition">
+<p class="admonition-title">Data Download</p>
+<p>To download the data and scripts for this fit, type in your command line,</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmi<span class="w"> </span>copy<span class="w"> </span>ch03NiModelling
+</pre></div>
+</div>
+<p>This will copy the example directory <code class="docutils literal notranslate"><span class="pre">ch03NiModelling</span></code> to your current working directory.
+Within this directory exists data for this exercise and a script to fit the bulk Ni PDF.
+Below walks you through the code in the script step-by-step.</p>
+</div>
+<ol class="arabic">
+<li><p>To start, we must first import all necessary modules and packages.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">diffpy.utils.parsers.loaddata</span><span class="w"> </span><span class="kn">import</span> <span class="n">loadData</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">diffpy.structure</span><span class="w"> </span><span class="kn">import</span> <span class="n">loadStructure</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">diffpy.srfit.fitbase</span><span class="w"> </span><span class="kn">import</span> <span class="n">FitContribution</span><span class="p">,</span> <span class="n">FitRecipe</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">diffpy.srfit.fitbase</span><span class="w"> </span><span class="kn">import</span> <span class="n">Profile</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">diffpy.srfit.pdf</span><span class="w"> </span><span class="kn">import</span> <span class="n">PDFParser</span><span class="p">,</span> <span class="n">PDFGenerator</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">diffpy.structure.parsers</span><span class="w"> </span><span class="kn">import</span> <span class="n">getParser</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">diffpy.srfit.structure</span><span class="w"> </span><span class="kn">import</span> <span class="n">constrainAsSpaceGroup</span>
+</pre></div>
+</div>
+</li>
+<li><p>As a sanity check, lets load the cif and PDF data to see what they look like.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">stru_path</span> <span class="o">=</span> <span class="s2">&quot;~/path/to/data/Ni.cif&quot;</span>
+<span class="n">data_path</span> <span class="o">=</span> <span class="s2">&quot;~/path/to/data/Ni.gr&quot;</span>
+<span class="c1"># Load the structure and PDF data</span>
+<span class="n">structure</span> <span class="o">=</span> <span class="n">loadStructure</span><span class="p">(</span><span class="n">stru_path</span><span class="p">)</span>
+<span class="n">pdf_data</span> <span class="o">=</span> <span class="n">loadData</span><span class="p">(</span><span class="n">data_path</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Ni cif file:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">structure</span><span class="p">)</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">pdf_data</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">g</span> <span class="o">=</span> <span class="n">pdf_data</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;PDF Data&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;r (Angstrom)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;G(r)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Ni PDF Data&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</li>
+<li><p>Once you see the data and have a feel for it, we can begin the fitting process. We will first define
+the <a class="reference internal" href="#dataset-parameters"><span class="std std-ref">Dataset parameters</span></a> and <a class="reference internal" href="#structural-parameters"><span class="std std-ref">Structural parameters</span></a>. These values
+will be used to initialize our fit. Given this data, these values are reasonable starting points.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">PDF_RMIN</span> <span class="o">=</span> <span class="mf">1.5</span>
+<span class="n">PDF_RMAX</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">PDF_RSTEP</span> <span class="o">=</span> <span class="mf">0.01</span>
+<span class="n">QMAX</span> <span class="o">=</span> <span class="mi">25</span>
+<span class="n">QMIN</span> <span class="o">=</span> <span class="mf">0.1</span>
+<span class="n">CUBICLAT_I</span> <span class="o">=</span> <span class="mf">3.52</span>
+<span class="n">SCALE_I</span> <span class="o">=</span> <span class="mf">0.4</span>
+<span class="n">UISO_I</span> <span class="o">=</span> <span class="mf">0.005</span>
+<span class="n">DELTA2_I</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">QDAMP_I</span> <span class="o">=</span> <span class="mf">0.04</span>
+<span class="n">QBROAD_I</span> <span class="o">=</span> <span class="mf">0.02</span>
+</pre></div>
+</div>
+</li>
+<li><p>Now, we will define a function called <code class="docutils literal notranslate"><span class="pre">make_recipe</span></code>.
+This function will essentially tell the fit what to do. It contains all the necessary parameters and
+contributions for the PDF fitting process. Because looking at a function with a lot of code is scary,
+here is a gist of what the function does.</p>
+<a class="reference internal image-reference" href="../_images/makerecipe_flow.png"><img alt="codecov-in-pr-comment" class="align-right" src="../_images/makerecipe_flow.png" style="width: 210px;" />
+</a>
+<ul class="simple">
+<li><p><strong>Parses PDF data:</strong> Given the PDF data file it extracts the Q_min and Q_max values.</p></li>
+<li><p><strong>Parses cif file:</strong> Given the cif file it extracts the structure and space group information.</p></li>
+<li><p><strong>Simulates a PDF:</strong> Given the structure, it computes a simulated PDF over predefined r-range.</p></li>
+<li><p><strong>Creates a Fit Contribution:</strong> This will hold the simulated PDF and the experimental PDF.</p></li>
+<li><p><strong>Creates a Fit Recipe:</strong> This is the main recipe that combines all contributions and parameters for the fit.</p></li>
+<li><p><strong>Refines params based on Fit Recipe:</strong> When the function is called, the parameters defined in the fit recipe are refined to best fit the data.</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">make_recipe</span><span class="p">(</span><span class="n">cif_path</span><span class="p">,</span> <span class="n">dat_path</span><span class="p">):</span>
+
+    <span class="c1"># 1. Get structural info</span>
+    <span class="n">p_cif</span> <span class="o">=</span> <span class="n">getParser</span><span class="p">(</span><span class="s1">&#39;cif&#39;</span><span class="p">)</span> <span class="c1"># Get the parser for CIF files</span>
+    <span class="n">stru</span> <span class="o">=</span> <span class="n">p_cif</span><span class="o">.</span><span class="n">parseFile</span><span class="p">(</span><span class="n">cif_path</span><span class="p">)</span> <span class="c1"># Using the parser, load the structure from the CIF</span>
+    <span class="n">sg</span> <span class="o">=</span> <span class="n">p_cif</span><span class="o">.</span><span class="n">spacegroup</span><span class="o">.</span><span class="n">short_name</span> <span class="c1"># Get the space group to constrain the fit later on</span>
+
+    <span class="c1"># 2. Get PDF data</span>
+    <span class="n">profile</span> <span class="o">=</span> <span class="n">Profile</span><span class="p">()</span> <span class="c1"># Create a Profile object to hold PDF data and metadata</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">PDFParser</span><span class="p">()</span> <span class="c1"># Create a PDFParser to get the appropriate Q_min and Q_max</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">parseFile</span><span class="p">(</span><span class="n">dat_path</span><span class="p">)</span> <span class="c1"># Parse the PDF data file</span>
+    <span class="n">profile</span><span class="o">.</span><span class="n">loadParsedData</span><span class="p">(</span><span class="n">parser</span><span class="p">)</span> <span class="c1"># Load the parsed PDF data into the profile</span>
+    <span class="n">profile</span><span class="o">.</span><span class="n">setCalculationRange</span><span class="p">(</span>
+        <span class="n">xmin</span><span class="o">=</span><span class="n">PDF_RMIN</span><span class="p">,</span> <span class="n">xmax</span><span class="o">=</span><span class="n">PDF_RMAX</span><span class="p">,</span> <span class="n">dx</span><span class="o">=</span><span class="n">PDF_RSTEP</span>
+    <span class="p">)</span>  <span class="c1"># Set the calculation range for the PDF fit</span>
+
+    <span class="c1"># 3. Create a PDFGenerator to generate a simulated PDF from the structure</span>
+    <span class="n">genpdf</span> <span class="o">=</span> <span class="n">PDFGenerator</span><span class="p">(</span><span class="s2">&quot;generatedPDF&quot;</span><span class="p">)</span> <span class="c1"># Give the generator a name</span>
+    <span class="n">genpdf</span><span class="o">.</span><span class="n">setStructure</span><span class="p">(</span><span class="n">stru</span><span class="p">,</span> <span class="n">periodic</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="c1"># Give the generator the structure</span>
+
+    <span class="c1"># 4. Create a Fit Contribution object</span>
+    <span class="n">contribution</span> <span class="o">=</span> <span class="n">FitContribution</span><span class="p">(</span><span class="s2">&quot;niPDFfit&quot;</span><span class="p">)</span> <span class="c1"># Give the contribution a name</span>
+    <span class="n">contribution</span><span class="o">.</span><span class="n">addProfileGenerator</span><span class="p">(</span><span class="n">genpdf</span><span class="p">)</span> <span class="c1"># Add the PDFGenerator to the contribution</span>
+
+    <span class="c1"># 5. Add the Profile to the contribution</span>
+    <span class="n">contribution</span><span class="o">.</span><span class="n">setProfile</span><span class="p">(</span><span class="n">profile</span><span class="p">,</span> <span class="n">xname</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="c1"># Add the Profile to the contribution</span>
+
+    <span class="c1"># 6. Set the equation used to combine the simulated PDF with the experimental PDF</span>
+    <span class="n">contribution</span><span class="o">.</span><span class="n">setEquation</span><span class="p">(</span><span class="s2">&quot;s1*generatedPDF&quot;</span><span class="p">)</span> <span class="c1"># scaling factor for the simulated PDF</span>
+
+    <span class="c1"># 7. Create a Fit Recipe which turns our physics model into a mathematical recipe</span>
+    <span class="n">recipe</span> <span class="o">=</span> <span class="n">FitRecipe</span><span class="p">()</span>
+    <span class="n">recipe</span><span class="o">.</span><span class="n">addContribution</span><span class="p">(</span><span class="n">contribution</span><span class="p">)</span> <span class="c1"># Add the contribution to the recipe</span>
+
+    <span class="c1"># 8. Initialize the experimental parameters</span>
+    <span class="n">recipe</span><span class="o">.</span><span class="n">niPDFfit</span><span class="o">.</span><span class="n">generatedPDF</span><span class="o">.</span><span class="n">qdamp</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">QDAMP_I</span>
+    <span class="n">recipe</span><span class="o">.</span><span class="n">niPDFfit</span><span class="o">.</span><span class="n">generatedPDF</span><span class="o">.</span><span class="n">qbroad</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">QBROAD_I</span>
+    <span class="n">recipe</span><span class="o">.</span><span class="n">niPDFfit</span><span class="o">.</span><span class="n">generatedPDF</span><span class="o">.</span><span class="n">setQmin</span><span class="p">(</span><span class="n">QMIN</span><span class="p">)</span>
+    <span class="n">recipe</span><span class="o">.</span><span class="n">niPDFfit</span><span class="o">.</span><span class="n">generatedPDF</span><span class="o">.</span><span class="n">setQmax</span><span class="p">(</span><span class="n">QMAX</span><span class="p">)</span>
+
+    <span class="c1"># 9. Add scaling factor to the recipe</span>
+    <span class="n">recipe</span><span class="o">.</span><span class="n">addVar</span><span class="p">(</span><span class="n">contribution</span><span class="o">.</span><span class="n">s1</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">SCALE_I</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s2">&quot;scale&quot;</span><span class="p">)</span>
+
+    <span class="c1"># 10. Add structural params to recipe, constraining them to the space group</span>
+    <span class="n">spacegroupparams</span> <span class="o">=</span> <span class="n">constrainAsSpaceGroup</span><span class="p">(</span><span class="n">genpdf</span><span class="o">.</span><span class="n">phase</span><span class="p">,</span> <span class="n">sg</span><span class="p">)</span> <span class="c1"># Extract SG constraints</span>
+    <span class="k">for</span> <span class="n">par</span> <span class="ow">in</span> <span class="n">spacegroupparams</span><span class="o">.</span><span class="n">latpars</span><span class="p">:</span> <span class="c1"># Iterate over constrained lattice parameters</span>
+        <span class="n">recipe</span><span class="o">.</span><span class="n">addVar</span><span class="p">(</span><span class="n">par</span><span class="p">,</span>
+                        <span class="n">value</span><span class="o">=</span><span class="n">CUBICLAT_I</span><span class="p">,</span>
+                        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;fcc_lat&quot;</span><span class="p">,</span>
+                        <span class="n">tag</span><span class="o">=</span><span class="s2">&quot;lat&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">par</span> <span class="ow">in</span> <span class="n">spacegroupparams</span><span class="o">.</span><span class="n">adppars</span><span class="p">:</span> <span class="c1"># Iterate over constrained ADPs</span>
+        <span class="n">recipe</span><span class="o">.</span><span class="n">addVar</span><span class="p">(</span><span class="n">par</span><span class="p">,</span>
+                        <span class="n">value</span><span class="o">=</span><span class="n">UISO_I</span><span class="p">,</span>
+                        <span class="n">fixed</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;fcc_ADP&quot;</span><span class="p">,</span>
+                        <span class="n">tag</span><span class="o">=</span><span class="s2">&quot;adp&quot;</span><span class="p">)</span>
+    <span class="n">recipe</span><span class="o">.</span><span class="n">addVar</span><span class="p">(</span><span class="n">genpdf</span><span class="o">.</span><span class="n">delta2</span><span class="p">,</span>
+                    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Ni_Delta2&quot;</span><span class="p">,</span>
+                    <span class="n">value</span><span class="o">=</span><span class="n">DELTA2_I</span><span class="p">,</span>
+                    <span class="n">tag</span><span class="o">=</span><span class="s2">&quot;d2&quot;</span><span class="p">)</span> <span class="c1"># Add delta2 parameter for PDF peak broadening</span>
+
+    <span class="c1"># 11. Add instrumental Qdamp and Qbroad parameters to the recipe</span>
+    <span class="n">recipe</span><span class="o">.</span><span class="n">addVar</span><span class="p">(</span><span class="n">genpdf</span><span class="o">.</span><span class="n">qdamp</span><span class="p">,</span>
+                    <span class="n">fixed</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Calib_Qdamp&quot;</span><span class="p">,</span>
+                    <span class="n">value</span><span class="o">=</span><span class="n">QDAMP_I</span><span class="p">,</span>
+                    <span class="n">tag</span><span class="o">=</span><span class="s2">&quot;inst&quot;</span><span class="p">)</span>
+    <span class="n">recipe</span><span class="o">.</span><span class="n">addVar</span><span class="p">(</span><span class="n">genpdf</span><span class="o">.</span><span class="n">qbroad</span><span class="p">,</span>
+                    <span class="n">fixed</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Calib_Qbroad&quot;</span><span class="p">,</span>
+                    <span class="n">value</span><span class="o">=</span><span class="n">QBROAD_I</span><span class="p">,</span>
+                    <span class="n">tag</span><span class="o">=</span><span class="s2">&quot;inst&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">recipe</span>
+</pre></div>
+</div>
+</li>
+<li><p>Now we can call <code class="docutils literal notranslate"><span class="pre">make_recipe</span></code> and plot the fit, experimental, and difference curves to evaluate how well the data fit.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">recipe</span> <span class="o">=</span> <span class="n">make_recipe</span><span class="p">(</span><span class="n">cif_path</span><span class="p">,</span> <span class="n">dat_path</span><span class="p">)</span> <span class="c1"># Call the function to create the fit recipe</span>
+<span class="n">recipe</span><span class="p">()</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">recipe</span><span class="o">.</span><span class="n">pdfcontrib</span><span class="o">.</span><span class="n">profile</span><span class="o">.</span><span class="n">x</span>
+<span class="n">g</span> <span class="o">=</span> <span class="n">recipe</span><span class="o">.</span><span class="n">pdfcontrib</span><span class="o">.</span><span class="n">profile</span><span class="o">.</span><span class="n">y</span>
+<span class="n">gcalc</span> <span class="o">=</span> <span class="n">recipe</span><span class="o">.</span><span class="n">pdfcontrib</span><span class="o">.</span><span class="n">profile</span><span class="o">.</span><span class="n">ycalc</span>
+<span class="n">diffzero</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.65</span> <span class="o">*</span> <span class="nb">max</span><span class="p">(</span><span class="n">g</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">g</span><span class="p">)</span> <span class="c1"># offset the difference curve</span>
+<span class="n">diff</span> <span class="o">=</span> <span class="n">g</span> <span class="o">-</span> <span class="n">gcalc</span> <span class="o">+</span> <span class="n">diffzero</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Experimental PDF&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">gcalc</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Fitted PDF&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">diff</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Difference&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;r (Angstrom)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;G(r)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Ni PDF Fit&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Once you run the above code, you should see a plot similar to the one below.</p>
+<a class="reference internal image-reference" href="../_images/Ni_fit.png"><img alt="codecov-in-pr-comment" class="align-center" src="../_images/Ni_fit.png" style="width: 700px;" />
+</a>
+</li>
+</ol>
+<p>Congratulations! You have successfully fit a bulk Ni PDF using <code class="docutils literal notranslate"><span class="pre">diffpy.cmi</span></code>. You are now one step closer to becoming a PDF fitting expert.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="core.html" class="btn btn-neutral float-left" title="core" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../release.html" class="btn btn-neutral float-right" title="Release notes" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, The Trustees of Columbia University in the City of New York.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

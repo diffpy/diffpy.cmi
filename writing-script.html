@@ -1,0 +1,488 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Writing a script with diffpy.cmi &mdash; diffpy.cmi 3.1.0rc0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="_static/wrap_table.css?v=dc09091b" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=a2ca8c84"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="_static/copybutton.js?v=cca77546"></script>
+      <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="diffpy.cmi package" href="api/diffpy.cmi.html" />
+    <link rel="prev" title="CMI Command-Line Interface (CLI)" href="cli-commands.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html">
+            
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">WHAT IS DIFFPY.CMI?</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">GETTING STARTED</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cli-commands.html">Command-Line Interface</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Tutorial diffpy.cmi Script</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#generate-synthetic-data">Generate Synthetic Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#fitcontribution"><code class="docutils literal notranslate"><span class="pre">FitContribution</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#setting-fit-equation">Setting Fit Equation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#initialize-fitting-parameters">Initialize Fitting Parameters</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#fitrecipe"><code class="docutils literal notranslate"><span class="pre">FitRecipe</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#adding-fitcontribution-to-fitrecipe">Adding <code class="docutils literal notranslate"><span class="pre">FitContribution</span></code> to <code class="docutils literal notranslate"><span class="pre">FitRecipe</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#add-variables-to-fit">Add Variables to Fit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#perform-the-least-squares-fit">Perform the Least-Squares Fit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#fitresults"><code class="docutils literal notranslate"><span class="pre">FitResults</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#how-to-fix-parameters">How to Fix Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tips-for-fitting-data">Tips for Fitting Data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#selecting-good-parameters">Selecting Good Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#refining-strategy">Refining Strategy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#words-of-encouragement">Words of Encouragement</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api/diffpy.cmi.html">Package API</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">AVAILABLE PACKS &amp; PROFILES</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="available-packs.html">Packs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="available-profiles.html">Profiles</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">EXAMPLES &amp; MORE</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/index.html">Examples</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">REFERENCE</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="release.html">Release notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">diffpy.cmi</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Writing a script with diffpy.cmi</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/diffpy/diffpy.cmi/blob/main/doc/source/writing-script.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="writing-a-script-with-diffpy-cmi">
+<h1>Writing a script with diffpy.cmi<a class="headerlink" href="#writing-a-script-with-diffpy-cmi" title="Link to this heading"></a></h1>
+<p>This guide provides a step-by-step walkthrough for creating a basic script using the <code class="docutils literal notranslate"><span class="pre">diffpy.cmi</span></code> framework.
+We will follow the <code class="docutils literal notranslate"><span class="pre">linefit</span></code> example so you can familiarize yourself with the structure of a CMI script.</p>
+<p>If you would like, copy the <code class="docutils literal notranslate"><span class="pre">linefit</span></code> example to your current working directory by running,</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmi<span class="w"> </span>copy<span class="w"> </span>linefit
+</pre></div>
+</div>
+<p>To demonstrate how to fit data in <code class="docutils literal notranslate"><span class="pre">diffpy.cmi</span></code>, we will start by trying to fit a simple line to some synthetic data.</p>
+<p>First, lets install the <code class="docutils literal notranslate"><span class="pre">plotting</span></code> pack if you haven’t already done so.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmi<span class="w"> </span>install<span class="w"> </span>plotting
+</pre></div>
+</div>
+<p>Now, open up a new Python script and start by importing the necessary modules,</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.optimize</span><span class="w"> </span><span class="kn">import</span> <span class="n">leastsq</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">diffpy.srfit.fitbase</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">FitContribution</span><span class="p">,</span>
+    <span class="n">FitRecipe</span><span class="p">,</span>
+    <span class="n">FitResults</span><span class="p">,</span>
+    <span class="n">Profile</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<section id="generate-synthetic-data">
+<h2>Generate Synthetic Data<a class="headerlink" href="#generate-synthetic-data" title="Link to this heading"></a></h2>
+<p>Let’s generate some synthetic data to fit, This data will be a simple line with some added noise,</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Generate synthetic data</span>
+<span class="n">xobs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mf">10.1</span><span class="p">)</span>
+<span class="n">sigma_yobs</span> <span class="o">=</span> <span class="mf">0.3</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">xobs</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">xobs</span><span class="o">.</span><span class="n">size</span><span class="p">)</span> <span class="c1"># random error</span>
+<span class="n">yobs</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">xobs</span> <span class="o">+</span> <span class="mi">3</span> <span class="o">+</span> <span class="n">sigma_yobs</span>
+</pre></div>
+</div>
+<p>Lets now visualize the data by plotting it,</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xobs</span><span class="p">,</span> <span class="n">yobs</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Observed Data&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>You should see a scatter plot that looks something like this,</p>
+<a class="reference internal image-reference" href="_images/linefitfig1.png"><img alt="Scatter plot of synthetic data" class="align-center" src="_images/linefitfig1.png" style="width: 400px;" />
+</a>
+<p>Great, now lets begin setting up our fitting framework. We will start by creating a <code class="docutils literal notranslate"><span class="pre">Profile</span></code> to hold our data.
+This is done to encapsulate the observed data so that it can be used in the fitting process.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a Profile to hold the data</span>
+<span class="n">linedata</span> <span class="o">=</span> <span class="n">Profile</span><span class="p">()</span>
+<span class="n">linedata</span><span class="o">.</span><span class="n">setObservedProfile</span><span class="p">(</span><span class="n">xobs</span><span class="p">,</span> <span class="n">yobs</span><span class="p">,</span> <span class="n">sigma_yobs</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="fitcontribution">
+<h2><code class="docutils literal notranslate"><span class="pre">FitContribution</span></code><a class="headerlink" href="#fitcontribution" title="Link to this heading"></a></h2>
+<p>Now it’s time to define our model in a <code class="docutils literal notranslate"><span class="pre">FitContribution</span></code>.
+A <code class="docutils literal notranslate"><span class="pre">FitContribution</span></code> is a container that holds the model function and its associated parameters.</p>
+<section id="setting-fit-equation">
+<h3>Setting Fit Equation<a class="headerlink" href="#setting-fit-equation" title="Link to this heading"></a></h3>
+<p>In this case, our model is a simple linear function defined by the equation <code class="docutils literal notranslate"><span class="pre">y</span> <span class="pre">=</span> <span class="pre">Ax</span> <span class="pre">+</span> <span class="pre">B</span></code>,</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define a FitContribution: linear model A*x + B</span>
+<span class="n">linefit</span> <span class="o">=</span> <span class="n">FitContribution</span><span class="p">(</span><span class="s2">&quot;linefit&quot;</span><span class="p">)</span>
+<span class="n">linefit</span><span class="o">.</span><span class="n">setProfile</span><span class="p">(</span><span class="n">linedata</span><span class="p">)</span>
+<span class="n">linefit</span><span class="o">.</span><span class="n">setEquation</span><span class="p">(</span><span class="s2">&quot;A * x + B&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>To see the parameters we just created, we can print them out,</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">linefit</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>This should output something like,</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Parameters
+------------------------------------------------------------------------------
+x<span class="w">   </span><span class="o">[</span>-10.<span class="w">  </span>-9.<span class="w">  </span>-8.<span class="w">  </span>-7.<span class="w">  </span>-6.<span class="w">  </span>-5.<span class="w">  </span>-4.<span class="w">  </span>-3.<span class="w">  </span>-2.<span class="w">  </span>-1.<span class="w">   </span><span class="m">0</span>.<span class="w">   </span><span class="m">1</span>.<span class="w">   </span><span class="m">2</span>.<span class="w">   </span><span class="m">3</span>.
+y<span class="w">   </span><span class="o">[</span>-1.8053485<span class="w">  </span>-1.56263035<span class="w"> </span>-1.11627164<span class="w"> </span>-0.4137478<span class="w">   </span><span class="m">0</span>.68210214<span class="w">  </span><span class="m">0</span>.58758801
+dy<span class="w">  </span><span class="o">[</span><span class="m">0</span>.3<span class="w"> </span><span class="m">0</span>.3<span class="w"> </span><span class="m">0</span>.3<span class="w"> </span><span class="m">0</span>.3<span class="w"> </span><span class="m">0</span>.3<span class="w"> </span><span class="m">0</span>.3<span class="w"> </span><span class="m">0</span>.3<span class="w"> </span><span class="m">0</span>.3<span class="w"> </span><span class="m">0</span>.3<span class="w"> </span><span class="m">0</span>.3<span class="w"> </span><span class="m">0</span>.3<span class="w"> </span><span class="m">0</span>.3<span class="w"> </span><span class="m">0</span>.3<span class="w"> </span><span class="m">0</span>.3<span class="w"> </span><span class="m">0</span>.3<span class="w"> </span><span class="m">0</span>.3<span class="w"> </span><span class="m">0</span>.3<span class="w"> </span><span class="m">0</span>.3
+B<span class="w">   </span>None
+A<span class="w">   </span>None
+</pre></div>
+</div>
+</section>
+<section id="initialize-fitting-parameters">
+<h3>Initialize Fitting Parameters<a class="headerlink" href="#initialize-fitting-parameters" title="Link to this heading"></a></h3>
+<p>Note that <code class="docutils literal notranslate"><span class="pre">A</span></code> and <code class="docutils literal notranslate"><span class="pre">B</span></code> are set to <code class="docutils literal notranslate"><span class="pre">None</span></code> since we haven’t assigned them any initial values yet.
+To do that, we can set them like this,</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">linefit</span><span class="o">.</span><span class="n">A</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">linefit</span><span class="o">.</span><span class="n">B</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Initial A value:&quot;</span><span class="p">,</span> <span class="n">linefit</span><span class="o">.</span><span class="n">A</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Initial B value:&quot;</span><span class="p">,</span> <span class="n">linefit</span><span class="o">.</span><span class="n">B</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This should output,</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Initial<span class="w"> </span>A<span class="w"> </span>value:<span class="w"> </span><span class="m">3</span>
+Initial<span class="w"> </span>B<span class="w"> </span>value:<span class="w"> </span><span class="m">5</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="fitrecipe">
+<h2><code class="docutils literal notranslate"><span class="pre">FitRecipe</span></code><a class="headerlink" href="#fitrecipe" title="Link to this heading"></a></h2>
+<p>Now that we have our model defined and initlialized, we can create a <code class="docutils literal notranslate"><span class="pre">FitRecipe</span></code>.
+The <code class="docutils literal notranslate"><span class="pre">FitRecipe</span></code> is the main container that holds all the <code class="docutils literal notranslate"><span class="pre">FitContributions</span></code>
+and manages the fitting process.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a FitRecipe to manage fitting</span>
+<span class="n">recipe</span> <span class="o">=</span> <span class="n">FitRecipe</span><span class="p">()</span>
+</pre></div>
+</div>
+<section id="adding-fitcontribution-to-fitrecipe">
+<h3>Adding <code class="docutils literal notranslate"><span class="pre">FitContribution</span></code> to <code class="docutils literal notranslate"><span class="pre">FitRecipe</span></code><a class="headerlink" href="#adding-fitcontribution-to-fitrecipe" title="Link to this heading"></a></h3>
+<p>We can now add our <code class="docutils literal notranslate"><span class="pre">linefit</span></code> contribution to the recipe and print out the parameters,</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">recipe</span><span class="o">.</span><span class="n">clearFitHooks</span><span class="p">()</span>
+<span class="n">recipe</span><span class="o">.</span><span class="n">addContribution</span><span class="p">(</span><span class="n">linefit</span><span class="p">)</span>
+<span class="n">recipe</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>This should output something like,</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Parameters
+------------------------------------------------------------------------------
+linefit.x<span class="w">   </span><span class="o">[</span>-10.<span class="w">  </span>-9.<span class="w">  </span>-8.<span class="w">  </span>-7.<span class="w">  </span>-6.<span class="w">  </span>-5.<span class="w">  </span>-4.<span class="w">  </span>-3.<span class="w">  </span>-2.<span class="w">  </span>-1.<span class="w">   </span><span class="m">0</span>.<span class="w">   </span><span class="m">1</span>.<span class="w">   </span><span class="m">2</span>.
+linefit.y<span class="w">   </span><span class="o">[</span>-1.67605745<span class="w"> </span>-1.19031421<span class="w"> </span>-1.40162608<span class="w"> </span>-0.90829441<span class="w">  </span><span class="m">0</span>.38607679<span class="w">  </span><span class="m">0</span>.44
+linefit.dy<span class="w">  </span><span class="o">[</span><span class="m">0</span>.3<span class="w"> </span><span class="m">0</span>.3<span class="w"> </span><span class="m">0</span>.3<span class="w"> </span><span class="m">0</span>.3<span class="w"> </span><span class="m">0</span>.3<span class="w"> </span><span class="m">0</span>.3<span class="w"> </span><span class="m">0</span>.3<span class="w"> </span><span class="m">0</span>.3<span class="w"> </span><span class="m">0</span>.3<span class="w"> </span><span class="m">0</span>.3<span class="w"> </span><span class="m">0</span>.3<span class="w"> </span><span class="m">0</span>.3<span class="w"> </span><span class="m">0</span>.3<span class="w"> </span><span class="m">0</span>.3<span class="w"> </span><span class="m">0</span>.3<span class="w"> </span><span class="m">0</span>.3<span class="w"> </span><span class="m">0</span>
+linefit.B<span class="w">   </span><span class="m">5</span>
+linefit.A<span class="w">   </span><span class="m">3</span>
+</pre></div>
+</div>
+<p>Now you can see that the parameters are prefixed with <code class="docutils literal notranslate"><span class="pre">linefit.</span></code>,
+indicating they belong to the <code class="docutils literal notranslate"><span class="pre">linefit</span></code> contribution. Also, note that <code class="docutils literal notranslate"><span class="pre">A</span></code> and <code class="docutils literal notranslate"><span class="pre">B</span></code> now
+have initial values assigned.</p>
+</section>
+</section>
+<section id="add-variables-to-fit">
+<h2>Add Variables to Fit<a class="headerlink" href="#add-variables-to-fit" title="Link to this heading"></a></h2>
+<p>With everything set up, we can now mark the parameters we want to refine during the fitting process.
+This is done using the <code class="docutils literal notranslate"><span class="pre">.addVar()</span></code> method of the <code class="docutils literal notranslate"><span class="pre">FitRecipe</span></code>,</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">recipe</span><span class="o">.</span><span class="n">addVar</span><span class="p">(</span><span class="n">recipe</span><span class="o">.</span><span class="n">linefit</span><span class="o">.</span><span class="n">A</span><span class="p">)</span>
+<span class="n">recipe</span><span class="o">.</span><span class="n">addVar</span><span class="p">(</span><span class="n">recipe</span><span class="o">.</span><span class="n">linefit</span><span class="o">.</span><span class="n">B</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>To see the variables that will be refined, we can print them out,</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;recipe.A =&quot;</span><span class="p">,</span> <span class="n">recipe</span><span class="o">.</span><span class="n">A</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;recipe.A.value =&quot;</span><span class="p">,</span> <span class="n">recipe</span><span class="o">.</span><span class="n">A</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;recipe.values =&quot;</span><span class="p">,</span> <span class="n">recipe</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;recipe.names =&quot;</span><span class="p">,</span> <span class="n">recipe</span><span class="o">.</span><span class="n">names</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;recipe.residual() =&quot;</span><span class="p">,</span> <span class="n">recipe</span><span class="o">.</span><span class="n">residual</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>This should output something like,</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>recipe.A<span class="w"> </span><span class="o">=</span><span class="w"> </span>ParameterProxy<span class="o">(</span>A<span class="o">)</span>
+recipe.A.value<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">3</span>
+recipe.values<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span><span class="m">3</span><span class="w"> </span><span class="m">5</span><span class="o">]</span>
+recipe.names<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span><span class="s1">&#39;A&#39;</span>,<span class="w"> </span><span class="s1">&#39;B&#39;</span><span class="o">]</span>
+recipe.residual<span class="o">()</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span>-78.18212598<span class="w"> </span>-67.62039727<span class="w"> </span>-60.63792074<span class="w"> </span>-52.12278541<span class="w"> </span>-41.97888213
+-34.76069913<span class="w"> </span>-27.49568671<span class="w"> </span>-17.88327019<span class="w"> </span>-10.00997001<span class="w">  </span>-1.21702776
+<span class="m">6</span>.79454602<span class="w">  </span><span class="m">15</span>.44637505<span class="w">  </span><span class="m">21</span>.39664018<span class="w">  </span><span class="m">32</span>.98689369<span class="w">  </span><span class="m">40</span>.26685555
+<span class="m">47</span>.96728622<span class="w">  </span><span class="m">57</span>.81169457<span class="w">  </span><span class="m">65</span>.48416201<span class="w">  </span><span class="m">73</span>.74878531<span class="w">  </span><span class="m">81</span>.40669851
+<span class="m">90</span>.08765793<span class="o">]</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">recipe.residual()</span></code> method computes the difference between the observed data and the model prediction.
+As you can see, the residuals are quite large at this point since we haven’t performed any fitting yet.</p>
+<p>To better visualize the residuals, we can plot them,</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ycalc</span> <span class="o">=</span> <span class="n">linefit</span><span class="o">.</span><span class="n">A</span><span class="o">.</span><span class="n">value</span> <span class="o">*</span> <span class="n">xobs</span> <span class="o">+</span> <span class="n">linefit</span><span class="o">.</span><span class="n">B</span><span class="o">.</span><span class="n">value</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xobs</span><span class="p">,</span> <span class="n">yobs</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;None&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Observed Data&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xobs</span><span class="p">,</span> <span class="n">ycalc</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Calculated Fit: Ax + B&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>You should see a plot that looks something like this,</p>
+<a class="reference internal image-reference" href="_images/linefitfig2.png"><img alt="Plot of observed data and initial fit" class="align-center" src="_images/linefitfig2.png" style="width: 400px;" />
+</a>
+<p>As you can see, the initial fit is quite poor, which is expected since we haven’t refined the parameters yet.
+So… lets refine them!</p>
+</section>
+<section id="perform-the-least-squares-fit">
+<h2>Perform the Least-Squares Fit<a class="headerlink" href="#perform-the-least-squares-fit" title="Link to this heading"></a></h2>
+<p>Now we are ready to perform the least squares fitting using the <code class="docutils literal notranslate"><span class="pre">leastsq</span></code> function from <code class="docutils literal notranslate"><span class="pre">scipy.optimize</span></code>.
+The <code class="docutils literal notranslate"><span class="pre">leastsq</span></code> function minimizes the sum of squares between the observed data and the model prediction
+by adjusting the parameters we marked for refinement. The least-squares algorithm is given by,</p>
+<div class="math notranslate nohighlight">
+\[\text{minimize} \sum_{i} \left( y_{\text{obs}, i} - y_{\text{calc}, i} \right)^2\]</div>
+<p>This is what is known as the <strong>objective function</strong>. The objective function is a function that
+you want to minimize (or maximize) during the fitting process. In this case,
+the squared difference between the calculated and observed values is what the algorithm will minimize.
+In theory, our objective function could be anything. You could even customize your own!
+But for now, we will use least-squares to optimize our fit.</p>
+<p>To perform a least-squares regression, we pass the residuals
+(<code class="docutils literal notranslate"><span class="pre">recipe.residual</span></code>), which represent the differences to minimize,
+as a function of the current parameter values (<code class="docutils literal notranslate"><span class="pre">recipe.values</span></code>) to <code class="docutils literal notranslate"><span class="pre">leastsq</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">leastsq</span><span class="p">(</span><span class="n">recipe</span><span class="o">.</span><span class="n">residual</span><span class="p">,</span> <span class="n">recipe</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;After leastsq:&quot;</span><span class="p">,</span> <span class="n">recipe</span><span class="o">.</span><span class="n">names</span><span class="p">,</span> <span class="s2">&quot;--&gt;&quot;</span><span class="p">,</span> <span class="n">recipe</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+<span class="n">linefit</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>This should output something like,</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>After<span class="w"> </span>leastsq:<span class="w"> </span><span class="o">[</span><span class="s1">&#39;A&#39;</span>,<span class="w"> </span><span class="s1">&#39;B&#39;</span><span class="o">]</span><span class="w"> </span>--&gt;<span class="w"> </span><span class="o">[</span><span class="m">0</span>.51240164<span class="w"> </span><span class="m">3</span>.00692156<span class="o">]</span>
+Parameters
+------------------------------------------------------------------------------
+x<span class="w">   </span><span class="o">[</span>-10.<span class="w">  </span>-9.<span class="w">  </span>-8.<span class="w">  </span>-7.<span class="w">  </span>-6.<span class="w">  </span>-5.<span class="w">  </span>-4.<span class="w">  </span>-3.<span class="w">  </span>-2.<span class="w">  </span>-1.<span class="w">   </span><span class="m">0</span>.<span class="w">   </span><span class="m">1</span>.<span class="w">   </span><span class="m">2</span>.<span class="w">   </span><span class="m">3</span>.
+y<span class="w">   </span><span class="o">[</span>-2.33763938<span class="w"> </span>-1.9018065<span class="w">  </span>-0.9653354<span class="w">  </span>-0.63162421<span class="w">  </span><span class="m">0</span>.22997984<span class="w"> </span>-0.17955301
+dy<span class="w">  </span><span class="o">[</span><span class="m">0</span>.3<span class="w"> </span><span class="m">0</span>.3<span class="w"> </span><span class="m">0</span>.3<span class="w"> </span><span class="m">0</span>.3<span class="w"> </span><span class="m">0</span>.3<span class="w"> </span><span class="m">0</span>.3<span class="w"> </span><span class="m">0</span>.3<span class="w"> </span><span class="m">0</span>.3<span class="w"> </span><span class="m">0</span>.3<span class="w"> </span><span class="m">0</span>.3<span class="w"> </span><span class="m">0</span>.3<span class="w"> </span><span class="m">0</span>.3<span class="w"> </span><span class="m">0</span>.3<span class="w"> </span><span class="m">0</span>.3<span class="w"> </span><span class="m">0</span>.3<span class="w"> </span><span class="m">0</span>.3<span class="w"> </span><span class="m">0</span>.3<span class="w"> </span><span class="m">0</span>.3
+A<span class="w">   </span><span class="m">0</span>.512401638015315
+B<span class="w">   </span><span class="m">3</span>.006921559716823
+</pre></div>
+</div>
+<p>You can see that the parameters <code class="docutils literal notranslate"><span class="pre">A</span></code> and <code class="docutils literal notranslate"><span class="pre">B</span></code> have been updated to values that better fit the data.
+Lets print the residual sum of squares to see how well the fit performed,</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;recipe.residual() =&quot;</span><span class="p">,</span> <span class="n">recipe</span><span class="o">.</span><span class="n">residual</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>This should output something like,</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>recipe.residual<span class="o">()</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="m">0</span>.83916097<span class="w">  </span><span class="m">0</span>.6429651<span class="w">  </span>-0.76778838<span class="w"> </span>-0.89453514<span class="w">  </span><span class="m">0</span>.42300657<span class="w">  </span><span class="m">0</span>.97663332
+-1.50946072<span class="w"> </span>-0.21983212<span class="w"> </span>-0.3464077<span class="w">  </span>-1.84471305<span class="w"> </span>-0.11995115<span class="w">  </span><span class="m">1</span>.14584239
+<span class="m">1</span>.04321154<span class="w">  </span><span class="m">0</span>.92606764<span class="w">  </span><span class="m">0</span>.53831321<span class="w"> </span>-0.06905766<span class="w"> </span>-0.02106872<span class="w"> </span>-0.78551651
+<span class="m">1</span>.3405239<span class="w">  </span>-0.01692016<span class="w"> </span>-1.28047336<span class="o">]</span>
+</pre></div>
+</div>
+<p>As you can see, the residuals have significantly decreased, indicating a much better fit to the data.</p>
+<p>Lets visualize the final fit by plotting the observed data and the fitted line,</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ycalc</span> <span class="o">=</span> <span class="n">linefit</span><span class="o">.</span><span class="n">A</span><span class="o">.</span><span class="n">value</span> <span class="o">*</span> <span class="n">xobs</span> <span class="o">+</span> <span class="n">linefit</span><span class="o">.</span><span class="n">B</span><span class="o">.</span><span class="n">value</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xobs</span><span class="p">,</span> <span class="n">yobs</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;None&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Observed Data&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xobs</span><span class="p">,</span> <span class="n">ycalc</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Fitted Line: Ax + B&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>You should see a plot that looks something like this,</p>
+<a class="reference internal image-reference" href="_images/linefitfig3.png"><img alt="Plot of observed data and final fitted line" class="align-center" src="_images/linefitfig3.png" style="width: 400px;" />
+</a>
+<p>Wow! Look at that fit!</p>
+</section>
+<section id="fitresults">
+<h2><code class="docutils literal notranslate"><span class="pre">FitResults</span></code><a class="headerlink" href="#fitresults" title="Link to this heading"></a></h2>
+<p>To summarize the fitting results, we can create a <code class="docutils literal notranslate"><span class="pre">FitResults</span></code> object and pass our recipe to it,</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create FitResults to summarize the fit</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">FitResults</span><span class="p">(</span><span class="n">recipe</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This should output something like,</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Overall
+------------------------------------------------------------------------------
+Residual<span class="w">       </span><span class="m">12</span>.59360793
+Contributions<span class="w">  </span><span class="m">12</span>.59360793
+Restraints<span class="w">     </span><span class="m">0</span>.00000000
+Chi2<span class="w">           </span><span class="m">12</span>.59360793
+Reduced<span class="w"> </span>Chi2<span class="w">   </span><span class="m">0</span>.66282147
+Rw<span class="w">             </span><span class="m">0</span>.05372518
+
+Variables
+------------------------------------------------------------------------------
+A<span class="w">  </span><span class="m">5</span>.18663792e-01<span class="w"> </span>+/-<span class="w"> </span><span class="m">1</span>.08112496e-02
+B<span class="w">  </span><span class="m">2</span>.96331208e+00<span class="w"> </span>+/-<span class="w"> </span><span class="m">6</span>.54653670e-02
+
+Variable<span class="w"> </span>Correlations<span class="w"> </span>greater<span class="w"> </span>than<span class="w"> </span><span class="m">25</span>%
+------------------------------------------------------------------------------
+No<span class="w"> </span>correlations<span class="w"> </span>greater<span class="w"> </span>than<span class="w"> </span><span class="m">25</span>%
+</pre></div>
+</div>
+<p>The value <code class="docutils literal notranslate"><span class="pre">Rw</span></code> is a measure of the quality of the fit, with lower values indicating a better fit.</p>
+</section>
+<section id="how-to-fix-parameters">
+<h2>How to Fix Parameters<a class="headerlink" href="#how-to-fix-parameters" title="Link to this heading"></a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Because in this example we are fitting a simple line with only two parameters,
+we can select any values for <code class="docutils literal notranslate"><span class="pre">A</span></code> and <code class="docutils literal notranslate"><span class="pre">B</span></code> and still get a good fit. However,
+we demonstrate how to fix parameters for educational purposes.</p>
+</div>
+<p>There are two ways to fix parameters in <code class="docutils literal notranslate"><span class="pre">diffpy.cmi</span></code>, the first one is by
+using the <code class="docutils literal notranslate"><span class="pre">.fix()</span></code> method on a parameter,</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">recipe</span><span class="o">.</span><span class="n">fix</span><span class="p">(</span><span class="n">B</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Free:&quot;</span><span class="p">,</span> <span class="n">recipe</span><span class="o">.</span><span class="n">names</span><span class="p">,</span> <span class="s2">&quot;--&gt;&quot;</span><span class="p">,</span> <span class="n">recipe</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Fixed:&quot;</span><span class="p">,</span> <span class="n">recipe</span><span class="o">.</span><span class="n">fixednames</span><span class="p">,</span> <span class="s2">&quot;--&gt;&quot;</span><span class="p">,</span> <span class="n">recipe</span><span class="o">.</span><span class="n">fixedvalues</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This should output something like,</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Free:<span class="w"> </span><span class="o">[</span><span class="s1">&#39;A&#39;</span><span class="o">]</span><span class="w"> </span>--&gt;<span class="w"> </span><span class="o">[</span><span class="m">0</span>.51315825<span class="o">]</span>
+Fixed:<span class="w"> </span><span class="o">[</span><span class="s1">&#39;B&#39;</span><span class="o">]</span><span class="w"> </span>--&gt;<span class="w"> </span><span class="o">[</span><span class="m">0</span><span class="o">]</span>
+</pre></div>
+</div>
+<p>The other way to fix parameters is by setting <code class="docutils literal notranslate"><span class="pre">fixed=True</span></code> when adding the variable
+with <code class="docutils literal notranslate"><span class="pre">.addVar()</span></code> to the recipe,</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">recipe</span><span class="o">.</span><span class="n">addVar</span><span class="p">(</span><span class="n">recipe</span><span class="o">.</span><span class="n">linefit</span><span class="o">.</span><span class="n">B</span><span class="p">,</span> <span class="n">fixed</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Free:&quot;</span><span class="p">,</span> <span class="n">recipe</span><span class="o">.</span><span class="n">names</span><span class="p">,</span> <span class="s2">&quot;--&gt;&quot;</span><span class="p">,</span> <span class="n">recipe</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Fixed:&quot;</span><span class="p">,</span> <span class="n">recipe</span><span class="o">.</span><span class="n">fixednames</span><span class="p">,</span> <span class="s2">&quot;--&gt;&quot;</span><span class="p">,</span> <span class="n">recipe</span><span class="o">.</span><span class="n">fixedvalues</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This should output something like,</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Free:<span class="w"> </span><span class="o">[</span><span class="s1">&#39;A&#39;</span><span class="o">]</span><span class="w"> </span>--&gt;<span class="w"> </span><span class="o">[</span><span class="m">0</span>.49144738<span class="o">]</span>
+Fixed:<span class="w"> </span><span class="o">[</span><span class="s1">&#39;B&#39;</span><span class="o">]</span><span class="w"> </span>--&gt;<span class="w"> </span><span class="o">[</span><span class="m">5</span><span class="o">]</span>
+</pre></div>
+</div>
+</section>
+<section id="tips-for-fitting-data">
+<h2>Tips for Fitting Data<a class="headerlink" href="#tips-for-fitting-data" title="Link to this heading"></a></h2>
+<p>Before we wrap up this tutorial,
+here are some tips on selecting and refining parameters for fitting.</p>
+<section id="selecting-good-parameters">
+<h3>Selecting Good Parameters<a class="headerlink" href="#selecting-good-parameters" title="Link to this heading"></a></h3>
+<p>Because the <code class="docutils literal notranslate"><span class="pre">leastsq</span></code> regressor is a local optimization, you typically need to provide good starting values
+for the parameters. The process of finding good starting values is an art which will be carefully crafted
+over time as you gain experience with fitting data. Use your scientific intuition to
+select good starting values!</p>
+</section>
+<section id="refining-strategy">
+<h3>Refining Strategy<a class="headerlink" href="#refining-strategy" title="Link to this heading"></a></h3>
+<p>Oftentimes, you need to fix certain parameters during the fitting process to find a solution that
+better fits your data. This is a common practice in data fitting to improve the stability of the fit.</p>
+<p>Typically, the process goes like this:</p>
+<div class="admonition-refining-strategy admonition">
+<p class="admonition-title">Refining Strategy</p>
+<ol class="arabic simple">
+<li><p><strong>Good initial guess:</strong> Start with good initial guesses for all parameters.</p></li>
+<li><p><strong>Refine on Parameters:</strong> Refine all (or a subset of) parameters. If you see large correlations or instability,
+try again with a different initial guess or a different subset of parameters.</p></li>
+<li><p><strong>Fixing Parameters:</strong> Fix some parameters based on the results from step 2.</p></li>
+<li><p><strong>Refine again:</strong> Refine the remaining free parameters.</p></li>
+</ol>
+</div>
+<p>This process is where you spend most of your time when fitting data.</p>
+</section>
+<section id="words-of-encouragement">
+<h3>Words of Encouragement<a class="headerlink" href="#words-of-encouragement" title="Link to this heading"></a></h3>
+<p>Remember, all the computer knows how to do is minimize a value.
+It has no understanding of the physical meaning of the parameters.
+That is why we need smart people like yourself to guide the fitting process!</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="cli-commands.html" class="btn btn-neutral float-left" title="CMI Command-Line Interface (CLI)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="api/diffpy.cmi.html" class="btn btn-neutral float-right" title="diffpy.cmi package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, The Trustees of Columbia University in the City of New York.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

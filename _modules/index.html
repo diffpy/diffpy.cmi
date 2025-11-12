@@ -3,10 +3,9 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" data-content_root="../">
 <head>
-  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>&lt;no title&gt; &mdash; diffpy.cmi 3.1.0rc0 documentation</title>
+  <title>Overview: module code &mdash; diffpy.cmi 3.1.0rc0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
@@ -84,9 +83,8 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">&lt;no title&gt;</li>
+      <li class="breadcrumb-item active">Overview: module code</li>
       <li class="wy-breadcrumbs-aside">
-              <a href="https://github.com/diffpy/diffpy.cmi/blob/main/doc/source/snippets/data_params.rst" class="fa fa-github"> Edit on GitHub</a>
       </li>
   </ul>
   <hr/>
@@ -94,59 +92,14 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <table class="wrap-text docutils align-default">
-<colgroup>
-<col style="width: 16.7%" />
-<col style="width: 50.0%" />
-<col style="width: 16.7%" />
-<col style="width: 16.7%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>PDF Parameter</p></th>
-<th class="head"><p>Description</p></th>
-<th class="head"><p>Refineable?</p></th>
-<th class="head"><p>Structural or Instrumental?</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">scale</span></code></p></td>
-<td><p>Overall scaling factor between calculated and observed PDFs; sets the absolute intensity.</p></td>
-<td><p>Yes</p></td>
-<td><p>Instrumental</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">qdamp</span></code></p></td>
-<td><p>Damping of PDF peaks due to limited experimental Q-range. Typically affects high-r ripples and overall peak amplitudes.</p></td>
-<td><p>Yes</p></td>
-<td><p>Instrumental</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">qbroad</span></code></p></td>
-<td><p>Instrumental or sample-related broadening of PDF peaks. This is due to the fact that diffraction peaks have different widths as a function of Q.</p></td>
-<td><p>Yes</p></td>
-<td><p>Instrumental</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">qmin</span></code></p></td>
-<td><p>Minimum Q included in the fit; sets the lower bound of the fourier transform (converting S(Q) to G(r)).</p></td>
-<td><p>No, from experiment/setup</p></td>
-<td><p>Instrumental</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">qmax</span></code></p></td>
-<td><p>Maximum Q included in the fit; sets the upper bound of the fourier transform (converting S(Q) to G(r)).</p></td>
-<td><p>No, from experiment/setup</p></td>
-<td><p>Instrumental</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">rmin</span></code></p></td>
-<td><p>Minimum r (distance) included in the fit; sets the lower bound of the fitting range.</p></td>
-<td><p>No, from experiment/setup</p></td>
-<td><p>Instrumental</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">rmax</span></code></p></td>
-<td><p>Maximum r (distance) included in the fit; sets the upper bound of the fitting range.</p></td>
-<td><p>No, from experiment/setup</p></td>
-<td><p>Instrumental (unless fitting to nanoparticles)</p></td>
-</tr>
-</tbody>
-</table>
-
+  <h1>All modules for which code is available</h1>
+<ul><li><a href="diffpy/cmi/cli.html">diffpy.cmi.cli</a></li>
+<li><a href="diffpy/cmi/conda.html">diffpy.cmi.conda</a></li>
+<li><a href="diffpy/cmi/installer.html">diffpy.cmi.installer</a></li>
+<li><a href="diffpy/cmi/log.html">diffpy.cmi.log</a></li>
+<li><a href="diffpy/cmi/packsmanager.html">diffpy.cmi.packsmanager</a></li>
+<li><a href="diffpy/cmi/profilesmanager.html">diffpy.cmi.profilesmanager</a></li>
+</ul>
 
            </div>
           </div>

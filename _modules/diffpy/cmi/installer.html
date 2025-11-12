@@ -1,0 +1,505 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>diffpy.cmi.installer &mdash; diffpy.cmi 3.1.0rc0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/wrap_table.css?v=dc09091b" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=a2ca8c84"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../_static/copybutton.js?v=cca77546"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html">
+            
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">WHAT IS DIFFPY.CMI?</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html">Overview</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">GETTING STARTED</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../cli-commands.html">Command-Line Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../writing-script.html">Tutorial diffpy.cmi Script</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/diffpy.cmi.html">Package API</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">AVAILABLE PACKS &amp; PROFILES</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../available-packs.html">Packs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../available-profiles.html">Profiles</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">EXAMPLES &amp; MORE</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/index.html">Examples</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">REFERENCE</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../release.html">Release notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../license.html">License</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">diffpy.cmi</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">diffpy.cmi.installer</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for diffpy.cmi.installer</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1">##############################################################################</span>
+<span class="c1">#</span>
+<span class="c1"># (c) 2025 The Trustees of Columbia University in the City of New York.</span>
+<span class="c1"># All rights reserved.</span>
+<span class="c1">#</span>
+<span class="c1"># File coded by: Tieqiong Zhang and members of the Billinge Group.</span>
+<span class="c1">#</span>
+<span class="c1"># See GitHub contributions for a more detailed list of contributors.</span>
+<span class="c1"># https://github.com/diffpy/diffpy.cmi/graphs/contributors</span>
+<span class="c1">#</span>
+<span class="c1"># See LICENSE.rst for license information.</span>
+<span class="c1">#</span>
+<span class="c1">##############################################################################</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">importlib.metadata</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">md</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">shlex</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">shutil</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">packaging.requirements</span><span class="w"> </span><span class="kn">import</span> <span class="n">InvalidRequirement</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">packaging.requirements</span><span class="w"> </span><span class="kn">import</span> <span class="n">Requirement</span> <span class="k">as</span> <span class="n">PkgRequirement</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">diffpy.cmi</span><span class="w"> </span><span class="kn">import</span> <span class="n">conda</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">diffpy.cmi.log</span><span class="w"> </span><span class="kn">import</span> <span class="n">plog</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;ParsedReq&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;parse_requirement_line&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;presence_check&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;install_requirements&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+
+
+<span class="c1"># Types and parsing</span>
+<div class="viewcode-block" id="ParsedReq">
+<a class="viewcode-back" href="../../../api/diffpy.cmi.html#diffpy.cmi.installer.ParsedReq">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ParsedReq</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Parsed representation of a single requirement line.</span>
+
+<span class="sd">    A requirement line may declare a package or a script. Script lines set</span>
+<span class="sd">    :attr:`name` to the basename (stem) of the script so presence checking can</span>
+<span class="sd">    treat them like packages when appropriate.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    raw : str</span>
+<span class="sd">        Original, unmodified line (kept verbatim).</span>
+<span class="sd">    kind : {&quot;script&quot;, &quot;pkg&quot;, &quot;skip&quot;}</span>
+<span class="sd">        Classification of the line.</span>
+<span class="sd">    name : str or None, optional</span>
+<span class="sd">        Package name (for ``pkg``) or script basename (for ``script``).</span>
+<span class="sd">    spec : str or None, optional</span>
+<span class="sd">        Version specifier (e.g., ``&quot;&gt;=1.2&quot;``) for packages.</span>
+<span class="sd">    channel : str or None, optional</span>
+<span class="sd">        Optional channel (from ``channel::spec``) for packages.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">raw</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">kind</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">spec</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">channel</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+
+
+<div class="viewcode-block" id="parse_requirement_line">
+<a class="viewcode-back" href="../../../api/diffpy.cmi.html#diffpy.cmi.installer.parse_requirement_line">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">parse_requirement_line</span><span class="p">(</span><span class="n">line</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ParsedReq</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Parse a single requirement definition.</span>
+
+<span class="sd">    Supported forms</span>
+<span class="sd">    ---------------</span>
+<span class="sd">    - **Scripts:** a line whose first token ends with ``.sh`` or ``.bat``.</span>
+<span class="sd">      The script&#39;s basename becomes :attr:`ParsedReq.name`.</span>
+<span class="sd">    - **Packages:** an optional ``channel::`` prefix followed by a valid</span>
+<span class="sd">      PEP 508 requirement string (e.g., ``&quot;numpy&gt;=1.24&quot;``).</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    line : str</span>
+<span class="sd">        Raw line from a requirements file.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ParsedReq</span>
+<span class="sd">        Structured representation of the requirement.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="p">(</span><span class="n">line</span> <span class="ow">or</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">s</span> <span class="ow">or</span> <span class="n">s</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;#&quot;</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">ParsedReq</span><span class="p">(</span><span class="n">raw</span><span class="o">=</span><span class="n">line</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;skip&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Script?</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">first</span> <span class="o">=</span> <span class="n">shlex</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">posix</span><span class="o">=</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">name</span> <span class="o">!=</span> <span class="s2">&quot;nt&quot;</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+        <span class="n">first</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">()</span> <span class="k">else</span> <span class="n">s</span>
+    <span class="k">if</span> <span class="n">first</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">endswith</span><span class="p">((</span><span class="s2">&quot;.sh&quot;</span><span class="p">,</span> <span class="s2">&quot;.bat&quot;</span><span class="p">)):</span>
+        <span class="k">return</span> <span class="n">ParsedReq</span><span class="p">(</span><span class="n">raw</span><span class="o">=</span><span class="n">line</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;script&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="n">first</span><span class="p">)</span><span class="o">.</span><span class="n">stem</span><span class="p">)</span>
+
+    <span class="c1"># Package</span>
+    <span class="n">chan</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">body</span> <span class="o">=</span> <span class="n">s</span>
+    <span class="k">if</span> <span class="s2">&quot;::&quot;</span> <span class="ow">in</span> <span class="n">s</span><span class="p">:</span>
+        <span class="n">c</span><span class="p">,</span> <span class="n">rest</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;::&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">c</span> <span class="ow">and</span> <span class="nb">all</span><span class="p">(</span><span class="n">ch</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">c</span> <span class="k">for</span> <span class="n">ch</span> <span class="ow">in</span> <span class="s2">&quot; &lt;&gt;=&quot;</span><span class="p">):</span>
+            <span class="n">chan</span><span class="p">,</span> <span class="n">body</span> <span class="o">=</span> <span class="n">c</span><span class="p">,</span> <span class="n">rest</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">req</span> <span class="o">=</span> <span class="n">PkgRequirement</span><span class="p">(</span><span class="n">body</span><span class="p">)</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">name</span>
+        <span class="n">spec</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">req</span><span class="o">.</span><span class="n">specifier</span><span class="p">)</span> <span class="ow">or</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="n">ParsedReq</span><span class="p">(</span>
+            <span class="n">raw</span><span class="o">=</span><span class="n">line</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;pkg&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">spec</span><span class="o">=</span><span class="n">spec</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="n">chan</span>
+        <span class="p">)</span>
+    <span class="k">except</span> <span class="n">InvalidRequirement</span><span class="p">:</span>
+        <span class="n">plog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Skipping invalid requirement line: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">())</span>
+        <span class="k">return</span> <span class="n">ParsedReq</span><span class="p">(</span><span class="n">raw</span><span class="o">=</span><span class="n">line</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;skip&quot;</span><span class="p">)</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_is_installed</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return whether a package is importable or listed by conda.</span>
+
+<span class="sd">    The check first tries Python package metadata and then falls back to</span>
+<span class="sd">    the names reported by ``conda list --json``.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    name : str</span>
+<span class="sd">        Distribution/package name to check.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    bool</span>
+<span class="sd">        ``True`` if present, ``False`` otherwise.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">md</span><span class="o">.</span><span class="n">version</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">except</span> <span class="n">md</span><span class="o">.</span><span class="n">PackageNotFoundError</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">plog</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Package </span><span class="si">%s</span><span class="s2"> not found in Python metadata: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="p">{</span><span class="n">n</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">conda</span><span class="o">.</span><span class="n">list_installed_names</span><span class="p">()}</span>
+
+
+<div class="viewcode-block" id="presence_check">
+<a class="viewcode-back" href="../../../api/diffpy.cmi.html#diffpy.cmi.installer.presence_check">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">presence_check</span><span class="p">(</span>
+    <span class="n">reqs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">ParsedReq</span><span class="p">],</span> <span class="o">*</span><span class="p">,</span> <span class="n">check_meta</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Check whether requirements appear satisfied.</span>
+
+<span class="sd">    Semantics</span>
+<span class="sd">    ---------</span>
+<span class="sd">    - **Packages:** mark missing when :func:`_is_installed` is ``False``.</span>
+<span class="sd">    - **Scripts:** use the basename as a pseudo-package name.</span>
+<span class="sd">      * If the basename starts with ``&quot;_&quot;`` (meta-scripts), count them as</span>
+<span class="sd">        missing only when ``check_meta=True`` (profile checks). During</span>
+<span class="sd">        post-install verification ``check_meta=False`` so meta-scripts</span>
+<span class="sd">        are ignored (script exit code already enforced).</span>
+<span class="sd">      * Otherwise, treat like a package and require the basename to be present.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    reqs : list of ParsedReq</span>
+<span class="sd">        Parsed requirements to check.</span>
+<span class="sd">    check_meta : bool, optional</span>
+<span class="sd">        Whether meta-scripts should be considered missing.</span>
+<span class="sd">        Defaults to ``True``.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    tuple of (bool, list of str)</span>
+<span class="sd">        ``(ok, missing)`` where ``ok`` is ``True`` when all checks pass and</span>
+<span class="sd">        ``missing`` lists raw lines deemed missing.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">missing</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">reqs</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">kind</span> <span class="o">==</span> <span class="s2">&quot;skip&quot;</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">r</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="k">elif</span> <span class="n">r</span><span class="o">.</span><span class="n">kind</span> <span class="o">==</span> <span class="s2">&quot;script&quot;</span> <span class="ow">and</span> <span class="n">r</span><span class="o">.</span><span class="n">name</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;_&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">check_meta</span><span class="p">:</span>
+                <span class="n">missing</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">raw</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+            <span class="k">continue</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="n">_is_installed</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">name</span><span class="p">):</span>
+            <span class="n">missing</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">raw</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+    <span class="k">return</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">missing</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">),</span> <span class="n">missing</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_script_supported_on_platform</span><span class="p">(</span><span class="n">ext</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return whether scripts with the given extension are runnable</span>
+<span class="sd">    here.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    ext : str</span>
+<span class="sd">        File extension including the leading dot (e.g., ``&quot;.sh&quot;``).</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    bool</span>
+<span class="sd">        ``True`` if runnable on the current platform, ``False`` otherwise.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">ext</span> <span class="o">=</span> <span class="p">(</span><span class="n">ext</span> <span class="ow">or</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;nt&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">ext</span> <span class="o">==</span> <span class="s2">&quot;.bat&quot;</span>
+    <span class="k">return</span> <span class="n">ext</span> <span class="o">==</span> <span class="s2">&quot;.sh&quot;</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_resolve_script_path</span><span class="p">(</span><span class="n">first_token</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">scripts_root</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Path</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Resolve a script path under the configured scripts directory.</span>
+
+<span class="sd">    Rules</span>
+<span class="sd">    -----</span>
+<span class="sd">    1) If ``first_token`` is an **absolute file path**, accept as-is.</span>
+<span class="sd">    2) Otherwise treat it as a relative file under ``scripts_root``.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    first_token : str</span>
+<span class="sd">        First token from the script line (ends with ``.sh`` or ``.bat``).</span>
+<span class="sd">    scripts_root : path-like</span>
+<span class="sd">        Root directory containing available scripts.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    pathlib.Path</span>
+<span class="sd">        Absolute resolved path to the script.</span>
+
+<span class="sd">    Raises</span>
+<span class="sd">    ------</span>
+<span class="sd">    FileNotFoundError</span>
+<span class="sd">        If the path cannot be resolved by the above rules.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">first_token</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">is_absolute</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">is_file</span><span class="p">():</span>
+            <span class="k">return</span> <span class="n">p</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span>
+        <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Script not found: </span><span class="si">{</span><span class="n">p</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">cand</span> <span class="o">=</span> <span class="n">scripts_root</span> <span class="o">/</span> <span class="n">first_token</span>
+    <span class="k">if</span> <span class="n">cand</span><span class="o">.</span><span class="n">is_file</span><span class="p">():</span>
+        <span class="k">return</span> <span class="n">cand</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span>
+    <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;Script not found: </span><span class="si">{</span><span class="n">first_token</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="sa">f</span><span class="s2">&quot; (expected under </span><span class="si">{</span><span class="n">scripts_root</span><span class="si">}</span><span class="s2"> or absolute file path)&quot;</span>
+    <span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_script_exec_cmd</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="n">args</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the execution command for a script on this platform.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    path : path-like</span>
+<span class="sd">        Script path.</span>
+<span class="sd">    args : list of str</span>
+<span class="sd">        Arguments to pass to the script.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    list of str</span>
+<span class="sd">        Command vector to execute via :func:`conda.run`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">ext</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">suffix</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;nt&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">ext</span> <span class="o">!=</span> <span class="s2">&quot;.bat&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">)]</span> <span class="o">+</span> <span class="n">args</span>
+        <span class="k">return</span> <span class="p">[</span><span class="s2">&quot;cmd&quot;</span><span class="p">,</span> <span class="s2">&quot;/c&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">)]</span> <span class="o">+</span> <span class="n">args</span>
+    <span class="k">if</span> <span class="n">ext</span> <span class="o">==</span> <span class="s2">&quot;.sh&quot;</span><span class="p">:</span>
+        <span class="n">shell</span> <span class="o">=</span> <span class="n">shutil</span><span class="o">.</span><span class="n">which</span><span class="p">(</span><span class="s2">&quot;bash&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">shutil</span><span class="o">.</span><span class="n">which</span><span class="p">(</span><span class="s2">&quot;sh&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="s2">&quot;sh&quot;</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">shell</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">)]</span> <span class="o">+</span> <span class="n">args</span>
+    <span class="k">return</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">)]</span> <span class="o">+</span> <span class="n">args</span>
+
+
+<span class="c1"># Install policy</span>
+
+
+<div class="viewcode-block" id="install_requirements">
+<a class="viewcode-back" href="../../../api/diffpy.cmi.html#diffpy.cmi.installer.install_requirements">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">install_requirements</span><span class="p">(</span>
+    <span class="n">reqs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">ParsedReq</span><span class="p">],</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">scripts_root</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span>
+    <span class="n">default_channel</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;conda-forge&quot;</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Install requirements, run scripts, and verify presence.</span>
+
+<span class="sd">    Policy</span>
+<span class="sd">    ------</span>
+<span class="sd">    1) **Packages first**: batch per channel; solver failures are treated as</span>
+<span class="sd">       soft (final presence check decides).</span>
+<span class="sd">    2) **Scripts next**: run native scripts only; a non-zero exit is a hard</span>
+<span class="sd">       failure.</span>
+<span class="sd">    3) **Presence check**: verify packages and non-meta scripts.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    reqs : list of ParsedReq</span>
+<span class="sd">        Parsed requirements (from packs and profile extras).</span>
+<span class="sd">    scripts_root : path-like</span>
+<span class="sd">        Directory containing relative scripts used by recipes.</span>
+<span class="sd">    default_channel : str, optional</span>
+<span class="sd">        Default conda channel for batches. Defaults to ``&quot;conda-forge&quot;``.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    int</span>
+<span class="sd">        ``0`` on success, ``1`` on failure.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Batch packages by channel</span>
+    <span class="n">by_channel</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">reqs</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">kind</span> <span class="o">!=</span> <span class="s2">&quot;pkg&quot;</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">r</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="k">if</span> <span class="n">_is_installed</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">name</span><span class="p">):</span>
+            <span class="k">continue</span>
+        <span class="n">chan</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">channel</span> <span class="ow">or</span> <span class="n">default_channel</span>
+        <span class="n">spec</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">r</span><span class="o">.</span><span class="n">name</span><span class="si">}{</span><span class="n">r</span><span class="o">.</span><span class="n">spec</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="n">lst</span> <span class="o">=</span> <span class="n">by_channel</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">chan</span><span class="p">,</span> <span class="p">[])</span>
+        <span class="k">if</span> <span class="n">spec</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">lst</span><span class="p">:</span>
+            <span class="n">lst</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">spec</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">chan</span><span class="p">,</span> <span class="n">specs</span> <span class="ow">in</span> <span class="n">by_channel</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">solver</span><span class="p">,</span> <span class="n">rc</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">conda</span><span class="o">.</span><span class="n">install_specs</span><span class="p">(</span>
+            <span class="n">specs</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="n">chan</span><span class="p">,</span> <span class="n">default_channel</span><span class="o">=</span><span class="n">default_channel</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">rc</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">plog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                <span class="s2">&quot;Batch install did not complete cleanly with </span><span class="si">%s</span><span class="s2"> &quot;</span>
+                <span class="s2">&quot;for channel &#39;</span><span class="si">%s</span><span class="s2">&#39;. &quot;</span>
+                <span class="s2">&quot;Run in debug mode (-v) to see solver output.&quot;</span><span class="p">,</span>
+                <span class="n">solver</span><span class="p">,</span>
+                <span class="n">chan</span><span class="p">,</span>
+            <span class="p">)</span>
+    <span class="n">conda</span><span class="o">.</span><span class="n">reset_cache</span><span class="p">()</span>
+
+    <span class="c1"># Execute scripts</span>
+    <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">reqs</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">kind</span> <span class="o">!=</span> <span class="s2">&quot;script&quot;</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">r</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">r</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">_is_installed</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">name</span><span class="p">):</span>
+            <span class="n">plog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Skipping script (already satisfied): </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">raw</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+            <span class="k">continue</span>
+        <span class="n">first_token</span> <span class="o">=</span> <span class="n">shlex</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">raw</span><span class="o">.</span><span class="n">strip</span><span class="p">(),</span> <span class="n">posix</span><span class="o">=</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">name</span> <span class="o">!=</span> <span class="s2">&quot;nt&quot;</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">ext</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">first_token</span><span class="p">)</span><span class="o">.</span><span class="n">suffix</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">_script_supported_on_platform</span><span class="p">(</span><span class="n">ext</span><span class="p">):</span>
+            <span class="n">plog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                <span class="s2">&quot;Skipping non-native script on this platform: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">first_token</span>
+            <span class="p">)</span>
+            <span class="k">continue</span>
+
+        <span class="n">path</span> <span class="o">=</span> <span class="n">_resolve_script_path</span><span class="p">(</span><span class="n">first_token</span><span class="p">,</span> <span class="n">scripts_root</span><span class="p">)</span>
+        <span class="n">args</span> <span class="o">=</span> <span class="n">shlex</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">raw</span><span class="p">,</span> <span class="n">posix</span><span class="o">=</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">name</span> <span class="o">!=</span> <span class="s2">&quot;nt&quot;</span><span class="p">))[</span><span class="mi">1</span><span class="p">:]</span>
+        <span class="n">cmd</span> <span class="o">=</span> <span class="n">_script_exec_cmd</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>
+        <span class="n">plog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Running script: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">cmd</span><span class="p">))</span>
+        <span class="n">rc</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">conda</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">cwd</span><span class="o">=</span><span class="n">path</span><span class="o">.</span><span class="n">parent</span><span class="p">,</span> <span class="n">capture</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">rc</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">plog</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Script failed (exit </span><span class="si">%d</span><span class="s2">): </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">rc</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">raw</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+            <span class="k">return</span> <span class="mi">1</span>
+        <span class="n">conda</span><span class="o">.</span><span class="n">reset_cache</span><span class="p">()</span>
+
+    <span class="c1"># Final presence check</span>
+    <span class="n">ok</span><span class="p">,</span> <span class="n">missing</span> <span class="o">=</span> <span class="n">presence_check</span><span class="p">(</span><span class="n">reqs</span><span class="p">,</span> <span class="n">check_meta</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">ok</span><span class="p">:</span>
+        <span class="n">plog</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+            <span class="s2">&quot;Requirements not fully satisfied after install: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">missing</span><span class="p">),</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="mi">1</span>
+
+    <span class="n">plog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Requirements installation complete.&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="mi">0</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, The Trustees of Columbia University in the City of New York.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

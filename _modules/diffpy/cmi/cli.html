@@ -1,0 +1,507 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>diffpy.cmi.cli &mdash; diffpy.cmi 3.1.0rc0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/wrap_table.css?v=dc09091b" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=a2ca8c84"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../_static/copybutton.js?v=cca77546"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html">
+            
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">WHAT IS DIFFPY.CMI?</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html">Overview</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">GETTING STARTED</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../cli-commands.html">Command-Line Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../writing-script.html">Tutorial diffpy.cmi Script</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/diffpy.cmi.html">Package API</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">AVAILABLE PACKS &amp; PROFILES</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../available-packs.html">Packs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../available-profiles.html">Profiles</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">EXAMPLES &amp; MORE</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/index.html">Examples</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">REFERENCE</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../release.html">Release notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../license.html">License</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">diffpy.cmi</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">diffpy.cmi.cli</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for diffpy.cmi.cli</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1">##############################################################################</span>
+<span class="c1">#</span>
+<span class="c1"># (c) 2025 The Trustees of Columbia University in the City of New York.</span>
+<span class="c1"># All rights reserved.</span>
+<span class="c1">#</span>
+<span class="c1"># File coded by: Tieqiong Zhang and members of the Billinge Group.</span>
+<span class="c1">#</span>
+<span class="c1"># See GitHub contributions for a more detailed list of contributors.</span>
+<span class="c1"># https://github.com/diffpy/diffpy.cmi/graphs/contributors</span>
+<span class="c1">#</span>
+<span class="c1"># See LICENSE.rst for license information.</span>
+<span class="c1">#</span>
+<span class="c1">##############################################################################</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">argparse</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">diffpy.cmi</span><span class="w"> </span><span class="kn">import</span> <span class="n">__version__</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">diffpy.cmi.conda</span><span class="w"> </span><span class="kn">import</span> <span class="n">env_info</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">diffpy.cmi.log</span><span class="w"> </span><span class="kn">import</span> <span class="n">plog</span><span class="p">,</span> <span class="n">set_log_mode</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">diffpy.cmi.packsmanager</span><span class="w"> </span><span class="kn">import</span> <span class="n">PacksManager</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">diffpy.cmi.profilesmanager</span><span class="w"> </span><span class="kn">import</span> <span class="n">ProfilesManager</span>
+
+
+<span class="c1"># Manual</span>
+<div class="viewcode-block" id="open_manual_and_exit">
+<a class="viewcode-back" href="../../../api/diffpy.cmi.html#diffpy.cmi.cli.open_manual_and_exit">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">open_manual_and_exit</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Open the manual in a web browser and exit.</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    This function terminates the process with ``SystemExit(0)``.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">webbrowser</span>
+
+    <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;diffpy.org/diffpy.cmi&quot;</span>
+    <span class="n">plog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Opening manual at </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">url</span><span class="p">)</span>
+    <span class="n">webbrowser</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+    <span class="k">raise</span> <span class="ne">SystemExit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span></div>
+
+
+
+<span class="c1"># Parser</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_build_parser</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Build and return the top-level argument parser for the CLI.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    argparse.ArgumentParser</span>
+<span class="sd">        Configured parser with all subcommands and options.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span>
+        <span class="n">prog</span><span class="o">=</span><span class="s2">&quot;cmi&quot;</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="p">(</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;\</span>
+<span class="sd">Welcome to diffpy.cmi, a complex modeling infrastructure for</span>
+<span class="sd">multi-modal analysis of scientific data.</span>
+
+<span class="sd">Diffpy.cmi is designed as an extensible complex modeling</span>
+<span class="sd">infrastructure. Users and developers can readily integrate</span>
+<span class="sd">novel data types and constraints into custom workflows. While</span>
+<span class="sd">widely used for advanced analysis of structural data, the</span>
+<span class="sd">framework is general and can be applied to any problem where</span>
+<span class="sd">model parameters are refined to fit calculated quantities to</span>
+<span class="sd">data.</span>
+
+<span class="sd">Diffpy.cmi is comprised of modular units called &#39;packs&#39; and</span>
+<span class="sd">&#39;profiles&#39; that facilitate tailored installations for specific</span>
+<span class="sd">scientific applications. Run &#39;cmi info -h&#39; for more details.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+        <span class="p">),</span>
+        <span class="n">formatter_class</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">RawDescriptionHelpFormatter</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;-v&quot;</span><span class="p">,</span> <span class="s2">&quot;--verbose&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Enable debug logging.&quot;</span>
+    <span class="p">)</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;-V&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--version&quot;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="s2">&quot;version&quot;</span><span class="p">,</span>
+        <span class="n">version</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;diffpy.cmi </span><span class="si">{</span><span class="n">__version__</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--manual&quot;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Open online documentation and exit.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">()</span>
+    <span class="n">sub</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">add_subparsers</span><span class="p">(</span><span class="n">dest</span><span class="o">=</span><span class="s2">&quot;cmd&quot;</span><span class="p">,</span> <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&lt;command&gt;&quot;</span><span class="p">)</span>
+    <span class="c1"># example</span>
+    <span class="n">p_info</span> <span class="o">=</span> <span class="n">sub</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span>
+        <span class="s2">&quot;info&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;Prints info about packs, profiles, and examples.</span><span class="se">\n</span><span class="s2"> &quot;</span><span class="p">),</span>
+        <span class="n">description</span><span class="o">=</span><span class="p">(</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Definitions:</span>
+<span class="sd">pack:       A collection of data processing routines, models, and examples.</span>
+<span class="sd">            For example, the &#39;pdf&#39; pack contains packages used for modeling</span>
+<span class="sd">            and refinement of the Atomic Pair Distribution Function (PDF).</span>
+
+<span class="sd">profile:    A set of pre-defined packs or configurations for a specific</span>
+<span class="sd">            scientific workflow. Profiles can be installed or customized</span>
+<span class="sd">            for different use cases.</span>
+
+<span class="sd">examples:   Example scripts or folders that can be copied locally using</span>
+<span class="sd">            &#39;cmi copy &lt;example_name&gt;&#39;.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+        <span class="p">),</span>
+        <span class="n">formatter_class</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">RawDescriptionHelpFormatter</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">p_info</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">()</span>
+    <span class="n">sub_info</span> <span class="o">=</span> <span class="n">p_info</span><span class="o">.</span><span class="n">add_subparsers</span><span class="p">(</span><span class="n">dest</span><span class="o">=</span><span class="s2">&quot;info_cmd&quot;</span><span class="p">,</span> <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&lt;command&gt;&quot;</span><span class="p">)</span>
+    <span class="n">sub_info</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span>
+        <span class="s2">&quot;packs&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Show available and installed packs.&quot;</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">()</span>
+    <span class="n">sub_info</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span>
+        <span class="s2">&quot;profiles&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Show available and installed profiles.&quot;</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">()</span>
+    <span class="n">sub_info</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span>
+        <span class="s2">&quot;examples&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Show available examples to copy.&quot;</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">()</span>
+    <span class="c1"># install (multiple targets)</span>
+    <span class="n">p_install</span> <span class="o">=</span> <span class="n">sub</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span><span class="s2">&quot;install&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Install packs/profiles.&quot;</span><span class="p">)</span>
+    <span class="n">p_install</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;targets&quot;</span><span class="p">,</span>
+        <span class="n">nargs</span><span class="o">=</span><span class="s2">&quot;*&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;One or more targets: pack/profile base names </span><span class="se">\</span>
+<span class="s2">              or absolute profile file/dir.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">p_install</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;-c&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--channel&quot;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;default_channel&quot;</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="s2">&quot;conda-forge&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Default conda channel for packages </span><span class="se">\</span>
+<span class="s2">            without explicit per-line channel.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">p_install</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">()</span>
+
+    <span class="n">p_copy</span> <span class="o">=</span> <span class="n">sub</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span>
+        <span class="s2">&quot;copy&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Copy example directories.&quot;</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Copy example directories to the current &quot;</span>
+        <span class="s2">&quot;or specified location.&quot;</span><span class="p">,</span>
+        <span class="n">usage</span><span class="o">=</span><span class="s2">&quot;cmi copy [-h] [-t DIR] [-f] &lt;commands&gt;...&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">p_copy</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">,</span>
+        <span class="n">nargs</span><span class="o">=</span><span class="s2">&quot;+&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Example name(s) to copy. Use `cmi info examples` to list.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">p_copy</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;-t&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--target-dir&quot;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;target_dir&quot;</span><span class="p">,</span>
+        <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;DIR&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Target directory to copy examples into. &quot;</span>
+        <span class="s2">&quot;Defaults to current working directory.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">p_copy</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;-f&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--force&quot;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Force overwrite existing files and merge directories.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">p_copy</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="n">_cmd_copy</span><span class="p">)</span>
+    <span class="c1"># env</span>
+    <span class="n">sub</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span><span class="s2">&quot;env&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Show basic conda environment info&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">p</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_resolve_target_for_install</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return (&#39;pack&#39;|&#39;profile&#39;, absolute path) for a single install</span>
+<span class="sd">    target.</span>
+
+<span class="sd">    Delegates resolution to manager resolvers to keep rules centralized:</span>
+<span class="sd">    :meth:`PacksManager._resolve_pack_file` and</span>
+<span class="sd">    :meth:`ProfilesManager._resolve_profile_file`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">mgr</span> <span class="o">=</span> <span class="n">PacksManager</span><span class="p">()</span>
+    <span class="n">pm</span> <span class="o">=</span> <span class="n">ProfilesManager</span><span class="p">()</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">is_absolute</span><span class="p">():</span>
+        <span class="k">return</span> <span class="s2">&quot;profile&quot;</span><span class="p">,</span> <span class="n">pm</span><span class="o">.</span><span class="n">_resolve_profile_file</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+
+    <span class="n">pack_path</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">profile_path</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">pack_path</span> <span class="o">=</span> <span class="n">mgr</span><span class="o">.</span><span class="n">_resolve_pack_file</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">profile_path</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">_resolve_profile_file</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+        <span class="k">pass</span>
+
+    <span class="k">if</span> <span class="n">pack_path</span> <span class="ow">and</span> <span class="n">profile_path</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Ambiguous install target &#39;</span><span class="si">{</span><span class="n">s</span><span class="si">}</span><span class="s2">&#39;: both a pack and a profile exist.&quot;</span>
+        <span class="p">)</span>
+    <span class="k">if</span> <span class="n">pack_path</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;pack&quot;</span><span class="p">,</span> <span class="n">pack_path</span>
+    <span class="k">if</span> <span class="n">profile_path</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;profile&quot;</span><span class="p">,</span> <span class="n">profile_path</span>
+    <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;No installed pack or profile named &#39;</span><span class="si">{</span><span class="n">s</span><span class="si">}</span><span class="s2">&#39; found.&quot;</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_cmd_install</span><span class="p">(</span><span class="n">ns</span><span class="p">:</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Handle `cmi install` subcommand for packs and profiles.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    ns : argparse.Namespace</span>
+<span class="sd">        Parsed arguments for the install subparser.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    int</span>
+<span class="sd">        Exit code (``0`` on success; non-zero on failure).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">ns</span><span class="p">,</span> <span class="s2">&quot;targets&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="n">plog</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+            <span class="s2">&quot;Missing install targets. &quot;</span>
+            <span class="s2">&quot;Provide pack/profile names or an absolute profile path.&quot;</span>
+        <span class="p">)</span>
+        <span class="n">ns</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">print_help</span><span class="p">()</span>
+        <span class="k">return</span> <span class="mi">1</span>
+    <span class="n">rc</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">mgr</span> <span class="o">=</span> <span class="n">PacksManager</span><span class="p">()</span>
+    <span class="n">pm</span> <span class="o">=</span> <span class="n">ProfilesManager</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">tgt</span> <span class="ow">in</span> <span class="n">ns</span><span class="o">.</span><span class="n">targets</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">kind</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="n">_resolve_target_for_install</span><span class="p">(</span><span class="n">tgt</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">kind</span> <span class="o">==</span> <span class="s2">&quot;pack&quot;</span><span class="p">:</span>
+                <span class="n">r</span> <span class="o">=</span> <span class="n">mgr</span><span class="o">.</span><span class="n">install_pack</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">stem</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">r</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">install</span><span class="p">(</span><span class="n">path</span> <span class="k">if</span> <span class="n">path</span><span class="o">.</span><span class="n">is_absolute</span><span class="p">()</span> <span class="k">else</span> <span class="n">path</span><span class="o">.</span><span class="n">stem</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">r</span><span class="p">:</span>
+                    <span class="n">rc</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">rc</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+                <span class="n">rc</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">rc</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="ne">FileNotFoundError</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">plog</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+            <span class="n">ns</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">print_help</span><span class="p">()</span>
+            <span class="n">rc</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">rc</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">plog</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+            <span class="n">rc</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">rc</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">rc</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_cmd_env</span><span class="p">(</span><span class="n">_</span><span class="p">:</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Print basic conda environment information.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    _ : argparse.Namespace</span>
+<span class="sd">        Unused parsed arguments placeholder.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    int</span>
+<span class="sd">        Always ``0``.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">info</span> <span class="o">=</span> <span class="n">env_info</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Conda environment:&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  available : </span><span class="si">{</span><span class="n">info</span><span class="o">.</span><span class="n">available</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  mamba     : </span><span class="si">{</span><span class="n">info</span><span class="o">.</span><span class="n">mamba</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  env_name  : </span><span class="si">{</span><span class="n">info</span><span class="o">.</span><span class="n">env_name</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="s1">&#39;(unknown)&#39;</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  prefix    : </span><span class="si">{</span><span class="n">info</span><span class="o">.</span><span class="n">prefix</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="s1">&#39;(unknown)&#39;</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="mi">0</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_cmd_info</span><span class="p">(</span><span class="n">ns</span><span class="p">:</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Handle `cmi info` subcommands.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    ns : argparse.Namespace</span>
+<span class="sd">        Parsed arguments for the info subparser.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    int</span>
+<span class="sd">        Exit code (``0`` on success; non-zero on failure).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">packsmanager</span> <span class="o">=</span> <span class="n">PacksManager</span><span class="p">()</span>
+    <span class="n">profilemanager</span> <span class="o">=</span> <span class="n">ProfilesManager</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">ns</span><span class="o">.</span><span class="n">info_cmd</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">packsmanager</span><span class="o">.</span><span class="n">print_info</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">INFO: Run `cmi info -h` for more options.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="mi">0</span>
+    <span class="k">if</span> <span class="n">ns</span><span class="o">.</span><span class="n">info_cmd</span> <span class="o">==</span> <span class="s2">&quot;packs&quot;</span><span class="p">:</span>
+        <span class="n">packsmanager</span><span class="o">.</span><span class="n">print_packs</span><span class="p">()</span>
+        <span class="k">return</span> <span class="mi">0</span>
+    <span class="k">if</span> <span class="n">ns</span><span class="o">.</span><span class="n">info_cmd</span> <span class="o">==</span> <span class="s2">&quot;profiles&quot;</span><span class="p">:</span>
+        <span class="n">profilemanager</span><span class="o">.</span><span class="n">print_profiles</span><span class="p">()</span>
+        <span class="k">return</span> <span class="mi">0</span>
+    <span class="k">if</span> <span class="n">ns</span><span class="o">.</span><span class="n">info_cmd</span> <span class="o">==</span> <span class="s2">&quot;examples&quot;</span><span class="p">:</span>
+        <span class="n">packsmanager</span><span class="o">.</span><span class="n">print_examples</span><span class="p">()</span>
+        <span class="k">return</span> <span class="mi">0</span>
+    <span class="n">ns</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">print_help</span><span class="p">()</span>
+    <span class="k">return</span> <span class="mi">2</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_cmd_copy</span><span class="p">(</span><span class="n">ns</span><span class="p">:</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Handle `cmi copy` subcommand for copying example directories.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    ns : argparse.Namespace</span>
+<span class="sd">        Parsed arguments for the copy subparser.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    int</span>
+<span class="sd">        Exit code (``0`` on success; non-zero on failure).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">names</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">ns</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="n">target_dir</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">ns</span><span class="p">,</span> <span class="s2">&quot;target_dir&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="n">force</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">ns</span><span class="p">,</span> <span class="s2">&quot;force&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">names</span><span class="p">:</span>
+        <span class="n">plog</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+            <span class="s2">&quot;Missing example name(s). Use `cmi info examples` to see options.&quot;</span>
+        <span class="p">)</span>
+        <span class="n">ns</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">print_help</span><span class="p">()</span>
+        <span class="k">return</span> <span class="mi">1</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">pkm</span> <span class="o">=</span> <span class="n">PacksManager</span><span class="p">()</span>
+        <span class="n">pkm</span><span class="o">.</span><span class="n">copy_examples</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="n">target_dir</span><span class="o">=</span><span class="n">target_dir</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="n">force</span><span class="p">)</span>
+        <span class="k">return</span> <span class="mi">0</span>
+    <span class="k">except</span> <span class="ne">FileNotFoundError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">plog</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+        <span class="k">return</span> <span class="mi">1</span>
+
+
+<div class="viewcode-block" id="main">
+<a class="viewcode-back" href="../../../api/diffpy.cmi.html#diffpy.cmi.cli.main">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">argv</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Run the CMI CLI.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    argv : list of str, optional</span>
+<span class="sd">        Argument vector to parse. When ``None``, defaults to ``sys.argv[1:]``.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    int</span>
+<span class="sd">        Process exit code (``0`` success, ``1`` failure, ``2`` usage error).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">_build_parser</span><span class="p">()</span>
+    <span class="n">ns</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">(</span><span class="n">argv</span><span class="p">)</span>
+    <span class="n">set_log_mode</span><span class="p">(</span><span class="n">ns</span><span class="o">.</span><span class="n">verbose</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">ns</span><span class="o">.</span><span class="n">manual</span><span class="p">:</span>
+        <span class="n">open_manual_and_exit</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">ns</span><span class="o">.</span><span class="n">cmd</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">print_help</span><span class="p">()</span>
+        <span class="k">return</span> <span class="mi">2</span>
+    <span class="k">if</span> <span class="n">ns</span><span class="o">.</span><span class="n">cmd</span> <span class="o">==</span> <span class="s2">&quot;info&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">_cmd_info</span><span class="p">(</span><span class="n">ns</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">ns</span><span class="o">.</span><span class="n">cmd</span> <span class="o">==</span> <span class="s2">&quot;copy&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">_cmd_copy</span><span class="p">(</span><span class="n">ns</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">ns</span><span class="o">.</span><span class="n">cmd</span> <span class="o">==</span> <span class="s2">&quot;install&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">_cmd_install</span><span class="p">(</span><span class="n">ns</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">ns</span><span class="o">.</span><span class="n">cmd</span> <span class="o">==</span> <span class="s2">&quot;env&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">_cmd_env</span><span class="p">(</span><span class="n">ns</span><span class="p">)</span>
+    <span class="n">plog</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Unknown command: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">ns</span><span class="o">.</span><span class="n">cmd</span><span class="p">)</span>
+    <span class="k">return</span> <span class="mi">2</span></div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">SystemExit</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, The Trustees of Columbia University in the City of New York.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,222 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CMI Command-Line Interface (CLI) &mdash; diffpy.cmi 3.1.0rc0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="_static/wrap_table.css?v=dc09091b" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=a2ca8c84"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="_static/copybutton.js?v=cca77546"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Writing a script with diffpy.cmi" href="writing-script.html" />
+    <link rel="prev" title="Installation" href="installation.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html">
+            
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">WHAT IS DIFFPY.CMI?</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">GETTING STARTED</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Command-Line Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#getting-help">Getting Help</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#cmi-info-command"><code class="docutils literal notranslate"><span class="pre">cmi</span> <span class="pre">info</span></code> command</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#cmi-install-command"><code class="docutils literal notranslate"><span class="pre">cmi</span> <span class="pre">install</span></code> command</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#cmi-copy-command"><code class="docutils literal notranslate"><span class="pre">cmi</span> <span class="pre">copy</span></code> command</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#cmi-env-command"><code class="docutils literal notranslate"><span class="pre">cmi</span> <span class="pre">env</span></code> command</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="writing-script.html">Tutorial diffpy.cmi Script</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/diffpy.cmi.html">Package API</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">AVAILABLE PACKS &amp; PROFILES</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="available-packs.html">Packs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="available-profiles.html">Profiles</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">EXAMPLES &amp; MORE</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/index.html">Examples</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">REFERENCE</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="release.html">Release notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">diffpy.cmi</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">CMI Command-Line Interface (CLI)</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/diffpy/diffpy.cmi/blob/main/doc/source/cli-commands.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="cmi-command-line-interface-cli">
+<span id="cli-commands"></span><span id="index-0"></span><h1>CMI Command-Line Interface (CLI)<a class="headerlink" href="#cmi-command-line-interface-cli" title="Link to this heading"></a></h1>
+<p>The <code class="docutils literal notranslate"><span class="pre">cmi</span></code> command provides access to <code class="docutils literal notranslate"><span class="pre">diffpy.cmi</span></code>.
+It allows users to explore, install, and run <strong>packs</strong>, <strong>profiles</strong>, and <strong>example workflows</strong>.</p>
+<section id="getting-help">
+<h2>Getting Help<a class="headerlink" href="#getting-help" title="Link to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">-h</span></code> flag is available for <strong>all</strong> cmi commands and subcommands.
+It’s highly recommended to use it wherever necessary.</p>
+<p>To display help for the main CLI, type</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmi<span class="w"> </span>-h
+cmi<span class="w"> </span>--help
+</pre></div>
+</div>
+<p>Display help for a specific subcommand with,</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmi<span class="w"> </span>&lt;subcommand&gt;<span class="w"> </span>-h
+</pre></div>
+</div>
+<p>Open the full online manual in a web browser by typing,</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmi<span class="w"> </span>--manual
+</pre></div>
+</div>
+</section>
+<section id="cmi-info-command">
+<h2><code class="docutils literal notranslate"><span class="pre">cmi</span> <span class="pre">info</span></code> command<a class="headerlink" href="#cmi-info-command" title="Link to this heading"></a></h2>
+<p>To print information about available and installed packs, profiles, and examples, type,</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmi<span class="w"> </span>info
+</pre></div>
+</div>
+<p>To print information about packs, profiles, or examples, type</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmi<span class="w"> </span>info<span class="w"> </span>packs
+cmi<span class="w"> </span>info<span class="w"> </span>profiles
+cmi<span class="w"> </span>info<span class="w"> </span>examples
+</pre></div>
+</div>
+</section>
+<section id="cmi-install-command">
+<h2><code class="docutils literal notranslate"><span class="pre">cmi</span> <span class="pre">install</span></code> command<a class="headerlink" href="#cmi-install-command" title="Link to this heading"></a></h2>
+<p>To install packs or profiles into your environment, type</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmi<span class="w"> </span>install<span class="w"> </span>&lt;pack-name&gt;
+cmi<span class="w"> </span>install<span class="w"> </span>&lt;profile-name&gt;
+</pre></div>
+</div>
+<p>Installation of multiple packs or profiles is also supported, e.g.,</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmi<span class="w"> </span>install<span class="w"> </span>&lt;pack-name&gt;<span class="w"> </span>&lt;profile-name&gt;
+</pre></div>
+</div>
+</section>
+<section id="cmi-copy-command">
+<h2><code class="docutils literal notranslate"><span class="pre">cmi</span> <span class="pre">copy</span></code> command<a class="headerlink" href="#cmi-copy-command" title="Link to this heading"></a></h2>
+<p>To view all examples available to copy, type</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmi<span class="w"> </span>info<span class="w"> </span>examples
+</pre></div>
+</div>
+<p>To copy an example or list of examples to cwd, type</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmi<span class="w"> </span>copy<span class="w"> </span>&lt;example-name&gt;
+cmi<span class="w"> </span>copy<span class="w"> </span>&lt;example-name1&gt;<span class="w"> </span>&lt;example-name2&gt;
+</pre></div>
+</div>
+<p>To copy all examples from a pack or list of packs to cwd, type</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmi<span class="w"> </span>copy<span class="w"> </span>&lt;pack-name&gt;
+cmi<span class="w"> </span>copy<span class="w"> </span>&lt;pack-name1&gt;<span class="w"> </span>&lt;pack-name2&gt;
+</pre></div>
+</div>
+<p>To copy all examples to cwd, type</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmi<span class="w"> </span>copy<span class="w"> </span>all
+</pre></div>
+</div>
+<p>To copy an example to a target directory, type</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmi<span class="w"> </span>copy<span class="w"> </span>&lt;example-name&gt;<span class="w"> </span>-t<span class="w"> </span>&lt;target-directory&gt;
+</pre></div>
+</div>
+<p>To force overwrite a preexisting example directory, type</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmi<span class="w"> </span>copy<span class="w"> </span>&lt;example-name&gt;<span class="w"> </span>-f
+</pre></div>
+</div>
+</section>
+<section id="cmi-env-command">
+<h2><code class="docutils literal notranslate"><span class="pre">cmi</span> <span class="pre">env</span></code> command<a class="headerlink" href="#cmi-env-command" title="Link to this heading"></a></h2>
+<p>To show basic information about your current conda environment, type</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmi<span class="w"> </span>env
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="installation.html" class="btn btn-neutral float-left" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="writing-script.html" class="btn btn-neutral float-right" title="Writing a script with diffpy.cmi" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, The Trustees of Columbia University in the City of New York.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

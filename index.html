@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>diffpy.cmi documentation &mdash; diffpy.cmi 0.1.0rc1 documentation</title>
+  <title>diffpy.cmi documentation &mdash; diffpy.cmi 3.1.0rc0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
@@ -15,7 +15,7 @@
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=3b45b1b0"></script>
+      <script src="_static/documentation_options.js?v=a2ca8c84"></script>
       <script src="_static/doctools.js?v=9bcbadda"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="_static/clipboard.min.js?v=a7894cd8"></script>
@@ -23,7 +23,7 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Getting started" href="getting-started.html" /> 
+    <link rel="next" title="Overview" href="overview.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -34,8 +34,8 @@
 
           
           
-          <a href="#" class="icon icon-home">
-            diffpy.cmi
+          <a href="#">
+            
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -45,10 +45,28 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <ul>
-<li class="toctree-l1"><a class="reference internal" href="getting-started.html">Getting started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tutorials/index.html">Tutorials</a></li>
+              <p class="caption" role="heading"><span class="caption-text">WHAT IS DIFFPY.CMI?</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">GETTING STARTED</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cli-commands.html">Command-Line Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="writing-script.html">Tutorial diffpy.cmi Script</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api/diffpy.cmi.html">Package API</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">AVAILABLE PACKS &amp; PROFILES</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="available-packs.html">Packs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="available-profiles.html">Profiles</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">EXAMPLES &amp; MORE</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/index.html">Examples</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">REFERENCE</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="release.html">Release notes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
 </ul>
@@ -80,30 +98,41 @@
   <section id="title">
 <h1>diffpy.cmi documentation<a class="headerlink" href="#title" title="Link to this heading"></a></h1>
 <div class="line-block">
-<div class="line">Software version 0.1.0rc1</div>
-<div class="line">Last updated August 28, 2025.</div>
+<div class="line">Software version 3.1.0rc0</div>
+<div class="line">Last updated November 12, 2025.</div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">diffpy.cmi</span></code> - Complex modeling infrastructure: a modular framework for multi-modal modeling of scientific data.</p>
-<p>diffpy.cmi is designed as an extensible complex modeling infrastructure. Users and developers can readily integrate novel data types and constraints into custom workflows. While widely used for advanced analysis of structural data, the framework is general and can be applied to any problem where model parameters are refined to fit calculated quantities to data.</p>
-<p>diffpy.cmi is a community-driven project that supports Unix, Linux, macOS, and Windows platforms. It is designed to be used in Python scripts enabling flexible scripting and automation for advanced and reproducible workflows. Users are encouraged to leverage the software for their modeling needs and to contribute feedback, use cases, and extensions through the project community.</p>
-<a class="reference internal image-reference" href="_images/diffpycmi_screenshot.png"><img alt="codecov-in-pr-comment" class="align-center" src="_images/diffpycmi_screenshot.png" style="width: 400px;" />
+<p><code class="docutils literal notranslate"><span class="pre">diffpy.cmi</span></code> is designed as an extensible complex modeling infrastructure.
+Users and developers can readily integrate novel data types and constraints into custom workflows.
+While widely used for advanced analysis of structural data, the framework is general and can be applied to any problem where
+model parameters are refined to fit data.</p>
+<p><code class="docutils literal notranslate"><span class="pre">diffpy.cmi</span></code> is a community-driven project that supports Unix, Linux, macOS, and Windows platforms.
+It is designed to be used in Python scripts enabling flexible scripting and automation for advanced and reproducible workflows.
+Users are encouraged to leverage the software for their modeling needs and to contribute feedback,
+use cases, and extensions through the project community.</p>
+<a class="reference internal image-reference" href="_images/diffpycmi_screenshot.png"><img alt="codecov-in-pr-comment" class="align-center" src="_images/diffpycmi_screenshot.png" style="width: 600px;" />
 </a>
-<section id="community-use-and-extensible-modeling">
-<h2>Community Use and Extensible Modeling<a class="headerlink" href="#community-use-and-extensible-modeling" title="Link to this heading"></a></h2>
-<p>One of the key strengths of <code class="docutils literal notranslate"><span class="pre">diffpy.cmi</span></code> is its modular design, which allows the integration and fitting of <em>any</em> data type, not just PDFs.
-While its current core functionality is in PDF modeling and multi-dataset fitting, <strong>we actively encourage and support community-developed modules and workflows for any data types you see fit!</strong></p>
+<section id="the-power-of-diffpy-cmi">
+<h2>The power of diffpy.cmi<a class="headerlink" href="#the-power-of-diffpy-cmi" title="Link to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">diffpy.cmi</span></code> is designed to be a <strong>generalized regression engine</strong> for any data type, enabling researchers to fit, analyze, and combine multiple sources of information in a unified framework.</p>
+<div style="border: 4px solid #555; border-radius: 8px; padding: 10px; margin: 1em 0; text-align: center; background-color: #f8f8f8;">
+    <strong>diffpy.cmi can be used to fit ANY type of data!</strong>
+</div><p>One of the key strengths of <code class="docutils literal notranslate"><span class="pre">diffpy.cmi</span></code> is its modular design, which allows the integration and fitting of <em>any</em> data type.
+While its most commonly used functionality is in pair distribution function (PDF) modeling and multi-dataset fitting,
+<strong>we actively encourage and support community-developed modules and workflows for any data types you see fit!</strong></p>
 <a class="reference internal image-reference" href="_images/cmi_problem_types.png"><img alt="codecov-in-pr-comment" class="align-center" src="_images/cmi_problem_types.png" style="width: 500px;" />
 </a>
-<p>Have you built a new workflow you’d like to implement into <code class="docutils literal notranslate"><span class="pre">diffpy.cmi</span></code>?
-We would love to <strong>highlight your extension or application!</strong></p>
-<ol class="arabic simple">
-<li><p><strong>Share your work:</strong> Please <a class="reference external" href="https://github.com/diffpy/diffpy.cmi">open an issue or a pull request</a> to share your work and help us expand the platform.</p></li>
-<li><p><strong>Be recognized:</strong> Community contributions and new use cases will be showcased and credited here.</p></li>
-</ol>
+<p>To make <code class="docutils literal notranslate"><span class="pre">diffpy.cmi</span></code> easy to use, we organize functionality into <strong>Packs</strong> and <strong>Profiles</strong>, allowing users to contribute their own modules and workflows seamlessly.
+Please see the <a class="reference internal" href="overview.html#overview"><span class="std std-ref">overview</span></a> for more information on these concepts and how you can contribute your own extensions to the community!</p>
 </section>
 <section id="getting-started">
 <h2>Getting started<a class="headerlink" href="#getting-started" title="Link to this heading"></a></h2>
-<p>To get started, please visit the <a class="reference internal" href="getting-started.html#getting-started"><span class="std std-ref">Getting started</span></a> page.</p>
+<p>To get started, please visit the <a class="reference internal" href="installation.html#installation"><span class="std std-ref">Getting started</span></a> section.</p>
+<a class="reference internal image-reference" href="_images/pdfprimer.png"><img alt="codecov-in-pr-comment" class="align-right" src="_images/pdfprimer.png" style="width: 150px;" />
+</a>
+<p>For detailed instructions and in-depth examples of modeling Pair Distribution Function data with <code class="docutils literal notranslate"><span class="pre">diffpy.cmi</span></code>, we highly recommend the book,</p>
+<p><em>Atomic Pair Distribution Function Analysis: A Primer</em> by Simon J. L. Billinge and Kirsten M. Ø. Jensen (Oxford University Press, 2023).</p>
+<p>To purchase this book, please visit <a class="reference external" href="https://www.amazon.com/Atomic-Pair-Distribution-Function-Analysis/dp/0198885806">this link</a>.</p>
 </section>
 <section id="authors">
 <h2>Authors<a class="headerlink" href="#authors" title="Link to this heading"></a></h2>
@@ -112,7 +141,7 @@ We would love to <strong>highlight your extension or application!</strong></p>
 </section>
 <section id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Link to this heading"></a></h2>
-<p>See the <a class="reference external" href="https://github.com/diffpy/diffpy.cmi#installation">README</a>
+<p>See the <a class="reference internal" href="installation.html#installation"><span class="std std-ref">Installation</span></a> page or the <a class="reference external" href="https://github.com/diffpy/diffpy.cmi#installation">README</a>
 file included with the distribution.</p>
 </section>
 <section id="acknowledgements">
@@ -132,32 +161,38 @@ Complex Modeling: A Strategy and Software Program for Combining Multiple Informa
 <section id="table-of-contents">
 <h2>Table of contents<a class="headerlink" href="#table-of-contents" title="Link to this heading"></a></h2>
 <div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">WHAT IS DIFFPY.CMI?</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="getting-started.html">Getting started</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="getting-started.html#installation">Installation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="getting-started.html#pack-and-profile-installation">Pack and Profile Installation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="getting-started.html#data-and-examples">Data and Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
 </ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="tutorials/index.html">Tutorials</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="tutorials/index.html#structural-parameters">Structural parameters</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tutorials/index.html#dataset-parameters">Dataset parameters</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tutorials/index.html#bulk-ni-pdf-fitting">Bulk Ni PDF fitting</a></li>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">GETTING STARTED</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cli-commands.html">Command-Line Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="writing-script.html">Tutorial diffpy.cmi Script</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/diffpy.cmi.html">Package API</a></li>
 </ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="api/diffpy.cmi.html">Package API</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="api/diffpy.cmi.html#libraries-developed-by-the-diffpy-team">Libraries developed by the DiffPy team</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/diffpy.cmi.html#external-libraries">External Libraries</a></li>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">AVAILABLE PACKS &amp; PROFILES</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="available-packs.html">Packs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="available-profiles.html">Profiles</a></li>
 </ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="release.html">Release notes</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="release.html#id1">0.0.1</a></li>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">EXAMPLES &amp; MORE</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/index.html">Examples</a></li>
 </ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="license.html">License</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="license.html#open-source-license-agreement">OPEN SOURCE LICENSE AGREEMENT</a></li>
-</ul>
-</li>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">REFERENCE</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="release.html">Release notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
 </ul>
 </div>
 </section>
@@ -174,7 +209,7 @@ Complex Modeling: A Strategy and Software Program for Combining Multiple Informa
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="getting-started.html" class="btn btn-neutral float-right" title="Getting started" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="overview.html" class="btn btn-neutral float-right" title="Overview" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

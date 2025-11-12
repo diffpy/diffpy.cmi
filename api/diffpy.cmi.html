@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>diffpy.cmi Contents &mdash; diffpy.cmi 0.1.0rc1 documentation</title>
+  <title>diffpy.cmi package &mdash; diffpy.cmi 3.1.0rc0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
@@ -15,7 +15,7 @@
   
       <script src="../_static/jquery.js?v=5d32c60e"></script>
       <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../_static/documentation_options.js?v=3b45b1b0"></script>
+      <script src="../_static/documentation_options.js?v=a2ca8c84"></script>
       <script src="../_static/doctools.js?v=9bcbadda"></script>
       <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -23,8 +23,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Release notes" href="../release.html" />
-    <link rel="prev" title="Tutorials" href="../tutorials/index.html" /> 
+    <link rel="next" title="Packs" href="../available-packs.html" />
+    <link rel="prev" title="Writing a script with diffpy.cmi" href="../writing-script.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -35,8 +35,8 @@
 
           
           
-          <a href="../index.html" class="icon icon-home">
-            diffpy.cmi
+          <a href="../index.html">
+            
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -46,14 +46,73 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../getting-started.html">Getting started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+              <p class="caption" role="heading"><span class="caption-text">WHAT IS DIFFPY.CMI?</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">Overview</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">GETTING STARTED</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli-commands.html">Command-Line Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../writing-script.html">Tutorial diffpy.cmi Script</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Package API</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#libraries-developed-by-the-diffpy-team">Libraries developed by the DiffPy team</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#external-libraries">External Libraries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#module-diffpy.cmi.log">diffpy.cmi.log module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#modes">Modes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#diffpy.cmi.log.get_log_mode"><code class="docutils literal notranslate"><span class="pre">get_log_mode()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#diffpy.cmi.log.is_debug"><code class="docutils literal notranslate"><span class="pre">is_debug()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#diffpy.cmi.log.set_log_mode"><code class="docutils literal notranslate"><span class="pre">set_log_mode()</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#module-diffpy.cmi.conda">diffpy.cmi.conda module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#diffpy.cmi.conda.CondaEnvInfo"><code class="docutils literal notranslate"><span class="pre">CondaEnvInfo</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#diffpy.cmi.conda.available"><code class="docutils literal notranslate"><span class="pre">available()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#diffpy.cmi.conda.env_info"><code class="docutils literal notranslate"><span class="pre">env_info()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#diffpy.cmi.conda.install_specs"><code class="docutils literal notranslate"><span class="pre">install_specs()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#diffpy.cmi.conda.list_installed_names"><code class="docutils literal notranslate"><span class="pre">list_installed_names()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#diffpy.cmi.conda.mamba_available"><code class="docutils literal notranslate"><span class="pre">mamba_available()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#diffpy.cmi.conda.reset_cache"><code class="docutils literal notranslate"><span class="pre">reset_cache()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#diffpy.cmi.conda.run"><code class="docutils literal notranslate"><span class="pre">run()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-diffpy.cmi.packsmanager">diffpy.cmi.packsmanager module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#diffpy.cmi.packsmanager.PacksManager"><code class="docutils literal notranslate"><span class="pre">PacksManager</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#diffpy.cmi.packsmanager.get_package_dir"><code class="docutils literal notranslate"><span class="pre">get_package_dir()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-diffpy.cmi.installer">diffpy.cmi.installer module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#diffpy.cmi.installer.ParsedReq"><code class="docutils literal notranslate"><span class="pre">ParsedReq</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#diffpy.cmi.installer.install_requirements"><code class="docutils literal notranslate"><span class="pre">install_requirements()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#diffpy.cmi.installer.parse_requirement_line"><code class="docutils literal notranslate"><span class="pre">parse_requirement_line()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#diffpy.cmi.installer.presence_check"><code class="docutils literal notranslate"><span class="pre">presence_check()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-diffpy.cmi.cli">diffpy.cmi.cli module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#diffpy.cmi.cli.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#diffpy.cmi.cli.open_manual_and_exit"><code class="docutils literal notranslate"><span class="pre">open_manual_and_exit()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-diffpy.cmi.profilesmanager">diffpy.cmi.profilesmanager module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#diffpy.cmi.profilesmanager.Profile"><code class="docutils literal notranslate"><span class="pre">Profile</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#diffpy.cmi.profilesmanager.ProfilesManager"><code class="docutils literal notranslate"><span class="pre">ProfilesManager</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">AVAILABLE PACKS &amp; PROFILES</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../available-packs.html">Packs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../available-profiles.html">Profiles</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">EXAMPLES &amp; MORE</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Examples</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">REFERENCE</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../release.html">Release notes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../license.html">License</a></li>
 </ul>
@@ -72,7 +131,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">diffpy.cmi Contents</li>
+      <li class="breadcrumb-item active">diffpy.cmi package</li>
       <li class="wy-breadcrumbs-aside">
               <a href="https://github.com/diffpy/diffpy.cmi/blob/main/doc/source/api/diffpy.cmi.rst" class="fa fa-github"> Edit on GitHub</a>
       </li>
@@ -82,84 +141,731 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="title">
-<h1>diffpy.cmi Contents<a class="headerlink" href="#title" title="Link to this heading"></a></h1>
-<p><code class="docutils literal notranslate"><span class="pre">diffpy.cmi</span></code> includes Python and C++ libraries developed by the DiffPy team as well as external libraries necessary for functionality.</p>
-<section id="libraries-developed-by-the-diffpy-team">
-<h2>Libraries developed by the DiffPy team<a class="headerlink" href="#libraries-developed-by-the-diffpy-team" title="Link to this heading"></a></h2>
-<table class="wrap-text docutils align-default">
-<colgroup>
-<col style="width: 21.4%" />
-<col style="width: 71.4%" />
-<col style="width: 7.1%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>Package</p></th>
-<th class="head"><p>Description</p></th>
-<th class="head"><p>Docs</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p><a class="reference external" href="https://github.com/diffpy/diffpy.srfit">diffpy.srfit</a></p></td>
-<td><p>Setup and control of general fitting problems.</p></td>
-<td><p><a class="reference external" href="https://www.diffpy.org/diffpy.srfit/">doc</a></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/diffpy/diffpy.srreal">diffpy.srreal</a></p></td>
-<td><p>Calculators for PDF, bond valence sum, and other quantities based on atom pair interaction.</p></td>
-<td><p><a class="reference external" href="https://www.diffpy.org/diffpy.srreal/">doc</a></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference external" href="https://github.com/diffpy/diffpy.structure">diffpy.structure</a></p></td>
-<td><p>Crystal structure container and parsers for structure formats.</p></td>
-<td><p><a class="reference external" href="https://www.diffpy.org/diffpy.structure/">doc</a></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/diffpy/diffpy.utils">diffpy.utils</a></p></td>
-<td><p>General purpose utilities for the diffpy libraries.</p></td>
-<td><p><a class="reference external" href="https://www.diffpy.org/diffpy.utils/">doc</a></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference external" href="https://github.com/diffpy/pyobjcryst">pyobjcryst</a></p></td>
-<td><p>Python bindings to ObjCryst++, the Object-Oriented Crystallographic Library.</p></td>
-<td><p><a class="reference external" href="https://www.diffpy.org/pyobjcryst/">doc</a></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/diffpy/libdiffpy">libdiffpy</a></p></td>
-<td><p>C++ library for calculation of PDF and other real-space quantities.</p></td>
-<td><p><a class="reference external" href="https://www.diffpy.org/libdiffpy/">doc</a></p></td>
-</tr>
-</tbody>
-</table>
+  <section id="module-diffpy.cmi">
+<span id="diffpy-cmi-package"></span><h1>diffpy.cmi package<a class="headerlink" href="#module-diffpy.cmi" title="Link to this heading"></a></h1>
+<p>Complex modeling infrastructure:
+a modular framework for multi-modal modeling of scientific data.</p>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+<section id="module-diffpy.cmi.log">
+<span id="diffpy-cmi-log-module"></span><h3>diffpy.cmi.log module<a class="headerlink" href="#module-diffpy.cmi.log" title="Link to this heading"></a></h3>
+<p>Centralized logging utilities for the CMI package.</p>
+<p>This module exposes a single package logger <code class="xref py py-data docutils literal notranslate"><span class="pre">plog</span></code> and helpers to
+switch between a concise <em>user</em> mode and a verbose <em>debug</em> mode.</p>
+<section id="modes">
+<h4>Modes<a class="headerlink" href="#modes" title="Link to this heading"></a></h4>
+<dl class="simple">
+<dt>user</dt><dd><p>Only <code class="docutils literal notranslate"><span class="pre">INFO</span></code> and <code class="docutils literal notranslate"><span class="pre">ERROR/CRITICAL</span></code> records are shown. <code class="docutils literal notranslate"><span class="pre">WARNING</span></code> and
+<code class="docutils literal notranslate"><span class="pre">DEBUG</span></code> are hidden.</p>
+</dd>
+<dt>debug</dt><dd><p>All levels are shown.</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>Use <a class="reference internal" href="#diffpy.cmi.log.set_log_mode" title="diffpy.cmi.log.set_log_mode"><code class="xref py py-func docutils literal notranslate"><span class="pre">set_log_mode()</span></code></a> in the CLI to toggle visibility. The logger itself
+always emits at <code class="docutils literal notranslate"><span class="pre">DEBUG</span></code> level; a handler-side filter controls what is shown.</p>
 </section>
-<section id="external-libraries">
-<h2>External Libraries<a class="headerlink" href="#external-libraries" title="Link to this heading"></a></h2>
-<table class="wrap-text docutils align-default">
-<colgroup>
-<col style="width: 21.4%" />
-<col style="width: 71.4%" />
-<col style="width: 7.1%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>Package</p></th>
-<th class="head"><p>Description</p></th>
-<th class="head"><p>Docs</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p><a class="reference external" href="https://github.com/diffpy/srfit-sasview">srfit-sasview</a></p></td>
-<td><p>Selected modules from SasView, the Small Angle Scattering Analysis Software Package.</p></td>
-<td><p><a class="reference external" href="https://www.sasview.org/documentation/">doc</a></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/python-periodictable/periodictable">periodictable</a></p></td>
-<td><p>Extensible periodic table of the elements with support for mass, density, and X-ray/neutron scattering information.</p></td>
-<td><p><a class="reference external" href="https://periodictable.readthedocs.io/en/latest/">doc</a></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference external" href="https://github.com/diffpy/libobjcryst">libobjcryst</a></p></td>
-<td><p>ObjCryst++, crystallographic library for C++ re-packaged for installation as a shared library.</p></td>
-<td><p><a class="reference external" href="https://sourceforge.net/projects/objcryst/">doc</a></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/CxxTest/cxxtest">cxxtest</a></p></td>
-<td><p>Testing framework for C++.</p></td>
-<td><p><a class="reference external" href="http://cxxtest.com/">doc</a></p></td>
-</tr>
-</tbody>
-</table>
+<dl class="py function">
+<dt class="sig sig-object py" id="diffpy.cmi.log.get_log_mode">
+<span class="sig-prename descclassname"><span class="pre">diffpy.cmi.log.</span></span><span class="sig-name descname"><span class="pre">get_log_mode</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/diffpy/cmi/log.html#get_log_mode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#diffpy.cmi.log.get_log_mode" title="Link to this definition"></a></dt>
+<dd><p>Return <code class="docutils literal notranslate"><span class="pre">&quot;user&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;debug&quot;</span></code>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="diffpy.cmi.log.is_debug">
+<span class="sig-prename descclassname"><span class="pre">diffpy.cmi.log.</span></span><span class="sig-name descname"><span class="pre">is_debug</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/diffpy/cmi/log.html#is_debug"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#diffpy.cmi.log.is_debug" title="Link to this definition"></a></dt>
+<dd><p>Return <code class="docutils literal notranslate"><span class="pre">True</span></code> when debug/verbose mode is active.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="diffpy.cmi.log.set_log_mode">
+<span class="sig-prename descclassname"><span class="pre">diffpy.cmi.log.</span></span><span class="sig-name descname"><span class="pre">set_log_mode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'user'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/diffpy/cmi/log.html#set_log_mode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#diffpy.cmi.log.set_log_mode" title="Link to this definition"></a></dt>
+<dd><p>Set visible logging mode.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>mode</strong> (<em>{&quot;user&quot;</em><em>,</em><em>&quot;debug&quot;}</em><em> or </em><em>bool</em><em>, </em><em>optional</em>) – <ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;user&quot;</span></code> (<code class="docutils literal notranslate"><span class="pre">False</span></code>): <code class="docutils literal notranslate"><span class="pre">INFO</span></code> and <code class="docutils literal notranslate"><span class="pre">ERROR</span></code> are visible</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;debug&quot;</span></code> (<code class="docutils literal notranslate"><span class="pre">True</span></code>): all levels visible.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-diffpy.cmi.conda">
+<span id="diffpy-cmi-conda-module"></span><h3>diffpy.cmi.conda module<a class="headerlink" href="#module-diffpy.cmi.conda" title="Link to this heading"></a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="diffpy.cmi.conda.CondaEnvInfo">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">diffpy.cmi.conda.</span></span><span class="sig-name descname"><span class="pre">CondaEnvInfo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">available</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mamba</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">env_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/diffpy/cmi/conda.html#CondaEnvInfo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#diffpy.cmi.conda.CondaEnvInfo" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Snapshot of conda/mamba availability and the active environment.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>available</strong> (<em>bool</em>) – Whether <code class="docutils literal notranslate"><span class="pre">conda</span></code> is available on <code class="docutils literal notranslate"><span class="pre">PATH</span></code>.</p></li>
+<li><p><strong>mamba</strong> (<em>bool</em>) – Whether <code class="docutils literal notranslate"><span class="pre">mamba</span></code> is available on <code class="docutils literal notranslate"><span class="pre">PATH</span></code>.</p></li>
+<li><p><strong>env_name</strong> (<em>str</em><em> or </em><em>None</em>) – Name of the active environment, if known.</p></li>
+<li><p><strong>prefix</strong> (<em>str</em><em> or </em><em>None</em>) – Filesystem prefix of the active environment, if known.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="diffpy.cmi.conda.CondaEnvInfo.available">
+<span class="sig-name descname"><span class="pre">available</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#diffpy.cmi.conda.CondaEnvInfo.available" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="diffpy.cmi.conda.CondaEnvInfo.env_name">
+<span class="sig-name descname"><span class="pre">env_name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#diffpy.cmi.conda.CondaEnvInfo.env_name" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="diffpy.cmi.conda.CondaEnvInfo.mamba">
+<span class="sig-name descname"><span class="pre">mamba</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#diffpy.cmi.conda.CondaEnvInfo.mamba" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="diffpy.cmi.conda.CondaEnvInfo.prefix">
+<span class="sig-name descname"><span class="pre">prefix</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#diffpy.cmi.conda.CondaEnvInfo.prefix" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="diffpy.cmi.conda.available">
+<span class="sig-prename descclassname"><span class="pre">diffpy.cmi.conda.</span></span><span class="sig-name descname"><span class="pre">available</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/diffpy/cmi/conda.html#available"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#diffpy.cmi.conda.available" title="Link to this definition"></a></dt>
+<dd><p>Return whether <code class="docutils literal notranslate"><span class="pre">conda</span></code> is available on PATH.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">True</span></code> if the <code class="docutils literal notranslate"><span class="pre">conda</span></code> executable can be invoked.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="diffpy.cmi.conda.env_info">
+<span class="sig-prename descclassname"><span class="pre">diffpy.cmi.conda.</span></span><span class="sig-name descname"><span class="pre">env_info</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#diffpy.cmi.conda.CondaEnvInfo" title="diffpy.cmi.conda.CondaEnvInfo"><span class="pre">CondaEnvInfo</span></a></span></span><a class="reference internal" href="../_modules/diffpy/cmi/conda.html#env_info"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#diffpy.cmi.conda.env_info" title="Link to this definition"></a></dt>
+<dd><p>Return availability and active-environment metadata.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Structured information assembled from <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">info</span> <span class="pre">--json</span></code> and
+availability probes.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#diffpy.cmi.conda.CondaEnvInfo" title="diffpy.cmi.conda.CondaEnvInfo">CondaEnvInfo</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="diffpy.cmi.conda.install_specs">
+<span class="sig-prename descclassname"><span class="pre">diffpy.cmi.conda.</span></span><span class="sig-name descname"><span class="pre">install_specs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">specs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default_channel</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'conda-forge'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/diffpy/cmi/conda.html#install_specs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#diffpy.cmi.conda.install_specs" title="Link to this definition"></a></dt>
+<dd><p>Install a batch of specs, preferring mamba then conda.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>specs</strong> (<em>sequence</em><em> of </em><em>str</em>) – Conda spec strings (e.g., <code class="docutils literal notranslate"><span class="pre">&quot;numpy&gt;=1.24&quot;</span></code>).</p></li>
+<li><p><strong>channel</strong> (<em>str</em><em> or </em><em>None</em><em>, </em><em>optional</em>) – Preferred channel for this batch.</p></li>
+<li><p><strong>default_channel</strong> (<em>str</em><em>, </em><em>optional</em>) – Channel used when <code class="docutils literal notranslate"><span class="pre">channel</span></code> is not given.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The solver used (<code class="docutils literal notranslate"><span class="pre">&quot;mamba&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;conda&quot;</span></code>), the exit code, and the
+captured output (empty when streaming).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple of (str, int, str)</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>This function logs at <code class="docutils literal notranslate"><span class="pre">INFO</span></code> level when each batch starts, warns when a
+mamba batch fails and a fallback is attempted, and leaves error decisions
+to higher-level callers.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="diffpy.cmi.conda.list_installed_names">
+<span class="sig-prename descclassname"><span class="pre">diffpy.cmi.conda.</span></span><span class="sig-name descname"><span class="pre">list_installed_names</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/diffpy/cmi/conda.html#list_installed_names"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#diffpy.cmi.conda.list_installed_names" title="Link to this definition"></a></dt>
+<dd><p>Return conda package names from <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">list</span> <span class="pre">--json</span></code>.</p>
+<p>Results are cached for the current process to reduce repeated shell calls.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Sorted unique package names.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list of str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="diffpy.cmi.conda.mamba_available">
+<span class="sig-prename descclassname"><span class="pre">diffpy.cmi.conda.</span></span><span class="sig-name descname"><span class="pre">mamba_available</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/diffpy/cmi/conda.html#mamba_available"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#diffpy.cmi.conda.mamba_available" title="Link to this definition"></a></dt>
+<dd><p>Return whether <code class="docutils literal notranslate"><span class="pre">mamba</span></code> is available on PATH.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">True</span></code> if the <code class="docutils literal notranslate"><span class="pre">mamba</span></code> executable can be invoked.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="diffpy.cmi.conda.reset_cache">
+<span class="sig-prename descclassname"><span class="pre">diffpy.cmi.conda.</span></span><span class="sig-name descname"><span class="pre">reset_cache</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/diffpy/cmi/conda.html#reset_cache"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#diffpy.cmi.conda.reset_cache" title="Link to this definition"></a></dt>
+<dd><p>Reset the internal cache of installed package names.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="diffpy.cmi.conda.run">
+<span class="sig-prename descclassname"><span class="pre">diffpy.cmi.conda.</span></span><span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cmd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cwd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">capture</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/diffpy/cmi/conda.html#run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#diffpy.cmi.conda.run" title="Link to this definition"></a></dt>
+<dd><p>Run a subprocess with sensible, mode-dependent defaults.</p>
+<p>The function does <strong>not</strong> decide logging policy. It simply runs the
+command and returns the exit code and combined output. Visibility of
+the child output follows CMI’s current log mode:</p>
+<ul class="simple">
+<li><p>In <strong>debug</strong> mode: stream output live by default.</p></li>
+<li><p>In <strong>user</strong> mode: capture output quietly by default.</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cmd</strong> (<em>sequence</em><em> of </em><em>str</em>) – Command and arguments.</p></li>
+<li><p><strong>cwd</strong> (<em>path-like</em><em>, </em><em>optional</em>) – Working directory for the child process.</p></li>
+<li><p><strong>capture</strong> (<em>bool</em><em> or </em><em>None</em><em>, </em><em>optional</em>) – Override the default visibility. <code class="docutils literal notranslate"><span class="pre">True</span></code> forces capture; <code class="docutils literal notranslate"><span class="pre">False</span></code>
+forces streaming; <code class="docutils literal notranslate"><span class="pre">None</span></code> selects the mode-dependent default.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Exit code and captured output (empty string when streaming).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple of (int, str)</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>When capturing in debug mode, the output is also echoed so developers
+still see live progress.</p>
+</dd></dl>
+
+</section>
+<section id="module-diffpy.cmi.packsmanager">
+<span id="diffpy-cmi-packsmanager-module"></span><h3>diffpy.cmi.packsmanager module<a class="headerlink" href="#module-diffpy.cmi.packsmanager" title="Link to this heading"></a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="diffpy.cmi.packsmanager.PacksManager">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">diffpy.cmi.packsmanager.</span></span><span class="sig-name descname"><span class="pre">PacksManager</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/diffpy/cmi/packsmanager.html#PacksManager"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#diffpy.cmi.packsmanager.PacksManager" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Discovery, parsing, and installation for pack files.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="diffpy.cmi.packsmanager.PacksManager.packs_dir">
+<span class="sig-name descname"><span class="pre">packs_dir</span></span><a class="headerlink" href="#diffpy.cmi.packsmanager.PacksManager.packs_dir" title="Link to this definition"></a></dt>
+<dd><p>Absolute path to the installed packs directory.
+Defaults to <cite>requirements/packs</cite> under the installed package.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pathlib.Path</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="diffpy.cmi.packsmanager.PacksManager.examples_dir">
+<span class="sig-name descname"><span class="pre">examples_dir</span></span><a class="headerlink" href="#diffpy.cmi.packsmanager.PacksManager.examples_dir" title="Link to this definition"></a></dt>
+<dd><p>Absolute path to the installed examples directory.
+Defaults to <cite>docs/examples</cite> under the installed package.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pathlib.Path</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="diffpy.cmi.packsmanager.PacksManager.available_examples">
+<span class="sig-name descname"><span class="pre">available_examples</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/diffpy/cmi/packsmanager.html#PacksManager.available_examples"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#diffpy.cmi.packsmanager.PacksManager.available_examples" title="Link to this definition"></a></dt>
+<dd><p>Finds all examples for each pack and builds a dict.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>root_path</strong> (<em>Path</em>) – Root path to the examples directory.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary mapping pack names to lists of example names.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>FileNotFoundError</strong> – If the provided root_path does not exist or is not a directory.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="diffpy.cmi.packsmanager.PacksManager.available_packs">
+<span class="sig-name descname"><span class="pre">available_packs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/diffpy/cmi/packsmanager.html#PacksManager.available_packs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#diffpy.cmi.packsmanager.PacksManager.available_packs" title="Link to this definition"></a></dt>
+<dd><p>List all available packs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Pack basenames available under <a class="reference internal" href="#diffpy.cmi.packsmanager.PacksManager.packs_dir" title="diffpy.cmi.packsmanager.PacksManager.packs_dir"><code class="xref py py-attr docutils literal notranslate"><span class="pre">packs_dir</span></code></a>.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list of str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="diffpy.cmi.packsmanager.PacksManager.check_pack">
+<span class="sig-name descname"><span class="pre">check_pack</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">identifier</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Path</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/diffpy/cmi/packsmanager.html#PacksManager.check_pack"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#diffpy.cmi.packsmanager.PacksManager.check_pack" title="Link to this definition"></a></dt>
+<dd><p>Return whether a pack is installed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>identifier</strong> (<em>str</em><em> or </em><em>path-like</em>) – Basename to the pack file.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">True</span></code> if the pack is installed, <code class="docutils literal notranslate"><span class="pre">False</span></code> otherwise.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="diffpy.cmi.packsmanager.PacksManager.copy_examples">
+<span class="sig-name descname"><span class="pre">copy_examples</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">examples_to_copy</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/diffpy/cmi/packsmanager.html#PacksManager.copy_examples"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#diffpy.cmi.packsmanager.PacksManager.copy_examples" title="Link to this definition"></a></dt>
+<dd><p>Copy examples or packs into the target or current working
+directory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>examples_to_copy</strong> (<em>list</em><em> of </em><em>str</em>) – User-specified pack(s), example(s), or “all” to copy all.</p></li>
+<li><p><strong>target_dir</strong> (<em>pathlib.Path</em><em> or </em><em>str</em><em>, </em><em>optional</em>) – Target directory to copy examples into. Defaults to current
+working directory.</p></li>
+<li><p><strong>force</strong> (<em>bool</em><em>, </em><em>optional</em>) – Defaults to <code class="docutils literal notranslate"><span class="pre">False</span></code>. If <code class="docutils literal notranslate"><span class="pre">True</span></code>, existing files are
+overwritten and directories are merged
+(extra files in the target are preserved).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="diffpy.cmi.packsmanager.PacksManager.install_pack">
+<span class="sig-name descname"><span class="pre">install_pack</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">identifier</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Path</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/diffpy/cmi/packsmanager.html#PacksManager.install_pack"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#diffpy.cmi.packsmanager.PacksManager.install_pack" title="Link to this definition"></a></dt>
+<dd><p>Install a pack and verify presence.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>identifier</strong> (<em>str</em>) – Basename to the pack file.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="diffpy.cmi.packsmanager.PacksManager.pack_requirements">
+<span class="sig-name descname"><span class="pre">pack_requirements</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">identifier</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Path</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#diffpy.cmi.installer.ParsedReq" title="diffpy.cmi.installer.ParsedReq"><span class="pre">ParsedReq</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/diffpy/cmi/packsmanager.html#PacksManager.pack_requirements"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#diffpy.cmi.packsmanager.PacksManager.pack_requirements" title="Link to this definition"></a></dt>
+<dd><p>Return parsed requirements for a pack.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>identifier</strong> (<em>str</em><em> or </em><em>path-like</em>) – Installed pack name.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Parsed requirements from the pack file.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list of <a class="reference internal" href="#diffpy.cmi.installer.ParsedReq" title="diffpy.cmi.installer.ParsedReq">ParsedReq</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="diffpy.cmi.packsmanager.PacksManager.print_examples">
+<span class="sig-name descname"><span class="pre">print_examples</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/diffpy/cmi/packsmanager.html#PacksManager.print_examples"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#diffpy.cmi.packsmanager.PacksManager.print_examples" title="Link to this definition"></a></dt>
+<dd><p>Print information about available examples.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="diffpy.cmi.packsmanager.PacksManager.print_info">
+<span class="sig-name descname"><span class="pre">print_info</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/diffpy/cmi/packsmanager.html#PacksManager.print_info"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#diffpy.cmi.packsmanager.PacksManager.print_info" title="Link to this definition"></a></dt>
+<dd><p>Print information about available packs, profiles, and
+examples.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="diffpy.cmi.packsmanager.PacksManager.print_packs">
+<span class="sig-name descname"><span class="pre">print_packs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/diffpy/cmi/packsmanager.html#PacksManager.print_packs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#diffpy.cmi.packsmanager.PacksManager.print_packs" title="Link to this definition"></a></dt>
+<dd><p>Print information about available packs.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="diffpy.cmi.packsmanager.get_package_dir">
+<span class="sig-prename descclassname"><span class="pre">diffpy.cmi.packsmanager.</span></span><span class="sig-name descname"><span class="pre">get_package_dir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/diffpy/cmi/packsmanager.html#get_package_dir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#diffpy.cmi.packsmanager.get_package_dir" title="Link to this definition"></a></dt>
+<dd><p>Get the package directory as a context manager.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>root_path</strong> (<em>str</em><em>, </em><em>optional</em>) – Used for testing, overrides the files(__name__) call.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A context manager that yields a pathlib.Path to the package directory.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>context manager</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-diffpy.cmi.installer">
+<span id="diffpy-cmi-installer-module"></span><h3>diffpy.cmi.installer module<a class="headerlink" href="#module-diffpy.cmi.installer" title="Link to this heading"></a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="diffpy.cmi.installer.ParsedReq">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">diffpy.cmi.installer.</span></span><span class="sig-name descname"><span class="pre">ParsedReq</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">raw</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kind</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spec</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/diffpy/cmi/installer.html#ParsedReq"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#diffpy.cmi.installer.ParsedReq" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Parsed representation of a single requirement line.</p>
+<p>A requirement line may declare a package or a script. Script lines set
+<a class="reference internal" href="#diffpy.cmi.installer.ParsedReq.name" title="diffpy.cmi.installer.ParsedReq.name"><code class="xref py py-attr docutils literal notranslate"><span class="pre">name</span></code></a> to the basename (stem) of the script so presence checking can
+treat them like packages when appropriate.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>raw</strong> (<em>str</em>) – Original, unmodified line (kept verbatim).</p></li>
+<li><p><strong>kind</strong> (<em>{&quot;script&quot;</em><em>, </em><em>&quot;pkg&quot;</em><em>, </em><em>&quot;skip&quot;}</em>) – Classification of the line.</p></li>
+<li><p><strong>name</strong> (<em>str</em><em> or </em><em>None</em><em>, </em><em>optional</em>) – Package name (for <code class="docutils literal notranslate"><span class="pre">pkg</span></code>) or script basename (for <code class="docutils literal notranslate"><span class="pre">script</span></code>).</p></li>
+<li><p><strong>spec</strong> (<em>str</em><em> or </em><em>None</em><em>, </em><em>optional</em>) – Version specifier (e.g., <code class="docutils literal notranslate"><span class="pre">&quot;&gt;=1.2&quot;</span></code>) for packages.</p></li>
+<li><p><strong>channel</strong> (<em>str</em><em> or </em><em>None</em><em>, </em><em>optional</em>) – Optional channel (from <code class="docutils literal notranslate"><span class="pre">channel::spec</span></code>) for packages.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="diffpy.cmi.installer.ParsedReq.channel">
+<span class="sig-name descname"><span class="pre">channel</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#diffpy.cmi.installer.ParsedReq.channel" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="diffpy.cmi.installer.ParsedReq.kind">
+<span class="sig-name descname"><span class="pre">kind</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#diffpy.cmi.installer.ParsedReq.kind" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="diffpy.cmi.installer.ParsedReq.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#diffpy.cmi.installer.ParsedReq.name" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="diffpy.cmi.installer.ParsedReq.raw">
+<span class="sig-name descname"><span class="pre">raw</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#diffpy.cmi.installer.ParsedReq.raw" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="diffpy.cmi.installer.ParsedReq.spec">
+<span class="sig-name descname"><span class="pre">spec</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#diffpy.cmi.installer.ParsedReq.spec" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="diffpy.cmi.installer.install_requirements">
+<span class="sig-prename descclassname"><span class="pre">diffpy.cmi.installer.</span></span><span class="sig-name descname"><span class="pre">install_requirements</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reqs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#diffpy.cmi.installer.ParsedReq" title="diffpy.cmi.installer.ParsedReq"><span class="pre">ParsedReq</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">scripts_root</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default_channel</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'conda-forge'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="reference internal" href="../_modules/diffpy/cmi/installer.html#install_requirements"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#diffpy.cmi.installer.install_requirements" title="Link to this definition"></a></dt>
+<dd><p>Install requirements, run scripts, and verify presence.</p>
+<section id="policy">
+<h4>Policy<a class="headerlink" href="#policy" title="Link to this heading"></a></h4>
+<ol class="arabic simple">
+<li><p><strong>Packages first</strong>: batch per channel; solver failures are treated as
+soft (final presence check decides).</p></li>
+<li><p><strong>Scripts next</strong>: run native scripts only; a non-zero exit is a hard
+failure.</p></li>
+<li><p><strong>Presence check</strong>: verify packages and non-meta scripts.</p></li>
+</ol>
+<dl class="field-list simple">
+<dt class="field-odd">param reqs<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Parsed requirements (from packs and profile extras).</p>
+</dd>
+<dt class="field-even">type reqs<span class="colon">:</span></dt>
+<dd class="field-even"><p>list of ParsedReq</p>
+</dd>
+<dt class="field-odd">param scripts_root<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Directory containing relative scripts used by recipes.</p>
+</dd>
+<dt class="field-even">type scripts_root<span class="colon">:</span></dt>
+<dd class="field-even"><p>path-like</p>
+</dd>
+<dt class="field-odd">param default_channel<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Default conda channel for batches. Defaults to <code class="docutils literal notranslate"><span class="pre">&quot;conda-forge&quot;</span></code>.</p>
+</dd>
+<dt class="field-even">type default_channel<span class="colon">:</span></dt>
+<dd class="field-even"><p>str, optional</p>
+</dd>
+<dt class="field-odd">returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">0</span></code> on success, <code class="docutils literal notranslate"><span class="pre">1</span></code> on failure.</p>
+</dd>
+<dt class="field-even">rtype<span class="colon">:</span></dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="diffpy.cmi.installer.parse_requirement_line">
+<span class="sig-prename descclassname"><span class="pre">diffpy.cmi.installer.</span></span><span class="sig-name descname"><span class="pre">parse_requirement_line</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">line</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#diffpy.cmi.installer.ParsedReq" title="diffpy.cmi.installer.ParsedReq"><span class="pre">ParsedReq</span></a></span></span><a class="reference internal" href="../_modules/diffpy/cmi/installer.html#parse_requirement_line"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#diffpy.cmi.installer.parse_requirement_line" title="Link to this definition"></a></dt>
+<dd><p>Parse a single requirement definition.</p>
+<section id="supported-forms">
+<h4>Supported forms<a class="headerlink" href="#supported-forms" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>Scripts:</strong> a line whose first token ends with <code class="docutils literal notranslate"><span class="pre">.sh</span></code> or <code class="docutils literal notranslate"><span class="pre">.bat</span></code>.
+The script’s basename becomes <a class="reference internal" href="#diffpy.cmi.installer.ParsedReq.name" title="diffpy.cmi.installer.ParsedReq.name"><code class="xref py py-attr docutils literal notranslate"><span class="pre">ParsedReq.name</span></code></a>.</p></li>
+<li><p><strong>Packages:</strong> an optional <code class="docutils literal notranslate"><span class="pre">channel::</span></code> prefix followed by a valid
+PEP 508 requirement string (e.g., <code class="docutils literal notranslate"><span class="pre">&quot;numpy&gt;=1.24&quot;</span></code>).</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">param line<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Raw line from a requirements file.</p>
+</dd>
+<dt class="field-even">type line<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+<dt class="field-odd">returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Structured representation of the requirement.</p>
+</dd>
+<dt class="field-even">rtype<span class="colon">:</span></dt>
+<dd class="field-even"><p>ParsedReq</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="diffpy.cmi.installer.presence_check">
+<span class="sig-prename descclassname"><span class="pre">diffpy.cmi.installer.</span></span><span class="sig-name descname"><span class="pre">presence_check</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reqs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#diffpy.cmi.installer.ParsedReq" title="diffpy.cmi.installer.ParsedReq"><span class="pre">ParsedReq</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">check_meta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/diffpy/cmi/installer.html#presence_check"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#diffpy.cmi.installer.presence_check" title="Link to this definition"></a></dt>
+<dd><p>Check whether requirements appear satisfied.</p>
+<section id="semantics">
+<h4>Semantics<a class="headerlink" href="#semantics" title="Link to this heading"></a></h4>
+<ul>
+<li><p><strong>Packages:</strong> mark missing when <code class="xref py py-func docutils literal notranslate"><span class="pre">_is_installed()</span></code> is <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
+<li><p><strong>Scripts:</strong> use the basename as a pseudo-package name.
+* If the basename starts with <code class="docutils literal notranslate"><span class="pre">&quot;_&quot;</span></code> (meta-scripts), count them as</p>
+<blockquote>
+<div><p>missing only when <code class="docutils literal notranslate"><span class="pre">check_meta=True</span></code> (profile checks). During
+post-install verification <code class="docutils literal notranslate"><span class="pre">check_meta=False</span></code> so meta-scripts
+are ignored (script exit code already enforced).</p>
+</div></blockquote>
+<ul class="simple">
+<li><p>Otherwise, treat like a package and require the basename to be present.</p></li>
+</ul>
+</li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">param reqs<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Parsed requirements to check.</p>
+</dd>
+<dt class="field-even">type reqs<span class="colon">:</span></dt>
+<dd class="field-even"><p>list of ParsedReq</p>
+</dd>
+<dt class="field-odd">param check_meta<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Whether meta-scripts should be considered missing.
+Defaults to <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p>
+</dd>
+<dt class="field-even">type check_meta<span class="colon">:</span></dt>
+<dd class="field-even"><p>bool, optional</p>
+</dd>
+<dt class="field-odd">returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">(ok,</span> <span class="pre">missing)</span></code> where <code class="docutils literal notranslate"><span class="pre">ok</span></code> is <code class="docutils literal notranslate"><span class="pre">True</span></code> when all checks pass and
+<code class="docutils literal notranslate"><span class="pre">missing</span></code> lists raw lines deemed missing.</p>
+</dd>
+<dt class="field-even">rtype<span class="colon">:</span></dt>
+<dd class="field-even"><p>tuple of (bool, list of str)</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+</section>
+<section id="module-diffpy.cmi.cli">
+<span id="diffpy-cmi-cli-module"></span><h3>diffpy.cmi.cli module<a class="headerlink" href="#module-diffpy.cmi.cli" title="Link to this heading"></a></h3>
+<dl class="py function">
+<dt class="sig sig-object py" id="diffpy.cmi.cli.main">
+<span class="sig-prename descclassname"><span class="pre">diffpy.cmi.cli.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">argv</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="reference internal" href="../_modules/diffpy/cmi/cli.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#diffpy.cmi.cli.main" title="Link to this definition"></a></dt>
+<dd><p>Run the CMI CLI.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>argv</strong> (<em>list</em><em> of </em><em>str</em><em>, </em><em>optional</em>) – Argument vector to parse. When <code class="docutils literal notranslate"><span class="pre">None</span></code>, defaults to <code class="docutils literal notranslate"><span class="pre">sys.argv[1:]</span></code>.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Process exit code (<code class="docutils literal notranslate"><span class="pre">0</span></code> success, <code class="docutils literal notranslate"><span class="pre">1</span></code> failure, <code class="docutils literal notranslate"><span class="pre">2</span></code> usage error).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="diffpy.cmi.cli.open_manual_and_exit">
+<span class="sig-prename descclassname"><span class="pre">diffpy.cmi.cli.</span></span><span class="sig-name descname"><span class="pre">open_manual_and_exit</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/diffpy/cmi/cli.html#open_manual_and_exit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#diffpy.cmi.cli.open_manual_and_exit" title="Link to this definition"></a></dt>
+<dd><p>Open the manual in a web browser and exit.</p>
+<p class="rubric">Notes</p>
+<p>This function terminates the process with <code class="docutils literal notranslate"><span class="pre">SystemExit(0)</span></code>.</p>
+</dd></dl>
+
+</section>
+<section id="module-diffpy.cmi.profilesmanager">
+<span id="diffpy-cmi-profilesmanager-module"></span><h3>diffpy.cmi.profilesmanager module<a class="headerlink" href="#module-diffpy.cmi.profilesmanager" title="Link to this heading"></a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="diffpy.cmi.profilesmanager.Profile">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">diffpy.cmi.profilesmanager.</span></span><span class="sig-name descname"><span class="pre">Profile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">packs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extras</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/diffpy/cmi/profilesmanager.html#Profile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#diffpy.cmi.profilesmanager.Profile" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Container for a resolved profile.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – Profile name (defaults to the YAML stem).</p></li>
+<li><p><strong>packs</strong> (<em>list</em><em> of </em><em>str</em>) – Pack basenames this profile depends on.</p></li>
+<li><p><strong>extras</strong> (<em>list</em><em> of </em><em>str</em>) – Extra requirement lines (scripts or packages).</p></li>
+<li><p><strong>source</strong> (<em>path-like</em>) – Absolute path to the YAML file that defined the profile.</p></li>
+<li><p><strong>Format</strong> (<a class="reference internal" href="#diffpy.cmi.profilesmanager.Profile" title="diffpy.cmi.profilesmanager.Profile"><em>Profile</em></a>)</p></li>
+<li><p><strong>--------------</strong></p></li>
+<li><p><strong>structure::</strong> (<em>All profile .yaml files must have the following</em>) – <dl class="simple">
+<dt>packs:</dt><dd><ul>
+<li><p>&lt;pack_name&gt;</p></li>
+</ul>
+</dd>
+<dt>extras:</dt><dd><ul>
+<li><p>&lt;additional_package_name&gt;</p></li>
+</ul>
+</dd>
+</dl>
+</p></li>
+<li><p><strong>profiles.</strong> (<em>The file name is the profile identifier used for installing</em>)</p></li>
+<li><p><strong>example.</strong> (<em>See requirements/profiles/all.yml for an</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="diffpy.cmi.profilesmanager.Profile.extras">
+<span class="sig-name descname"><span class="pre">extras</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#diffpy.cmi.profilesmanager.Profile.extras" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="diffpy.cmi.profilesmanager.Profile.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#diffpy.cmi.profilesmanager.Profile.name" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="diffpy.cmi.profilesmanager.Profile.packs">
+<span class="sig-name descname"><span class="pre">packs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#diffpy.cmi.profilesmanager.Profile.packs" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="diffpy.cmi.profilesmanager.Profile.source">
+<span class="sig-name descname"><span class="pre">source</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Path</span></em><a class="headerlink" href="#diffpy.cmi.profilesmanager.Profile.source" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="diffpy.cmi.profilesmanager.ProfilesManager">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">diffpy.cmi.profilesmanager.</span></span><span class="sig-name descname"><span class="pre">ProfilesManager</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">packs_mgr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#diffpy.cmi.packsmanager.PacksManager" title="diffpy.cmi.packsmanager.PacksManager"><span class="pre">PacksManager</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/diffpy/cmi/profilesmanager.html#ProfilesManager"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#diffpy.cmi.profilesmanager.ProfilesManager" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Discovery, loading, checking and installation for profiles.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="diffpy.cmi.profilesmanager.ProfilesManager.packs_mgr">
+<span class="sig-name descname"><span class="pre">packs_mgr</span></span><a class="headerlink" href="#diffpy.cmi.profilesmanager.ProfilesManager.packs_mgr" title="Link to this definition"></a></dt>
+<dd><p>The packs manager used for discovery and installation policy.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#diffpy.cmi.packsmanager.PacksManager" title="diffpy.cmi.packsmanager.PacksManager">PacksManager</a>, optional</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="diffpy.cmi.profilesmanager.ProfilesManager.profiles_dir">
+<span class="sig-name descname"><span class="pre">profiles_dir</span></span><a class="headerlink" href="#diffpy.cmi.profilesmanager.ProfilesManager.profiles_dir" title="Link to this definition"></a></dt>
+<dd><p>Absolute path to the installed profiles directory.
+Defaults to <cite>requirements/profiles</cite> under the installed package.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pathlib.Path</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="diffpy.cmi.profilesmanager.ProfilesManager.available_profiles">
+<span class="sig-name descname"><span class="pre">available_profiles</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/diffpy/cmi/profilesmanager.html#ProfilesManager.available_profiles"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#diffpy.cmi.profilesmanager.ProfilesManager.available_profiles" title="Link to this definition"></a></dt>
+<dd><p>Return available installed profiles by basename.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Profile basenames available under <a class="reference internal" href="#diffpy.cmi.profilesmanager.ProfilesManager.profiles_dir" title="diffpy.cmi.profilesmanager.ProfilesManager.profiles_dir"><code class="xref py py-attr docutils literal notranslate"><span class="pre">profiles_dir</span></code></a>.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list of str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="diffpy.cmi.profilesmanager.ProfilesManager.check_profile">
+<span class="sig-name descname"><span class="pre">check_profile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">identifier</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Path</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/diffpy/cmi/profilesmanager.html#ProfilesManager.check_profile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#diffpy.cmi.profilesmanager.ProfilesManager.check_profile" title="Link to this definition"></a></dt>
+<dd><p>Return whether a profile appears installed on this system.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>identifier</strong> (<em>str</em><em> or </em><em>path-like</em>) – Basename or absolute YAML path.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">True</span></code> if all packages and non-meta scripts appear present.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="diffpy.cmi.profilesmanager.ProfilesManager.install">
+<span class="sig-name descname"><span class="pre">install</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">identifier</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Path</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/diffpy/cmi/profilesmanager.html#ProfilesManager.install"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#diffpy.cmi.profilesmanager.ProfilesManager.install" title="Link to this definition"></a></dt>
+<dd><p>Install a profile and verify presence.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>identifier</strong> (<em>str</em><em> or </em><em>path-like</em>) – Basename or absolute YAML path.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="diffpy.cmi.profilesmanager.ProfilesManager.load">
+<span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">identifier</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Path</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#diffpy.cmi.profilesmanager.Profile" title="diffpy.cmi.profilesmanager.Profile"><span class="pre">Profile</span></a></span></span><a class="reference internal" href="../_modules/diffpy/cmi/profilesmanager.html#ProfilesManager.load"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#diffpy.cmi.profilesmanager.ProfilesManager.load" title="Link to this definition"></a></dt>
+<dd><p>Load a profile file into a <a class="reference internal" href="#diffpy.cmi.profilesmanager.Profile" title="diffpy.cmi.profilesmanager.Profile"><code class="xref py py-class docutils literal notranslate"><span class="pre">Profile</span></code></a> object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>identifier</strong> (<em>str</em><em> or </em><em>path-like</em>) – Basename or absolute YAML path.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Loaded profile with metadata.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#diffpy.cmi.profilesmanager.Profile" title="diffpy.cmi.profilesmanager.Profile">Profile</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="diffpy.cmi.profilesmanager.ProfilesManager.print_profiles">
+<span class="sig-name descname"><span class="pre">print_profiles</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/diffpy/cmi/profilesmanager.html#ProfilesManager.print_profiles"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#diffpy.cmi.profilesmanager.ProfilesManager.print_profiles" title="Link to this definition"></a></dt>
+<dd><p>Print available and installed profiles.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
 </section>
 </section>
 
@@ -167,8 +873,8 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="../tutorials/index.html" class="btn btn-neutral float-left" title="Tutorials" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../release.html" class="btn btn-neutral float-right" title="Release notes" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../writing-script.html" class="btn btn-neutral float-left" title="Writing a script with diffpy.cmi" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../available-packs.html" class="btn btn-neutral float-right" title="Packs" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

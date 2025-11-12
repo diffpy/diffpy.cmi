@@ -1,0 +1,482 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>diffpy.cmi.conda &mdash; diffpy.cmi 3.1.0rc0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/wrap_table.css?v=dc09091b" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=a2ca8c84"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../_static/copybutton.js?v=cca77546"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html">
+            
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">WHAT IS DIFFPY.CMI?</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html">Overview</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">GETTING STARTED</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../cli-commands.html">Command-Line Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../writing-script.html">Tutorial diffpy.cmi Script</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/diffpy.cmi.html">Package API</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">AVAILABLE PACKS &amp; PROFILES</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../available-packs.html">Packs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../available-profiles.html">Profiles</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">EXAMPLES &amp; MORE</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/index.html">Examples</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">REFERENCE</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../release.html">Release notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../license.html">License</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">diffpy.cmi</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">diffpy.cmi.conda</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for diffpy.cmi.conda</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1">##############################################################################</span>
+<span class="c1">#</span>
+<span class="c1"># (c) 2025 The Trustees of Columbia University in the City of New York.</span>
+<span class="c1"># All rights reserved.</span>
+<span class="c1">#</span>
+<span class="c1"># File coded by: Tieqiong Zhang and members of the Billinge Group.</span>
+<span class="c1">#</span>
+<span class="c1"># See GitHub contributions for a more detailed list of contributors.</span>
+<span class="c1"># https://github.com/diffpy/diffpy.cmi/graphs/contributors</span>
+<span class="c1">#</span>
+<span class="c1"># See LICENSE.rst for license information.</span>
+<span class="c1">#</span>
+<span class="c1">##############################################################################</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">subprocess</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Tuple</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">diffpy.cmi.log</span><span class="w"> </span><span class="kn">import</span> <span class="n">is_debug</span><span class="p">,</span> <span class="n">plog</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;CondaEnvInfo&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;env_info&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;available&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;mamba_available&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;list_installed_names&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;install_specs&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;reset_cache&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;run&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+
+<span class="c1"># Environment info</span>
+
+
+<div class="viewcode-block" id="CondaEnvInfo">
+<a class="viewcode-back" href="../../../api/diffpy.cmi.html#diffpy.cmi.conda.CondaEnvInfo">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">CondaEnvInfo</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Snapshot of conda/mamba availability and the active environment.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    available : bool</span>
+<span class="sd">        Whether ``conda`` is available on ``PATH``.</span>
+<span class="sd">    mamba : bool</span>
+<span class="sd">        Whether ``mamba`` is available on ``PATH``.</span>
+<span class="sd">    env_name : str or None</span>
+<span class="sd">        Name of the active environment, if known.</span>
+<span class="sd">    prefix : str or None</span>
+<span class="sd">        Filesystem prefix of the active environment, if known.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">available</span><span class="p">:</span> <span class="nb">bool</span>
+    <span class="n">mamba</span><span class="p">:</span> <span class="nb">bool</span>
+    <span class="n">env_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">prefix</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span></div>
+
+
+
+<div class="viewcode-block" id="run">
+<a class="viewcode-back" href="../../../api/diffpy.cmi.html#diffpy.cmi.conda.run">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span>
+    <span class="n">cmd</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+    <span class="n">cwd</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Path</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">capture</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Run a subprocess with sensible, mode-dependent defaults.</span>
+
+<span class="sd">    The function does **not** decide logging policy. It simply runs the</span>
+<span class="sd">    command and returns the exit code and combined output. Visibility of</span>
+<span class="sd">    the child output follows CMI&#39;s current log mode:</span>
+
+<span class="sd">    - In **debug** mode: stream output live by default.</span>
+<span class="sd">    - In **user** mode: capture output quietly by default.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    cmd : sequence of str</span>
+<span class="sd">        Command and arguments.</span>
+<span class="sd">    cwd : path-like, optional</span>
+<span class="sd">        Working directory for the child process.</span>
+<span class="sd">    capture : bool or None, optional</span>
+<span class="sd">        Override the default visibility. ``True`` forces capture; ``False``</span>
+<span class="sd">        forces streaming; ``None`` selects the mode-dependent default.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    tuple of (int, str)</span>
+<span class="sd">        Exit code and captured output (empty string when streaming).</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    When capturing in debug mode, the output is also echoed so developers</span>
+<span class="sd">    still see live progress.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">dbg</span> <span class="o">=</span> <span class="n">is_debug</span><span class="p">()</span>
+    <span class="n">do_capture</span> <span class="o">=</span> <span class="p">(</span><span class="ow">not</span> <span class="n">dbg</span><span class="p">)</span> <span class="k">if</span> <span class="n">capture</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="nb">bool</span><span class="p">(</span><span class="n">capture</span><span class="p">)</span>
+    <span class="n">qcmd</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">cmd</span><span class="p">)</span>
+
+    <span class="n">win</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;nt&quot;</span>
+    <span class="n">prog</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">cmd</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">if</span> <span class="n">cmd</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
+    <span class="n">needs_cmd</span> <span class="o">=</span> <span class="n">win</span> <span class="ow">and</span> <span class="p">(</span>
+        <span class="n">prog</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">conda.bat&quot;</span><span class="p">)</span>
+        <span class="ow">or</span> <span class="n">prog</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">mamba.bat&quot;</span><span class="p">)</span>
+        <span class="ow">or</span> <span class="n">prog</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;conda&quot;</span><span class="p">,</span> <span class="s2">&quot;conda.bat&quot;</span><span class="p">,</span> <span class="s2">&quot;mamba&quot;</span><span class="p">,</span> <span class="s2">&quot;mamba.bat&quot;</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">argv</span> <span class="o">=</span> <span class="p">([</span><span class="s2">&quot;cmd&quot;</span><span class="p">,</span> <span class="s2">&quot;/c&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">cmd</span><span class="p">))</span> <span class="k">if</span> <span class="n">needs_cmd</span> <span class="k">else</span> <span class="nb">list</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">do_capture</span><span class="p">:</span>
+            <span class="n">cp</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
+                <span class="n">argv</span><span class="p">,</span>
+                <span class="n">cwd</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">cwd</span><span class="p">)</span> <span class="k">if</span> <span class="n">cwd</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="n">capture_output</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="n">text</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="n">check</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">rc</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">returncode</span>
+            <span class="n">out</span> <span class="o">=</span> <span class="p">(</span><span class="n">cp</span><span class="o">.</span><span class="n">stdout</span> <span class="ow">or</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">cp</span><span class="o">.</span><span class="n">stderr</span> <span class="ow">or</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+            <span class="c1"># In debug, also echo captured output so devs see it live</span>
+            <span class="k">if</span> <span class="n">dbg</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">cp</span><span class="o">.</span><span class="n">stdout</span><span class="p">:</span>
+                    <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">cp</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">cp</span><span class="o">.</span><span class="n">stderr</span><span class="p">:</span>
+                    <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">cp</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">cp</span><span class="o">.</span><span class="n">stdout</span> <span class="ow">or</span> <span class="n">cp</span><span class="o">.</span><span class="n">stderr</span><span class="p">:</span>
+                    <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+                    <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">cp</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
+                <span class="n">argv</span><span class="p">,</span>
+                <span class="n">cwd</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">cwd</span><span class="p">)</span> <span class="k">if</span> <span class="n">cwd</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="n">text</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="n">check</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">rc</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">returncode</span>
+            <span class="n">out</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">rc</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">plog</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Command failed (</span><span class="si">%d</span><span class="s2">): </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">rc</span><span class="p">,</span> <span class="n">qcmd</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">rc</span><span class="p">,</span> <span class="n">out</span>
+    <span class="k">except</span> <span class="ne">FileNotFoundError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">plog</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Command not found: </span><span class="si">%s</span><span class="s2"> (</span><span class="si">%s</span><span class="s2">)&quot;</span><span class="p">,</span> <span class="n">cmd</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">e</span><span class="p">)</span>
+        <span class="k">return</span> <span class="mi">127</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="available">
+<a class="viewcode-back" href="../../../api/diffpy.cmi.html#diffpy.cmi.conda.available">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">available</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return whether ``conda`` is available on PATH.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    bool</span>
+<span class="sd">        ``True`` if the ``conda`` executable can be invoked.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">rc</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">run</span><span class="p">([</span><span class="s2">&quot;conda&quot;</span><span class="p">,</span> <span class="s2">&quot;--version&quot;</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">rc</span> <span class="o">==</span> <span class="mi">0</span></div>
+
+
+
+<div class="viewcode-block" id="mamba_available">
+<a class="viewcode-back" href="../../../api/diffpy.cmi.html#diffpy.cmi.conda.mamba_available">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">mamba_available</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return whether ``mamba`` is available on PATH.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    bool</span>
+<span class="sd">        ``True`` if the ``mamba`` executable can be invoked.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">rc</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">run</span><span class="p">([</span><span class="s2">&quot;mamba&quot;</span><span class="p">,</span> <span class="s2">&quot;--version&quot;</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">rc</span> <span class="o">==</span> <span class="mi">0</span></div>
+
+
+
+<div class="viewcode-block" id="env_info">
+<a class="viewcode-back" href="../../../api/diffpy.cmi.html#diffpy.cmi.conda.env_info">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">env_info</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">CondaEnvInfo</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return availability and active-environment metadata.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    CondaEnvInfo</span>
+<span class="sd">        Structured information assembled from ``conda info --json`` and</span>
+<span class="sd">        availability probes.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">rc</span><span class="p">,</span> <span class="n">out</span> <span class="o">=</span> <span class="n">run</span><span class="p">([</span><span class="s2">&quot;conda&quot;</span><span class="p">,</span> <span class="s2">&quot;info&quot;</span><span class="p">,</span> <span class="s2">&quot;--json&quot;</span><span class="p">],</span> <span class="n">capture</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">rc</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">out</span><span class="p">)</span> <span class="k">if</span> <span class="n">out</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">plog</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Failed to parse JSON: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">env_name</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">prefix</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+        <span class="n">env_name</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;active_prefix_name&quot;</span><span class="p">)</span>
+        <span class="n">prefix</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;active_prefix&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;default_prefix&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">CondaEnvInfo</span><span class="p">(</span>
+        <span class="n">available</span><span class="o">=</span><span class="n">available</span><span class="p">(),</span>
+        <span class="n">mamba</span><span class="o">=</span><span class="n">mamba_available</span><span class="p">(),</span>
+        <span class="n">env_name</span><span class="o">=</span><span class="n">env_name</span><span class="p">,</span>
+        <span class="n">prefix</span><span class="o">=</span><span class="n">prefix</span><span class="p">,</span>
+    <span class="p">)</span></div>
+
+
+
+<span class="n">_installed_names_cache</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">set</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
+
+
+<div class="viewcode-block" id="reset_cache">
+<a class="viewcode-back" href="../../../api/diffpy.cmi.html#diffpy.cmi.conda.reset_cache">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">reset_cache</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Reset the internal cache of installed package names.&quot;&quot;&quot;</span>
+    <span class="k">global</span> <span class="n">_installed_names_cache</span>
+    <span class="n">_installed_names_cache</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+
+
+<div class="viewcode-block" id="list_installed_names">
+<a class="viewcode-back" href="../../../api/diffpy.cmi.html#diffpy.cmi.conda.list_installed_names">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">list_installed_names</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return conda package names from ``conda list --json``.</span>
+
+<span class="sd">    Results are cached for the current process to reduce repeated shell calls.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    list of str</span>
+<span class="sd">        Sorted unique package names.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">global</span> <span class="n">_installed_names_cache</span>
+    <span class="k">if</span> <span class="n">_installed_names_cache</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">_installed_names_cache</span><span class="p">)</span>
+
+    <span class="n">rc</span><span class="p">,</span> <span class="n">out</span> <span class="o">=</span> <span class="n">run</span><span class="p">([</span><span class="s2">&quot;conda&quot;</span><span class="p">,</span> <span class="s2">&quot;list&quot;</span><span class="p">,</span> <span class="s2">&quot;--json&quot;</span><span class="p">],</span> <span class="n">capture</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">names</span><span class="p">:</span> <span class="nb">set</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">rc</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">arr</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">out</span><span class="p">)</span> <span class="ow">or</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">rec</span> <span class="ow">in</span> <span class="n">arr</span><span class="p">:</span>
+                <span class="n">n</span> <span class="o">=</span> <span class="p">(</span><span class="n">rec</span> <span class="ow">or</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="n">n</span><span class="p">:</span>
+                    <span class="n">names</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">plog</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;conda list JSON parse failed: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">plog</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;conda list returned rc=</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">rc</span><span class="p">)</span>
+
+    <span class="n">_installed_names_cache</span> <span class="o">=</span> <span class="n">names</span>
+    <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">names</span><span class="p">)</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_install_args</span><span class="p">(</span><span class="n">channel</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">default_channel</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return common install arguments for conda/mamba.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    channel : str or None</span>
+<span class="sd">        Target channel for the batch, or ``None`` to use ``default_channel``.</span>
+<span class="sd">    default_channel : str</span>
+<span class="sd">        Channel used when ``channel`` is ``None``.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    list of str</span>
+<span class="sd">        Flattened list of CLI arguments.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">args</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;-y&quot;</span><span class="p">]</span>
+    <span class="n">ch</span> <span class="o">=</span> <span class="p">(</span><span class="n">channel</span> <span class="ow">or</span> <span class="n">default_channel</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">ch</span><span class="p">:</span>
+        <span class="n">args</span> <span class="o">+=</span> <span class="p">[</span><span class="s2">&quot;-c&quot;</span><span class="p">,</span> <span class="n">ch</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">args</span>
+
+
+<div class="viewcode-block" id="install_specs">
+<a class="viewcode-back" href="../../../api/diffpy.cmi.html#diffpy.cmi.conda.install_specs">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">install_specs</span><span class="p">(</span>
+    <span class="n">specs</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">channel</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">default_channel</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;conda-forge&quot;</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Install a batch of specs, preferring mamba then conda.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    specs : sequence of str</span>
+<span class="sd">        Conda spec strings (e.g., ``&quot;numpy&gt;=1.24&quot;``).</span>
+<span class="sd">    channel : str or None, optional</span>
+<span class="sd">        Preferred channel for this batch.</span>
+<span class="sd">    default_channel : str, optional</span>
+<span class="sd">        Channel used when ``channel`` is not given.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    tuple of (str, int, str)</span>
+<span class="sd">        The solver used (``&quot;mamba&quot;`` or ``&quot;conda&quot;``), the exit code, and the</span>
+<span class="sd">        captured output (empty when streaming).</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    This function logs at ``INFO`` level when each batch starts, warns when a</span>
+<span class="sd">    mamba batch fails and a fallback is attempted, and leaves error decisions</span>
+<span class="sd">    to higher-level callers.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">specs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">specs</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">specs</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;none&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;&quot;</span>
+
+    <span class="c1"># Try mamba first</span>
+    <span class="k">if</span> <span class="n">mamba_available</span><span class="p">():</span>
+        <span class="n">cmd</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="p">[</span><span class="s2">&quot;mamba&quot;</span><span class="p">,</span> <span class="s2">&quot;install&quot;</span><span class="p">]</span>
+            <span class="o">+</span> <span class="n">_install_args</span><span class="p">(</span><span class="n">channel</span><span class="p">,</span> <span class="n">default_channel</span><span class="p">)</span>
+            <span class="o">+</span> <span class="n">specs</span>
+        <span class="p">)</span>
+        <span class="n">plog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+            <span class="s2">&quot;mamba batch (</span><span class="si">%s</span><span class="s2">): </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">channel</span> <span class="ow">or</span> <span class="n">default_channel</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">specs</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">rc</span><span class="p">,</span> <span class="n">out</span> <span class="o">=</span> <span class="n">run</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">rc</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">reset_cache</span><span class="p">()</span>
+            <span class="k">return</span> <span class="s2">&quot;mamba&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">out</span>
+        <span class="n">plog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+            <span class="s2">&quot;mamba batch failed for channel </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">channel</span> <span class="ow">or</span> <span class="n">default_channel</span>
+        <span class="p">)</span>
+
+    <span class="c1"># Fallback to conda</span>
+    <span class="k">if</span> <span class="n">available</span><span class="p">():</span>
+        <span class="n">cmd</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="p">[</span><span class="s2">&quot;conda&quot;</span><span class="p">,</span> <span class="s2">&quot;install&quot;</span><span class="p">]</span>
+            <span class="o">+</span> <span class="n">_install_args</span><span class="p">(</span><span class="n">channel</span><span class="p">,</span> <span class="n">default_channel</span><span class="p">)</span>
+            <span class="o">+</span> <span class="n">specs</span>
+        <span class="p">)</span>
+        <span class="n">plog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+            <span class="s2">&quot;conda batch (</span><span class="si">%s</span><span class="s2">): </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">channel</span> <span class="ow">or</span> <span class="n">default_channel</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">specs</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">rc</span><span class="p">,</span> <span class="n">out</span> <span class="o">=</span> <span class="n">run</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">rc</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">reset_cache</span><span class="p">()</span>
+            <span class="k">return</span> <span class="s2">&quot;conda&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">out</span>
+        <span class="k">return</span> <span class="s2">&quot;conda&quot;</span><span class="p">,</span> <span class="n">rc</span><span class="p">,</span> <span class="n">out</span>
+
+    <span class="k">return</span> <span class="s2">&quot;unavailable&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;Neither mamba nor conda is available.&quot;</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, The Trustees of Columbia University in the City of New York.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

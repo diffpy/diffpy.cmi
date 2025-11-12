@@ -1,0 +1,556 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>diffpy.cmi.packsmanager &mdash; diffpy.cmi 3.1.0rc0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/wrap_table.css?v=dc09091b" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=a2ca8c84"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../_static/copybutton.js?v=cca77546"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html">
+            
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">WHAT IS DIFFPY.CMI?</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html">Overview</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">GETTING STARTED</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../cli-commands.html">Command-Line Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../writing-script.html">Tutorial diffpy.cmi Script</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/diffpy.cmi.html">Package API</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">AVAILABLE PACKS &amp; PROFILES</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../available-packs.html">Packs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../available-profiles.html">Profiles</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">EXAMPLES &amp; MORE</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/index.html">Examples</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">REFERENCE</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../release.html">Release notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../license.html">License</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">diffpy.cmi</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">diffpy.cmi.packsmanager</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for diffpy.cmi.packsmanager</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1">##############################################################################</span>
+<span class="c1">#</span>
+<span class="c1"># (c) 2025 The Trustees of Columbia University in the City of New York.</span>
+<span class="c1"># All rights reserved.</span>
+<span class="c1">#</span>
+<span class="c1"># File coded by: Tieqiong Zhang and members of the Billinge Group.</span>
+<span class="c1">#</span>
+<span class="c1"># See GitHub contributions for a more detailed list of contributors.</span>
+<span class="c1"># https://github.com/diffpy/diffpy.cmi/graphs/contributors</span>
+<span class="c1">#</span>
+<span class="c1"># See LICENSE.rst for license information.</span>
+<span class="c1">#</span>
+<span class="c1">##############################################################################</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">shutil</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">importlib.resources</span><span class="w"> </span><span class="kn">import</span> <span class="n">as_file</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">diffpy.cmi.installer</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">ParsedReq</span><span class="p">,</span>
+    <span class="n">install_requirements</span><span class="p">,</span>
+    <span class="n">parse_requirement_line</span><span class="p">,</span>
+    <span class="n">presence_check</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">diffpy.cmi.log</span><span class="w"> </span><span class="kn">import</span> <span class="n">plog</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;PacksManager&quot;</span><span class="p">,</span> <span class="s2">&quot;get_package_dir&quot;</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="get_package_dir">
+<a class="viewcode-back" href="../../../api/diffpy.cmi.html#diffpy.cmi.packsmanager.get_package_dir">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_package_dir</span><span class="p">(</span><span class="n">root_path</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get the package directory as a context manager.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    root_path : str, optional</span>
+<span class="sd">        Used for testing, overrides the files(__name__) call.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    context manager</span>
+<span class="sd">        A context manager that yields a pathlib.Path to the package directory.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">root_path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">resource</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">parents</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">resource</span> <span class="o">=</span> <span class="n">root_path</span>
+    <span class="k">return</span> <span class="n">as_file</span><span class="p">(</span><span class="n">resource</span><span class="p">)</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_installed_packs_dir</span><span class="p">(</span><span class="n">root_path</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Path</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Locate requirements/packs/ for the installed package.&quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="n">get_package_dir</span><span class="p">(</span><span class="n">root_path</span><span class="p">)</span> <span class="k">as</span> <span class="n">pkgdir</span><span class="p">:</span>
+        <span class="n">pkg</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">pkgdir</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="p">(</span>
+            <span class="n">pkg</span> <span class="o">/</span> <span class="s2">&quot;requirements&quot;</span> <span class="o">/</span> <span class="s2">&quot;packs&quot;</span><span class="p">,</span>
+            <span class="n">pkg</span><span class="o">.</span><span class="n">parents</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">/</span> <span class="s2">&quot;requirements&quot;</span> <span class="o">/</span> <span class="s2">&quot;packs&quot;</span><span class="p">,</span>
+        <span class="p">):</span>
+            <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
+                <span class="k">return</span> <span class="n">c</span>
+    <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span>
+        <span class="s2">&quot;Could not locate requirements/packs. Check your installation.&quot;</span>
+    <span class="p">)</span>
+
+
+<div class="viewcode-block" id="PacksManager">
+<a class="viewcode-back" href="../../../api/diffpy.cmi.html#diffpy.cmi.packsmanager.PacksManager">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">PacksManager</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Discovery, parsing, and installation for pack files.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    packs_dir : pathlib.Path</span>
+<span class="sd">        Absolute path to the installed packs directory.</span>
+<span class="sd">        Defaults to `requirements/packs` under the installed package.</span>
+<span class="sd">    examples_dir : pathlib.Path</span>
+<span class="sd">        Absolute path to the installed examples directory.</span>
+<span class="sd">        Defaults to `docs/examples` under the installed package.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root_path</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">packs_dir</span> <span class="o">=</span> <span class="n">_installed_packs_dir</span><span class="p">(</span><span class="n">root_path</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">examples_dir</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_examples_dir</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_examples_dir</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Path</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the absolute path to the installed examples directory.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        pathlib.Path</span>
+<span class="sd">            Directory containing shipped examples.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">packs_dir</span> <span class="o">/</span> <span class="s2">&quot;..&quot;</span> <span class="o">/</span> <span class="s2">&quot;..&quot;</span> <span class="o">/</span> <span class="s2">&quot;docs&quot;</span> <span class="o">/</span> <span class="s2">&quot;examples&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span>
+
+<div class="viewcode-block" id="PacksManager.available_packs">
+<a class="viewcode-back" href="../../../api/diffpy.cmi.html#diffpy.cmi.packsmanager.PacksManager.available_packs">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">available_packs</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;List all available packs.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        list of str</span>
+<span class="sd">            Pack basenames available under :attr:`packs_dir`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span>
+            <span class="n">p</span><span class="o">.</span><span class="n">stem</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">packs_dir</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;*.txt&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">is_file</span><span class="p">()</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="PacksManager.available_examples">
+<a class="viewcode-back" href="../../../api/diffpy.cmi.html#diffpy.cmi.packsmanager.PacksManager.available_examples">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">available_examples</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Finds all examples for each pack and builds a dict.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        root_path : Path</span>
+<span class="sd">            Root path to the examples directory.</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict</span>
+<span class="sd">            A dictionary mapping pack names to lists of example names.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        FileNotFoundError</span>
+<span class="sd">            If the provided root_path does not exist or is not a directory.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">example_dir</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">examples_dir</span>
+        <span class="n">examples_dict</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">pack_path</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">example_dir</span><span class="o">.</span><span class="n">iterdir</span><span class="p">()):</span>
+            <span class="k">if</span> <span class="n">pack_path</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
+                <span class="n">pack_name</span> <span class="o">=</span> <span class="n">pack_path</span><span class="o">.</span><span class="n">stem</span>
+                <span class="n">examples_dict</span><span class="p">[</span><span class="n">pack_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="k">for</span> <span class="n">example_path</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">pack_path</span><span class="o">.</span><span class="n">iterdir</span><span class="p">()):</span>
+                    <span class="k">if</span> <span class="n">example_path</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
+                        <span class="n">example_name</span> <span class="o">=</span> <span class="n">example_path</span><span class="o">.</span><span class="n">stem</span>
+                        <span class="n">examples_dict</span><span class="p">[</span><span class="n">pack_name</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                            <span class="p">(</span><span class="n">example_name</span><span class="p">,</span> <span class="n">example_path</span><span class="p">)</span>
+                        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">examples_dict</span></div>
+
+
+<div class="viewcode-block" id="PacksManager.copy_examples">
+<a class="viewcode-back" href="../../../api/diffpy.cmi.html#diffpy.cmi.packsmanager.PacksManager.copy_examples">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">copy_examples</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">examples_to_copy</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+        <span class="n">target_dir</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Path</span> <span class="o">|</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">force</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Copy examples or packs into the target or current working</span>
+<span class="sd">        directory.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        examples_to_copy : list of str</span>
+<span class="sd">            User-specified pack(s), example(s), or &quot;all&quot; to copy all.</span>
+<span class="sd">        target_dir : pathlib.Path or str, optional</span>
+<span class="sd">            Target directory to copy examples into. Defaults to current</span>
+<span class="sd">            working directory.</span>
+<span class="sd">        force : bool, optional</span>
+<span class="sd">            Defaults to ``False``. If ``True``, existing files are</span>
+<span class="sd">            overwritten and directories are merged</span>
+<span class="sd">            (extra files in the target are preserved).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">target_dir</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="n">target_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">target_dir</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_target_dir</span> <span class="o">=</span> <span class="n">target_dir</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span> <span class="k">if</span> <span class="n">target_dir</span> <span class="k">else</span> <span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_force</span> <span class="o">=</span> <span class="n">force</span>
+
+        <span class="k">if</span> <span class="s2">&quot;all&quot;</span> <span class="ow">in</span> <span class="n">examples_to_copy</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_copy_all</span><span class="p">()</span>
+            <span class="k">return</span>
+
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">examples_to_copy</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">available_examples</span><span class="p">():</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_copy_pack</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_example_name</span><span class="p">(</span><span class="n">item</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_copy_example</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;No examples or packs found for input: &#39;</span><span class="si">{</span><span class="n">item</span><span class="si">}</span><span class="s2">&#39;&quot;</span>
+                <span class="p">)</span>
+        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_target_dir</span>
+        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_force</span>
+        <span class="k">return</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_copy_all</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Copy all packs and examples.&quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">pack_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">available_examples</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_copy_pack</span><span class="p">(</span><span class="n">pack_name</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_copy_pack</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pack_name</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Copy all examples in a single pack.&quot;&quot;&quot;</span>
+        <span class="n">examples</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">available_examples</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pack_name</span><span class="p">,</span> <span class="p">[])</span>
+        <span class="k">for</span> <span class="n">ex_name</span><span class="p">,</span> <span class="n">ex_path</span> <span class="ow">in</span> <span class="n">examples</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_copy_tree_to_target</span><span class="p">(</span><span class="n">pack_name</span><span class="p">,</span> <span class="n">ex_name</span><span class="p">,</span> <span class="n">ex_path</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_copy_example</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">example_name</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Copy a single example by its name.&quot;&quot;&quot;</span>
+        <span class="n">example_found</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">for</span> <span class="n">pack_name</span><span class="p">,</span> <span class="n">examples</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">available_examples</span><span class="p">()</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">ex_name</span><span class="p">,</span> <span class="n">ex_path</span> <span class="ow">in</span> <span class="n">examples</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">ex_name</span> <span class="o">==</span> <span class="n">example_name</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_copy_tree_to_target</span><span class="p">(</span><span class="n">pack_name</span><span class="p">,</span> <span class="n">ex_name</span><span class="p">,</span> <span class="n">ex_path</span><span class="p">)</span>
+                    <span class="n">example_found</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">example_found</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;No examples or packs found for input: &#39;</span><span class="si">{</span><span class="n">example_name</span><span class="si">}</span><span class="s2">&#39;&quot;</span>
+            <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_is_example_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return True if the given name matches any known example.&quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">pack_name</span><span class="p">,</span> <span class="n">examples</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">available_examples</span><span class="p">()</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">example_name</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">examples</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">example_name</span> <span class="o">==</span> <span class="n">name</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_copy_tree_to_target</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pack_name</span><span class="p">,</span> <span class="n">example_name</span><span class="p">,</span> <span class="n">example_origin</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Copy an example folder from source to the user&#39;s target</span>
+<span class="sd">        directory.&quot;&quot;&quot;</span>
+        <span class="n">target_dir</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_target_dir</span> <span class="o">/</span> <span class="n">pack_name</span> <span class="o">/</span> <span class="n">example_name</span>
+        <span class="n">target_dir</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">target_dir</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_force</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_overwrite_example</span><span class="p">(</span>
+                <span class="n">example_origin</span><span class="p">,</span> <span class="n">target_dir</span><span class="p">,</span> <span class="n">pack_name</span><span class="p">,</span> <span class="n">example_name</span>
+            <span class="p">)</span>
+            <span class="k">return</span>
+        <span class="k">if</span> <span class="n">target_dir</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_copy_missing_files</span><span class="p">(</span><span class="n">example_origin</span><span class="p">,</span> <span class="n">target_dir</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;WARNING: Example &#39;</span><span class="si">{</span><span class="n">pack_name</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">example_name</span><span class="si">}</span><span class="s2">&#39;&quot;</span>
+                <span class="s2">&quot; already exists at the specified target directory. &quot;</span>
+                <span class="s2">&quot;Existing files were left unchanged; &quot;</span>
+                <span class="s2">&quot;new or missing files were copied. To overwrite everything, &quot;</span>
+                <span class="s2">&quot;rerun with --force.&quot;</span>
+            <span class="p">)</span>
+            <span class="k">return</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_copy_new_example</span><span class="p">(</span>
+            <span class="n">example_origin</span><span class="p">,</span> <span class="n">target_dir</span><span class="p">,</span> <span class="n">pack_name</span><span class="p">,</span> <span class="n">example_name</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_overwrite_example</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">example_origin</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">pack_name</span><span class="p">,</span> <span class="n">example_name</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Delete target and copy example.&quot;&quot;&quot;</span>
+        <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
+        <span class="n">shutil</span><span class="o">.</span><span class="n">copytree</span><span class="p">(</span><span class="n">example_origin</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Overwriting example &#39;</span><span class="si">{</span><span class="n">pack_name</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">example_name</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_copy_missing_files</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">example_origin</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Copy only files and directories that are missing in the</span>
+<span class="sd">        target.&quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">example_item</span> <span class="ow">in</span> <span class="n">example_origin</span><span class="o">.</span><span class="n">rglob</span><span class="p">(</span><span class="s2">&quot;*&quot;</span><span class="p">):</span>
+            <span class="n">rel_path</span> <span class="o">=</span> <span class="n">example_item</span><span class="o">.</span><span class="n">relative_to</span><span class="p">(</span><span class="n">example_origin</span><span class="p">)</span>
+            <span class="n">target_item</span> <span class="o">=</span> <span class="n">target</span> <span class="o">/</span> <span class="n">rel_path</span>
+            <span class="k">if</span> <span class="n">example_item</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
+                <span class="n">target_item</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">example_item</span><span class="o">.</span><span class="n">is_file</span><span class="p">()</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">target_item</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+                <span class="n">target_item</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                <span class="n">shutil</span><span class="o">.</span><span class="n">copy2</span><span class="p">(</span><span class="n">example_item</span><span class="p">,</span> <span class="n">target_item</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_copy_new_example</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">example_origin</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">pack_name</span><span class="p">,</span> <span class="n">example_name</span>
+    <span class="p">):</span>
+        <span class="n">shutil</span><span class="o">.</span><span class="n">copytree</span><span class="p">(</span><span class="n">example_origin</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Copied example &#39;</span><span class="si">{</span><span class="n">pack_name</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">example_name</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_resolve_pack_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identifier</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Path</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Resolve a pack identifier to an absolute .txt path.</span>
+
+<span class="sd">        Rules</span>
+<span class="sd">        -----</span>
+<span class="sd">        1) Absolute path to a ``.txt`` file is NOT accepted.</span>
+<span class="sd">        2) The identifier is treated as a basename that must exist</span>
+<span class="sd">           under :attr:`packs_dir`.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        identifier : str or path-like</span>
+<span class="sd">            Basename to resolve.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        pathlib.Path</span>
+<span class="sd">            Absolute path to the pack file.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        FileNotFoundError</span>
+<span class="sd">            If the pack cannot be found per the above rules.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">identifier</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">is_absolute</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Absolute pack paths are not supported: </span><span class="si">{</span><span class="n">p</span><span class="si">}</span><span class="s2">.</span><span class="se">\</span>
+<span class="s2">                Use a provided pack or </span><span class="se">\</span>
+<span class="s2">                define extra requirements using a profile.&quot;</span>
+            <span class="p">)</span>
+        <span class="n">cand</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">packs_dir</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">p</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">.txt&quot;</span>
+        <span class="k">if</span> <span class="n">cand</span><span class="o">.</span><span class="n">is_file</span><span class="p">():</span>
+            <span class="k">return</span> <span class="n">cand</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span>
+        <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Pack not found: </span><span class="si">{</span><span class="n">identifier</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">cand</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="PacksManager.pack_requirements">
+<a class="viewcode-back" href="../../../api/diffpy.cmi.html#diffpy.cmi.packsmanager.PacksManager.pack_requirements">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">pack_requirements</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">identifier</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">ParsedReq</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return parsed requirements for a pack.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        identifier : str or path-like</span>
+<span class="sd">            Installed pack name.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        list of ParsedReq</span>
+<span class="sd">            Parsed requirements from the pack file.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_resolve_pack_file</span><span class="p">(</span><span class="n">identifier</span><span class="p">)</span>
+        <span class="n">lines</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">ln</span> <span class="ow">in</span> <span class="n">path</span><span class="o">.</span><span class="n">read_text</span><span class="p">(</span><span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">splitlines</span><span class="p">():</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="n">ln</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">s</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">s</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;#&quot;</span><span class="p">):</span>
+                <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">parse_requirement_line</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="PacksManager.check_pack">
+<a class="viewcode-back" href="../../../api/diffpy.cmi.html#diffpy.cmi.packsmanager.PacksManager.check_pack">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">check_pack</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identifier</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return whether a pack is installed.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        identifier : str or path-like</span>
+<span class="sd">            Basename to the pack file.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        bool</span>
+<span class="sd">            ``True`` if the pack is installed, ``False`` otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">reqs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pack_requirements</span><span class="p">(</span><span class="n">identifier</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">presence_check</span><span class="p">(</span><span class="n">reqs</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="PacksManager.install_pack">
+<a class="viewcode-back" href="../../../api/diffpy.cmi.html#diffpy.cmi.packsmanager.PacksManager.install_pack">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">install_pack</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identifier</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Install a pack and verify presence.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        identifier : str</span>
+<span class="sd">            Basename to the pack file.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_resolve_pack_file</span><span class="p">(</span><span class="n">identifier</span><span class="p">)</span>
+        <span class="n">reqs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pack_requirements</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">stem</span><span class="p">)</span>
+        <span class="n">scripts_root</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">packs_dir</span> <span class="o">/</span> <span class="s2">&quot;scripts&quot;</span>
+        <span class="n">plog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Installing pack: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">path</span><span class="o">.</span><span class="n">stem</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">install_requirements</span><span class="p">(</span><span class="n">reqs</span><span class="p">,</span> <span class="n">scripts_root</span><span class="o">=</span><span class="n">scripts_root</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">plog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Pack &#39;</span><span class="si">%s</span><span class="s2">&#39; installation complete.&quot;</span><span class="p">,</span> <span class="n">path</span><span class="o">.</span><span class="n">stem</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">plog</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Pack &#39;</span><span class="si">%s</span><span class="s2">&#39; installation failed.&quot;</span><span class="p">,</span> <span class="n">path</span><span class="o">.</span><span class="n">stem</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="PacksManager.print_packs">
+<a class="viewcode-back" href="../../../api/diffpy.cmi.html#diffpy.cmi.packsmanager.PacksManager.print_packs">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">print_packs</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Print information about available packs.&quot;&quot;&quot;</span>
+        <span class="n">uninstalled_packs</span><span class="p">,</span> <span class="n">installed_packs</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">pack</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">available_packs</span><span class="p">():</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_pack</span><span class="p">(</span><span class="n">pack</span><span class="p">):</span>
+                <span class="n">installed_packs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pack</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">uninstalled_packs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pack</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Installed Packs:&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;----------------&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">pack</span> <span class="ow">in</span> <span class="n">installed_packs</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">installed_packs</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;  (none)&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="n">pack</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Available Packs:&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;----------------&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">uninstalled_packs</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;  (all packs installed)&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">pack</span> <span class="ow">in</span> <span class="n">uninstalled_packs</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="n">pack</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="PacksManager.print_examples">
+<a class="viewcode-back" href="../../../api/diffpy.cmi.html#diffpy.cmi.packsmanager.PacksManager.print_examples">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">print_examples</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Print information about available examples.&quot;&quot;&quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Examples:&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;---------&quot;</span><span class="p">)</span>
+        <span class="n">examples_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">available_examples</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">pack</span><span class="p">,</span> <span class="n">examples</span> <span class="ow">in</span> <span class="n">examples_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="n">pack</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">ex_name</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">examples</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   - </span><span class="si">{</span><span class="n">ex_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="PacksManager.print_info">
+<a class="viewcode-back" href="../../../api/diffpy.cmi.html#diffpy.cmi.packsmanager.PacksManager.print_info">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">print_info</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Print information about available packs, profiles, and</span>
+<span class="sd">        examples.&quot;&quot;&quot;</span>
+        <span class="c1"># packs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">print_packs</span><span class="p">()</span>
+        <span class="c1"># profiles</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">diffpy.cmi.profilesmanager</span><span class="w"> </span><span class="kn">import</span> <span class="n">ProfilesManager</span>
+
+        <span class="n">prm</span> <span class="o">=</span> <span class="n">ProfilesManager</span><span class="p">()</span>
+        <span class="n">prm</span><span class="o">.</span><span class="n">print_profiles</span><span class="p">()</span>
+        <span class="c1"># examples</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">print_examples</span><span class="p">()</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, The Trustees of Columbia University in the City of New York.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
