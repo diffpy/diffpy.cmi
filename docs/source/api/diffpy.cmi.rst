@@ -1,18 +1,60 @@
 :tocdepth: -1
 
-|title|
-=======
+diffpy.cmi package
+==================
 
-.. |title| replace:: diffpy.cmi Contents
+.. automodule:: diffpy.cmi
+    :members:
+    :undoc-members:
+    :show-inheritance:
 
-``diffpy.cmi`` includes Python and C++ libraries developed by the DiffPy team as well as external libraries necessary for functionality.
+Submodules
+----------
 
-Libraries developed by the DiffPy team
---------------------------------------
+diffpy.cmi.log module
+^^^^^^^^^^^^^^^^^^^^^
 
-.. include:: ../snippets/diffpy_libraries.rst
+.. automodule:: diffpy.cmi.log
+    :members:
+    :undoc-members:
+    :show-inheritance:
 
-External Libraries
-------------------
+diffpy.cmi.conda module
+^^^^^^^^^^^^^^^^^^^^^^^
 
-.. include:: ../snippets/external_libraries.rst
+.. automodule:: diffpy.cmi.conda
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+diffpy.cmi.packsmanager module
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. automodule:: diffpy.cmi.packsmanager
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+diffpy.cmi.installer module
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. automodule:: diffpy.cmi.installer
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+diffpy.cmi.cli module
+^^^^^^^^^^^^^^^^^^^^^
+
+.. automodule:: diffpy.cmi.cli
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+diffpy.cmi.profilesmanager module
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. automodule:: diffpy.cmi.profilesmanager
+    :members:
+    :undoc-members:
+    :show-inheritance:

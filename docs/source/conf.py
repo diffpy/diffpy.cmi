@@ -148,6 +148,7 @@ html_context = {
 #
 html_theme_options = {
     "navigation_with_keys": "true",
+    "logo_only": True,
 }
 
 # Add any paths that contain custom themes here, relative to this directory.
