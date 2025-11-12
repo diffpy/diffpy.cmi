@@ -1,6 +1,7 @@
 import os
 import re
 import subprocess
+import sys
 from pathlib import Path
 
 import pytest
@@ -375,7 +376,7 @@ def test_print_packs_and_examples(
     packs_to_install, expected, example_cases, capsys, conda_env
 ):
     env_dir_str = Path(conda_env).as_posix()
-    shell = os.name == "nt"
+    shell = sys.platform.startswith("win")
     req_dir = example_cases / "case5" / "requirements" / "packs"
     for pack in packs_to_install:
         req_file = (req_dir / f"{pack}.txt").as_posix()
