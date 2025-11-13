@@ -87,3 +87,9 @@ exclude = '''
   | tests/data
 )/
 '''
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.package-data]
+"diffpy.cmi" = ["../docs/examples/**/*"]

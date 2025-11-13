@@ -5,7 +5,7 @@ graft requirements
 include AUTHORS.rst LICENSE*.rst README.rst
 
 # include examples inside the package
-recursive-include src/diffpy/cmi/docs/examples *
+recursive-include docs/examples *
 
 # Exclude all bytecode files and __pycache__ directories
 global-exclude *.py[cod]  # Exclude all .pyc, .pyo, and .pyd files.
