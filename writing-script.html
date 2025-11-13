@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Writing a script with diffpy.cmi &mdash; diffpy.cmi 3.1.0 documentation</title>
+  <title>Writing a script with diffpy.cmi &mdash; diffpy.cmi 3.1.1rc0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
@@ -15,7 +15,7 @@
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=0ffc2956"></script>
+      <script src="_static/documentation_options.js?v=d31fc6dd"></script>
       <script src="_static/doctools.js?v=9bcbadda"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="_static/clipboard.min.js?v=a7894cd8"></script>
@@ -57,6 +57,7 @@
 <li class="toctree-l1"><a class="reference internal" href="cli-commands.html">Command-Line Interface</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Tutorial diffpy.cmi Script</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#generate-synthetic-data">Generate Synthetic Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#profile"><code class="docutils literal notranslate"><span class="pre">Profile</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#fitcontribution"><code class="docutils literal notranslate"><span class="pre">FitContribution</span></code></a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#setting-fit-equation">Setting Fit Equation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#initialize-fitting-parameters">Initialize Fitting Parameters</a></li>
@@ -164,6 +165,9 @@ We will follow the <code class="docutils literal notranslate"><span class="pre">
 <p>You should see a scatter plot that looks something like this,</p>
 <a class="reference internal image-reference" href="_images/linefitfig1.png"><img alt="Scatter plot of synthetic data" class="align-center" src="_images/linefitfig1.png" style="width: 400px;" />
 </a>
+</section>
+<section id="profile">
+<h2><code class="docutils literal notranslate"><span class="pre">Profile</span></code><a class="headerlink" href="#profile" title="Link to this heading"></a></h2>
 <p>Great, now lets begin setting up our fitting framework. We will start by creating a <code class="docutils literal notranslate"><span class="pre">Profile</span></code> to hold our data.
 This is done to encapsulate the observed data so that it can be used in the fitting process.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a Profile to hold the data</span>

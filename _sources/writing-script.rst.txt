@@ -62,6 +62,9 @@ You should see a scatter plot that looks something like this,
    :align: center
    :width: 400px
 
+``Profile``
+-----------
+
 Great, now lets begin setting up our fitting framework. We will start by creating a ``Profile`` to hold our data.
 This is done to encapsulate the observed data so that it can be used in the fitting process.
 
