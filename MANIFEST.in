@@ -1,6 +1,7 @@
 graft src
 graft tests
 graft requirements
+
 include AUTHORS.rst LICENSE*.rst README.rst
 
 # include examples inside the package
