@@ -1,10 +1,10 @@
 import os
 import re
-import subprocess
 from pathlib import Path
 
 import pytest
 
+from diffpy.cmi import installer
 from diffpy.cmi.packsmanager import PacksManager
 
 
@@ -372,21 +372,24 @@ Examples:
 
 @pytest.mark.parametrize("packs_to_install,expected", install_params)
 def test_print_packs_and_examples(
-    packs_to_install, expected, example_cases, capsys, conda_env
+    packs_to_install, expected, example_cases, capsys, monkeypatch
 ):
-    env_dir_str = Path(conda_env).as_posix()
-    shell = os.name == "nt"
-    req_dir = example_cases / "case5" / "requirements" / "packs"
+    case5dir = example_cases / "case5"
+    req_dir = case5dir / "requirements" / "packs"
+
+    installed_reqs = []
     for pack in packs_to_install:
-        req_file = (req_dir / f"{pack}.txt").as_posix()
-        subprocess.run(
-            ["conda", "install", "-y", "--file", req_file, "-p", env_dir_str],
-            check=True,
-            capture_output=True,
-            text=True,
-            shell=shell,
-        )
-    pm = PacksManager(root_path=example_cases / "case5")
+        req_file = req_dir / f"{pack}.txt"
+        for line in req_file.read_text().splitlines():
+            line = line.strip()
+            installed_reqs.append(line)
+
+    def mock_is_installed(name: str) -> bool:
+        return name in installed_reqs
+
+    monkeypatch.setattr(installer, "_is_installed", mock_is_installed)
+
+    pm = PacksManager(root_path=case5dir)
     pm.print_packs()
     pm.print_examples()
     captured = capsys.readouterr()
