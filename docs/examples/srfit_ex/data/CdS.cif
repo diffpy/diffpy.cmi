@@ -1,0 +1,69 @@
+data_1011054
+_chemical_name_systematic          'Cadmium sulfide - $-alpha'
+_chemical_name_mineral             'Greenockite'
+_chemical_compound_source          'synthetic'
+_chemical_formula_structural       'Cd S'
+_chemical_formula_sum              'Cd S'
+_publ_section_title
+;
+Ueber die Kristallstruktur des $-alpha- und $-beta Cd S, sowie des
+Wurtzits.
+;
+loop_
+_publ_author_name
+  'Ulrich, F'
+  'Zachariasen, W'
+_journal_name_full
+;
+Zeitschrift fuer Kristallographie, Kristallgeometrie, Kristallphysik,
+Kristallchemie (-144,1977)
+;
+_journal_coden_ASTM                ZEKGAX
+_journal_volume                    62
+_journal_year                      1925
+_journal_page_first                260
+_journal_page_last                 273
+_cell_length_a                     4.15
+_cell_length_b                     4.15
+_cell_length_c                     6.737
+_cell_angle_alpha                  90
+_cell_angle_beta                   90
+_cell_angle_gamma                  120
+_cell_volume                       100.5
+_cell_formula_units_Z              2
+_exptl_crystal_density_meas        4.82
+_symmetry_space_group_name_H-M     'P 63 m c'
+_symmetry_Int_Tables_number        186
+_symmetry_cell_setting             hexagonal
+loop_
+_symmetry_equiv_pos_as_xyz
+  'x,y,z'
+  '-y,x-y,z'
+  'y-x,-x,z'
+  '-y,-x,z'
+  'y-x,y,z'
+  'x,x-y,z'
+  '-x,-y,1/2+z'
+  'y,y-x,1/2+z'
+  'x-y,x,1/2+z'
+  'y,x,1/2+z'
+  'x-y,-y,1/2+z'
+  '-x,y-x,1/2+z'
+loop_
+_atom_type_symbol
+_atom_type_oxidation_number
+  Cd2+   2.000
+  S2-   -2.000
+loop_
+_atom_site_label
+_atom_site_type_symbol
+_atom_site_symmetry_multiplicity
+_atom_site_Wyckoff_symbol
+_atom_site_fract_x
+_atom_site_fract_y
+_atom_site_fract_z
+_atom_site_occupancy
+_atom_site_attached_hydrogens
+_atom_site_calc_flag
+  Cd1   Cd   2 b 0.33333 0.66667 0. 1.  0 d
+  S1    S    2 b 0.33333 0.66667 0.375 1.  0 d
