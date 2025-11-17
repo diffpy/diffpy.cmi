@@ -372,7 +372,7 @@ Examples:
 
 @pytest.mark.parametrize("packs_to_install,expected", install_params)
 def test_print_packs_and_examples(
-    packs_to_install, expected, example_cases, capsys, monkeypatch
+    packs_to_install, expected, example_cases, capsys, mocker
 ):
     case5dir = example_cases / "case5"
     req_dir = case5dir / "requirements" / "packs"
@@ -382,13 +382,15 @@ def test_print_packs_and_examples(
         req_file = req_dir / f"{pack}.txt"
         for line in req_file.read_text().splitlines():
             line = line.strip()
-            installed_reqs.append(line)
+            if line and not line.startswith("#"):
+                installed_reqs.append(line)
 
     def mock_is_installed(name: str) -> bool:
         return name in installed_reqs
 
-    monkeypatch.setattr(installer, "_is_installed", mock_is_installed)
-
+    mocker.patch.object(
+        installer, "_is_installed", side_effect=mock_is_installed
+    )
     pm = PacksManager(root_path=case5dir)
     pm.print_packs()
     pm.print_examples()
