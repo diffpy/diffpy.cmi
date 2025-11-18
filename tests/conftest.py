@@ -1,29 +1,8 @@
 import json
-import os
-import subprocess
 from pathlib import Path
 
 import matplotlib
 import pytest
-
-
-@pytest.fixture(scope="function")
-def conda_env(tmp_path):
-    env_dir = tmp_path / "fake_env"
-    env_dir_str = env_dir.as_posix()
-    shell = os.name == "nt"
-    subprocess.run(
-        ["conda", "create", "-y", "-p", env_dir_str],
-        check=True,
-        capture_output=True,
-        shell=shell,
-    )
-    yield env_dir_str
-    subprocess.run(
-        ["conda", "env", "remove", "-p", env_dir_str, "-y"],
-        check=True,
-        shell=shell,
-    )
 
 
 @pytest.fixture(scope="function")
