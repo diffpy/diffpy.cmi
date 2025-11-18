@@ -346,8 +346,8 @@ def test_copy_examples_force(example_cases, expected_paths, force):
 
 
 install_params = [
-    (  # input: install requirements for packA
-        # expected: print_info output showing packA installed but not packB
+    (  # input: packs to install
+        # expected: output showing packA installed but not packB
         ("packA",),
         """Installed Packs:
 ----------------

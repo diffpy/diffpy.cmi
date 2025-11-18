@@ -26,9 +26,24 @@ from diffpy.cmi.installer import (
     presence_check,
 )
 from diffpy.cmi.log import plog
-from diffpy.cmi.packsmanager import PacksManager
+from diffpy.cmi.packsmanager import PacksManager, get_package_dir
 
 __all__ = ["Profile", "ProfilesManager"]
+
+
+def _installed_profiles_dir(root_path=None) -> Path:
+    """Locate requirements/profiles/ for the installed package."""
+    with get_package_dir(root_path) as pkgdir:
+        pkg = Path(pkgdir).resolve()
+        for c in (
+            pkg / "requirements" / "profiles",
+            pkg.parents[2] / "requirements" / "profiles",
+        ):
+            if c.is_dir():
+                return c
+    raise FileNotFoundError(
+        "Could not locate requirements/profiles. Check your installation."
+    )
 
 
 @dataclass
@@ -78,9 +93,14 @@ class ProfilesManager:
         Defaults to `requirements/profiles` under the installed package.
     """
 
-    def __init__(self, packs_mgr: Optional[PacksManager] = None) -> None:
-        self.packs_mgr = packs_mgr or PacksManager()
-        self.profiles_dir = self.packs_mgr.packs_dir.parent / "profiles"
+    def __init__(
+        self,
+        packs_mgr: Optional[PacksManager] = None,
+        root_path=None,
+    ) -> None:
+
+        self.packs_mgr = packs_mgr or PacksManager(root_path=root_path)
+        self.profiles_dir = _installed_profiles_dir(root_path)
 
     # Resolution & loading
     def _resolve_profile_file(self, identifier: Union[str, Path]) -> Path:
