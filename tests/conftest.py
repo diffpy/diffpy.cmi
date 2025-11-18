@@ -93,13 +93,30 @@ def example_cases(tmp_path_factory):
     case5e.mkdir(parents=True, exist_ok=True)
     (case5e / "script5.py").write_text(f"# {case5e.name} script5\n")
 
-    case5req_dir = root_temp_dir / "case5" / "requirements" / "packs"
-    case5req_dir.mkdir(parents=True, exist_ok=True)
+    case5reqs_dir = root_temp_dir / "case5" / "requirements"
+    case5packs_dir = case5reqs_dir / "packs"
+    case5packs_dir.mkdir(parents=True, exist_ok=True)
+    (case5packs_dir / "packA.txt").write_text("requests")
+    (case5packs_dir / "packB.txt").write_text("attrs")
 
-    fake_env = root_temp_dir / "case5" / "fake_env"
-    fake_env.mkdir(parents=True, exist_ok=True)
-    (case5req_dir / "packA.txt").write_text("requests")
-    (case5req_dir / "packB.txt").write_text("attrs")
+    case5profiles_dir = case5reqs_dir / "profiles"
+    case5profiles_dir.mkdir(parents=True, exist_ok=True)
+    profileAyml = """\
+packs:
+- packA
+
+extras:
+- ipykernel
+    """
+    profileByml = """\
+packs:
+- packB
+
+extras:
+- notebook
+    """
+    (case5profiles_dir / "profileA.yml").write_text(profileAyml)
+    (case5profiles_dir / "profileB.yml").write_text(profileByml)
 
     yield root_temp_dir
 
