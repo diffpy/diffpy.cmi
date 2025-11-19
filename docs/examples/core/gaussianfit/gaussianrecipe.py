@@ -25,7 +25,7 @@ If you have not yet run the example, run it and inspect the output. The example
 script is driven by the 'main' method defined below. Take a look at that method
 to get an understanding of how a fit recipe can be used once created.  After
 that, read the 'make_recipe' code to see what goes into a fit recipe. After
-that, read the 'scipyOptimize' code to see how the refinement is executed.
+that, read the 'optimize_recipe' code to see how the refinement is executed.
 Finally, read the 'plotResults' code to see how to extracts the refined profile
 and plot it.
 
@@ -64,7 +64,7 @@ def main():
     recipe = make_recipe()
 
     # Refine using the optimizer of your choice.
-    scipyOptimize(recipe)
+    optimize_recipe(recipe)
 
     # Get the results in a FitResults object. The FitResults object stores the
     # current state of the recipe, and uses it to calculate useful statistics
@@ -92,7 +92,7 @@ def make_recipe():
     disagreement between the calculated profile and the data.
 
     Once we define the FitRecipe, we can send it an optimizer to be
-    optimized. See the 'scipyOptimize' function.
+    optimized. See the 'optimize_recipe' function.
     """
 
     # The Profile
@@ -160,7 +160,7 @@ def make_recipe():
     return recipe
 
 
-def scipyOptimize(recipe):
+def optimize_recipe(recipe):
     """Optimize the recipe created above using scipy.
 
     The FitRecipe we created in make_recipe has a 'residual' method that
