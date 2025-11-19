@@ -308,9 +308,9 @@ def make_recipe(strufile, datname):
 def main():
 
     # Make the data and the recipe
-    strufile = str(Path(__file__).parent / "C60.stru")
+    strufile = str((Path(__file__).parent / "C60.stru").resolve())
     q = numpy.arange(1, 20, 0.05)
-    iq_path = str(Path(__file__).parent / "C60.iq")
+    iq_path = str((Path(__file__).parent / "C60.iq").resolve())
     makeData(strufile, q, iq_path, 1.0, 100.68, 0.005, 0.13, 2)
 
     # Make the recipe
