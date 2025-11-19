@@ -45,39 +45,40 @@ def optimize_recipe(recipe, optimizer: str = "leastsq", **kwargs):
         return
 
 
-def plot_results(r, gobs, gcalc):
+def plot_results(x, yobs, ycalc):
     """Plot the results contained within a refined FitRecipe.
 
     Parameters
     ----------
-    r : array-like
+    x : array-like
         The independent variable.
-    gobs : array-like
+    yobs : array-like
         The observed/experimental data.
-    gcalc : array-like
+    ycalc : array-like
         The calculated/fitted data.
     """
-    diffzero = -0.8 * max(gobs) * np.ones_like(gobs)
-    diff = gobs - gcalc + diffzero
+    diffzero = -0.8 * max(yobs) * np.ones_like(yobs)
+    diff = yobs - ycalc + diffzero
     ls = "None"
     marker = "o"
     ms = 5
     mew = 0.5
     mfc = "None"
     plt.plot(
-        r,
-        gobs,
+        x,
+        yobs,
         ls=ls,
         marker=marker,
         ms=ms,
         mew=mew,
         mfc=mfc,
-        label="G(r) Data",
+        label="data",
     )
-    plt.plot(r, gcalc, label="G(r) Fit")
-    plt.plot(r, diff, label="G(r) diff")
-    plt.plot(r, diffzero, lw=1.0, c="black")
+    plt.plot(x, ycalc, label="calculated")
+    plt.plot(x, diff, label="diff")
+    plt.plot(x, diffzero, lw=1.0, c="black")
     plt.xlabel(r"$r (\AA)$")
     plt.ylabel(r"$G (\AA^{-2})$")
-    plt.legend(loc=1)
+    plt.legend()
+    plt.show()
     return
