@@ -45,7 +45,7 @@ def optimize_recipe(recipe, optimizer: str = "leastsq", **kwargs):
         return
 
 
-def plot_results(x, yobs, ycalc):
+def plot_results(x, yobs, ycalc, difference_offset=None):
     """Plot the results contained within a refined FitRecipe.
 
     Parameters
@@ -56,9 +56,16 @@ def plot_results(x, yobs, ycalc):
         The observed/experimental data.
     ycalc : array-like
         The calculated/fitted data.
+    difference_offset : int or float, optional
+        The y-axis offset for the difference curve. If None, defaults to
+        -0.8 * max(yobs).
     """
-    diffzero = -0.8 * max(yobs) * np.ones_like(yobs)
-    diff = yobs - ycalc + diffzero
+    if difference_offset is None:
+        difference_offset = -0.8 * max(yobs) * np.ones_like(yobs)
+    else:
+        difference_offset = difference_offset * np.ones_like(yobs)
+
+    diff = yobs - ycalc + difference_offset
     ls = "None"
     marker = "o"
     ms = 5
@@ -76,7 +83,7 @@ def plot_results(x, yobs, ycalc):
     )
     plt.plot(x, ycalc, label="calculated")
     plt.plot(x, diff, label="diff")
-    plt.plot(x, diffzero, lw=1.0, c="black")
+    plt.plot(x, difference_offset, lw=1.0, c="black")
     plt.xlabel(r"$r (\AA)$")
     plt.ylabel(r"$G (\AA^{-2})$")
     plt.legend()
