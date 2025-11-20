@@ -6,9 +6,10 @@ labels: "release"
 assignees: ""
 ---
 
-### Run diffpy.cmi example scripts
+### checklist for diffpy.cmi
 
 - [ ] Manually trigger the `validate-examples.yml` workflow to run all example scripts.
+- [ ] Make sure available examples, packs, and profiles are listed in the docs. Check this by installing locally with `pip install .`, building the docs with `cmi install docs && cd docs && make html && open build/html/index.html`, running `cmi info`, and comparing the output to what is listed under "Examples" in the docs.
 
 ### PyPI/GitHub rc-release preparation checklist:
 
