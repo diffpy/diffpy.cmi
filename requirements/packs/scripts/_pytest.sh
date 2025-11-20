@@ -1,9 +1,4 @@
 #!/usr/bin/env bash
-# Usage:
-#   ./_pytest.sh urls.txt
-#   ./_pytest.sh https://host/a.tar.gz https://host/b.tgz
-# From ChatGPT
-
 set -euo pipefail
 
 URLS=()
@@ -20,11 +15,12 @@ fi
 
 START_DIR="$PWD"
 TMPROOT="$(TMPDIR="$START_DIR" mktemp -d -t .tmp_remote_tests.XXXXXXXX)"
-trap 'cd "$START_DIR" 2>/dev/null || true; rm -rf -- "$TMPROOT"' EXIT
+trap 'cd "$START_DIR" 2>/dev/null || true; rm -rf -- "$TMPROOT" || true' EXIT
 cd "$TMPROOT"
 
 overall_ec=0
 i=0
+
 for url in "${URLS[@]}"; do
   ((++i))
   printf '\n==> [%d] %s\n' "$i" "$url"
@@ -49,7 +45,7 @@ for url in "${URLS[@]}"; do
     projroot="$pkgdir"
   fi
 
-  [ -d "$projroot/src" ] && rm -rf -- "$projroot/src"
+  [ -d "$projroot/src" ] && rm -rf -- "$projroot/src" || true
 
   if [ -d "$projroot/tests" ]; then
     ( cd "$projroot" && PYTHONPATH="$PWD:tests:${PYTHONPATH:-}" pytest ) || overall_ec=1
@@ -57,8 +53,8 @@ for url in "${URLS[@]}"; do
     ( cd "$projroot" && PYTHONPATH="$PWD:${PYTHONPATH:-}" pytest ) || overall_ec=1
   fi
 
-  rm -f -- "$tarball" "$tfile"
-  rm -rf -- "$pkgdir"
+  rm -f -- "$tarball" "$tfile" || true
+  rm -rf -- "$pkgdir" || true
 done
 
 exit "$overall_ec"
