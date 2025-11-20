@@ -423,3 +423,22 @@ Words of Encouragement
 Remember, all the computer knows how to do is minimize a value.
 It has no understanding of the physical meaning of the parameters.
 That is why we need smart people like yourself to guide the fitting process!
+
+What's Next?
+------------
+
+Now that you have a basic understanding of how to write a script using ``diffpy.cmi``,
+you can explore more advanced examples such as fitting a gaussian (``gaussianfit`` example) or fitting intensity (``intensityfit`` example) data with ``diffpy.cmi``.
+To see available examples, run
+
+.. code-block:: bash
+
+    cmi info examples
+
+To copy an example to your current working directory, use the command
+
+.. code-block:: bash
+
+    cmi copy <example-name>
+
+Happy fitting!
