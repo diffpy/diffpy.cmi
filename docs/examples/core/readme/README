@@ -1,9 +1,7 @@
 ## Purpose
 
-These example scripts are intended to help a developer get acquainted with the
-SrFit programming interface. Although one can write scripts like these to drive
-optimization, these scripts do not represent the SrFit user interface. That
-interface will be made available in a future release.
+These example scripts are intended to help users get acquainted with the
+SrFit programming interface.
 
 A secondary purpose of these tutorials is to generate interest in SrFit. By
 reading through the examples we hope that you are inspired to think of exciting
@@ -48,7 +46,8 @@ The examples described below will go into detail about each of these points.
 
 ## Examples
 
-The following examples are contained in the _docs/examples/_ directory of the
+The following examples can be copied using diffpy.cmi command-line interface.
+Additionally, the are contained in the _docs/examples/_ directory of the
 SrFit source distribution. They can be downloaded from
 http://dev.danse.us/packages/srfit_examples-alpha9.zip
 
@@ -62,100 +61,3 @@ the plot window and open the example file. In the file there will be a
 description of what the script is doing and the purpose of the example. By
 reading through the example, you will be introduced to the SrFit programming
 interface.
-
-Here is an overview of the examples. It is recommended that you work through
-them in the order listed below.
-
-Basic:
-
-- gaussianrecipe.py\_
-  Introductory recipe building and configuration. This introduces the
-  fundamental classes in SrFit.
-
-- debyemodel.py\_
-  Introductory recipe building and configuration. This shows how to use a
-  function created by someone else in a refinement. This example also
-  introduces restraints.
-
-- debyemodelII.py\_
-  Refine two different values of a variable from two different regions of a
-  profile. This example introduces constraints and working with multiple
-  contributions to a fit.
-
-Advanced:
-
-- gaussiangenerator.py*
-  Create a custom ProfileGenerator and use it in a refinement. This is an
-  instructive extension to gaussianrecipe.py*.
-
-- npintensity.py\_
-  Use diffpy.structure to build a nanoparticle intensity generator, and use
-  it to refine a structure to simulated data.
-
-- npintensityII.py\_
-  Use the calculator built in npintensity.py to simultaneously refine a
-  structure to two data sets.
-
-## Use Cases
-
-There are several examples that demonstrate various SrFit use cases. These do
-not adopt the tutorial format of the previous examples. Regardless, developers
-should read through these use cases to gain an understanding of PDF and SAS
-refinement with SrFit.
-
-- crystalpdf.py\_
-  Refine a diffpy.structure crystal to PDF data using automatic explicit
-  space group constraints.
-
-- simplepdf.py*
-  As crystalpdf.py*, but with a simplified interface.
-
-- crystalpdfobjcryst.py\_
-  Refine a pyobjcryst crystal to PDF data using automatic implicit space
-  group constraints.
-
-- crystalpdftwophase.py\_
-  Refine a two-phase structure to PDF data using two profile generators.
-
-- simplepdftwophase.py*
-  crystalpdftwophase.py* using the simplified PDFContribution interface.
-
-- crystalpdftwodata.py\_
-  Refine a single structure to x-ray and neutron data simultaneously.
-
-- crystalpdfall.py\_
-  Refine a two-phase structure using four data sets.
-
-- nppdfobjcryst.py\_
-  Refine the C60 structure to real data.
-
-- nppdfcrystal.py\_
-  Fit a nanoparticle PDF as a crystal PDF attenuated by a nanoparticle form
-  factor.
-
-- coreshellnp.py\_
-  As above, but fit the PDF from core-shell nanoparticles.
-
-- ellipsoidsas.py\_
-  Refine an ellipsoid SAS model to ideal data.
-
-- nppdfsas.py\_
-  Refine PDF from nanoparticle of assumed shape using a crystal model and SAS
-  data from the same system.
-
-## Miscellaneous
-
-These demonstrate other SrFit features. These are in flux and may not be in
-future versions.
-
-- simplerecipe.py\_
-  This introduces the SimpleRecipe class that is a FitRecipe with an embedded
-  Profile and FitContribution. SimpleRecipe exposes methods from the Profile
-  and FitContribution, and adds other methods so it is easy to set up a
-  simple fit.
-
-- interface.py\_
-  This example introduces some interface enhancements that allow the SrFit
-  recipes to be written with less code. This is not the same as a
-  full-featured scripting interface, but rather somewhere in between a
-  scripting interface and the API.
