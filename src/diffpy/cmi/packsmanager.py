@@ -28,6 +28,20 @@ from diffpy.cmi.log import plog
 __all__ = ["PacksManager", "get_package_dir"]
 
 
+class Styles:
+    RESET = "\033[0m"
+    # styles
+    BOLD = "\033[1m"
+    UNDER = "\033[4m"
+    # colors
+    RED = "\033[31m"
+    GREEN = "\033[32m"
+    YELLOW = "\033[33m"
+    BLUE = "\033[34m"
+    MAGENTA = "\033[35m"
+    CYAN = "\033[36m"
+
+
 def get_package_dir(root_path=None):
     """Get the package directory as a context manager.
 
@@ -353,20 +367,19 @@ class PacksManager:
     def print_packs(self) -> None:
         """Print information about available packs."""
         uninstalled_packs, installed_packs = [], []
+        s = Styles()
         for pack in self.available_packs():
             if self.check_pack(pack):
                 installed_packs.append(pack)
             else:
                 uninstalled_packs.append(pack)
-        print("Installed Packs:")
-        print("----------------")
+        print(f"{s.BOLD}{s.UNDER}{s.BLUE}Installed Packs:{s.RESET}")
         for pack in installed_packs:
             if not installed_packs:
                 print("  (none)")
             else:
                 print(f"  {pack}")
-        print("\nAvailable Packs:")
-        print("----------------")
+        print(f"\n{s.BOLD}{s.UNDER}{s.BLUE}Available Packs:{s.RESET}")
         if not uninstalled_packs:
             print("  (all packs installed)")
         else:
@@ -375,11 +388,11 @@ class PacksManager:
 
     def print_examples(self) -> None:
         """Print information about available examples."""
-        print("\nExamples:")
-        print("---------")
+        s = Styles()
+        print(f"\n{s.BOLD}{s.UNDER}{s.CYAN}Examples:{s.RESET}")
         examples_dict = self.available_examples()
         for pack, examples in examples_dict.items():
-            print(f"  {pack}:")
+            print(f"  {s.BOLD}{pack}:{s.RESET}")
             for ex_name, _ in examples:
                 print(f"   - {ex_name}")
 
