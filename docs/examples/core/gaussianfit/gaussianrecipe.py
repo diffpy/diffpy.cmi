@@ -26,8 +26,8 @@ script is driven by the 'main' method defined below. Take a look at that method
 to get an understanding of how a fit recipe can be used once created.  After
 that, read the 'make_recipe' code to see what goes into a fit recipe. After
 that, read the 'optimize_recipe' code to see how the refinement is executed.
-Finally, read the 'plotResults' code to see how to extracts the refined profile
-and plot it.
+Finally, read the 'plot_results' code to see how to extracts the refined
+profile and plot it.
 
 Extensions
 
@@ -43,6 +43,8 @@ will leave you with a much better understanding of how SrFit works.
   file.
 """
 
+
+from pathlib import Path
 
 from diffpy.srfit.fitbase import (
     FitContribution,
@@ -75,7 +77,7 @@ def main():
     res.printResults()
 
     # Plot the results.
-    plotResults(recipe)
+    plot_results(recipe)
 
     return
 
@@ -101,7 +103,8 @@ def make_recipe():
 
     # Load data and add it to the profile. This uses the loadtxt function from
     # numpy.
-    profile.loadtxt("data/gaussian.dat")
+    gaussian_data = str(Path(__file__).parent / "gaussian.dat")
+    profile.loadtxt(gaussian_data)
 
     # The FitContribution
     # The FitContribution associates the Profile with a fitting equation. The
@@ -180,7 +183,7 @@ def optimize_recipe(recipe):
     return
 
 
-def plotResults(recipe):
+def plot_results(recipe):
     """Plot the results contained within a refined FitRecipe."""
 
     # We can access the data and fit profile through the Profile we created
@@ -198,7 +201,7 @@ def plotResults(recipe):
 
     pylab.plot(x, y, "b.", label="observed Gaussian")
     pylab.plot(x, ycalc, "g-", label="calculated Gaussian")
-    pylab.legend(loc=(0.0, 0.8))
+    pylab.legend()
     pylab.xlabel("x")
     pylab.ylabel("y")
 

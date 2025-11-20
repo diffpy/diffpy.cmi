@@ -187,7 +187,7 @@ def make_recipe(strufile, datname1, datname2):
     return recipe
 
 
-def plotResults(recipe):
+def plot_results(recipe):
     """Plot the results contained within a refined FitRecipe."""
 
     # plotting song and dance
@@ -271,7 +271,7 @@ def main():
     res.printResults()
 
     # Plot!
-    plotResults(recipe)
+    plot_results(recipe)
 
     return
 

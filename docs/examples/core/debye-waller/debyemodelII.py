@@ -95,7 +95,7 @@ def make_recipeII():
     return recipe
 
 
-def plotResults(recipe):
+def plot_results(recipe):
     """Display the results contained within a refined FitRecipe."""
 
     # The variable values are returned in the order in which the variables were
@@ -130,7 +130,7 @@ def plotResults(recipe):
     pylab.plot(T, highU, label=lbl2)
     pylab.xlabel("T (K)")
     pylab.ylabel(r"$U_{iso} (\AA^2)$")
-    pylab.legend(loc=(0.0, 0.8))
+    pylab.legend()
 
     pylab.show()
     return
@@ -151,7 +151,7 @@ def main():
     res.printResults()
 
     # Plot the results
-    plotResults(recipe)
+    plot_results(recipe)
 
     return
 

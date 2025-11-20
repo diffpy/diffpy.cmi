@@ -35,7 +35,7 @@ Extensions
 
 import numpy
 
-from diffpy.cmi.fit_tools import optimize_recipe
+from diffpy.cmi.fit_tools import optimize_recipe, plot_results
 from diffpy.srfit.fitbase import (
     FitContribution,
     FitRecipe,
@@ -158,29 +158,6 @@ def make_recipe():
     return recipe
 
 
-def plotResults(recipe):
-    """Plot the results contained within a refined FitRecipe."""
-
-    # Plot this.
-    # Note that since the contribution was given the name "pb", it is
-    # accessible from the recipe with this name. This is a useful way to
-    # organize multiple contributions to a fit.
-    T = recipe.pb.profile.x
-    U = recipe.pb.profile.y
-    Ucalc = recipe.pb.profile.ycalc
-
-    import pylab
-
-    pylab.plot(T, U, "o", label="Pb $U_{iso}$ Data")
-    pylab.plot(T, Ucalc)
-    pylab.xlabel("T (K)")
-    pylab.ylabel(r"$U_{iso} (\AA^2)$")
-    pylab.legend(loc=(0.0, 0.8))
-
-    pylab.show()
-    return
-
-
 def main():
     """The workflow of creating, running and inspecting a fit."""
 
@@ -197,7 +174,11 @@ def main():
     res.printResults()
 
     # Plot the results
-    plotResults(recipe)
+    x = recipe.pb.profile.x
+    yobs = recipe.pb.profile.y
+    ycalc = recipe.pb.profile.ycalc
+
+    plot_results(x, yobs, ycalc)
 
     return
 

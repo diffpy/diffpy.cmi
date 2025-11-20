@@ -331,12 +331,12 @@ def main():
     res.printResults(footer=footer)
 
     # Plot!
-    plotResults(recipe)
+    plot_results(recipe)
 
     return
 
 
-def plotResults(recipe):
+def plot_results(recipe):
     """Plot the results contained within a refined FitRecipe."""
 
     # All this should be pretty familiar by now.
