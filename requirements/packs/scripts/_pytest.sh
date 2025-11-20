@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
+# Usage:
+#   ./_pytest.sh urls.txt
+#   ./_pytest.sh https://host/a.tar.gz https://host/b.tgz
+# From ChatGPT
 set -euo pipefail
 
 URLS=()
