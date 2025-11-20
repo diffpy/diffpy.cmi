@@ -26,7 +26,7 @@ from diffpy.cmi.installer import (
     presence_check,
 )
 from diffpy.cmi.log import plog
-from diffpy.cmi.packsmanager import PacksManager, get_package_dir
+from diffpy.cmi.packsmanager import PacksManager, Styles, get_package_dir
 
 __all__ = ["Profile", "ProfilesManager"]
 
@@ -234,21 +234,20 @@ class ProfilesManager:
 
     def print_profiles(self) -> None:
         """Print available and installed profiles."""
+        s = Styles()
         installed_profiles, uninstalled_profiles = [], []
         for profile_name in self.available_profiles():
             if self.check_profile(profile_name):
                 installed_profiles.append(profile_name)
             else:
                 uninstalled_profiles.append(profile_name)
-        print("\nInstalled Profiles:")
-        print("-------------------")
+        print(f"\n{s.BOLD}{s.UNDER}{s.MAGENTA}Installed Profiles:{s.RESET}")
         if not installed_profiles:
             print("  (none)")
         else:
             for profile in installed_profiles:
                 print(f"  {profile}")
-        print("\nAvailable Profiles:")
-        print("-------------------")
+        print(f"\n{s.BOLD}{s.UNDER}{s.MAGENTA}Available Profiles:{s.RESET}")
         if not uninstalled_profiles:
             print("  (all profiles installed)")
         else:

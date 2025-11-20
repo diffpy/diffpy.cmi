@@ -1,19 +1,19 @@
 import pytest
 import yaml
 
+from diffpy.cmi.packsmanager import Styles
 from diffpy.cmi.profilesmanager import ProfilesManager
 
+s = Styles()
 install_params = [
     (  # input: profiles to install
         # expected: print_profile output showing profileA
         # installed but not profileB
         ("profileA",),
-        """Installed Profiles:
--------------------
+        f"""{s.BOLD}{s.UNDER}{s.MAGENTA}Installed Profiles:{s.RESET}
   profileA
 
-Available Profiles:
--------------------
+{s.BOLD}{s.UNDER}{s.MAGENTA}Available Profiles:{s.RESET}
   profileB
 """,
     ),

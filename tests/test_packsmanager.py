@@ -5,7 +5,7 @@ from pathlib import Path
 import pytest
 
 from diffpy.cmi import installer
-from diffpy.cmi.packsmanager import PacksManager
+from diffpy.cmi.packsmanager import PacksManager, Styles
 
 
 def paths_and_names_match(expected, actual, root):
@@ -345,24 +345,22 @@ def test_copy_examples_force(example_cases, expected_paths, force):
             assert copied_path.read_text() == original_path.read_text()
 
 
+s = Styles()
 install_params = [
     (  # input: packs to install
         # expected: output showing packA installed but not packB
         ("packA",),
-        """Installed Packs:
-----------------
+        f"""{s.BOLD}{s.UNDER}{s.BLUE}Installed Packs:{s.RESET}
   packA
 
-Available Packs:
-----------------
+{s.BOLD}{s.UNDER}{s.BLUE}Available Packs:{s.RESET}
   packB
 
-Examples:
----------
-  packA:
+{s.BOLD}{s.UNDER}{s.CYAN}Examples:{s.RESET}
+  {s.BOLD}packA:{s.RESET}
    - ex1
    - ex2
-  packB:
+  {s.BOLD}packB:{s.RESET}
    - ex1
    - ex3
    - ex4""",
