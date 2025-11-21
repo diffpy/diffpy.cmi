@@ -1,0 +1,63 @@
+## Purpose
+
+These example scripts are intended to help users get acquainted with the
+SrFit programming interface.
+
+A secondary purpose of these tutorials is to generate interest in SrFit. By
+reading through the examples we hope that you are inspired to think of exciting
+new ways to get the most out of your scientific data. If you think SrFit can
+help you with that, please feel free to contact us through the DiffPy website.
+
+http://www.diffpy.org
+
+## Overview
+
+Three things are required for optimization: a function that generates a
+quantity to be minimized, variables that can be used to manipulate that
+function and an algorithm that can drive the function output to a smaller value
+by steering the variables. For scientific purposes, the quantity to be
+minimized is the disagreement between a measured profile and a theoretical
+profile. The scientific understanding of the system under consideration partly
+determines the suitability of the theoretical profile generator and the
+scientific relevance of the variables used to drive it.
+
+The purpose of SrFit is to give users the means to combine known information
+about a system of interest in order to extract scientifically relevant
+quantities, and thus understanding from it. Various experimental procedures and
+theoretical calculations may be needed to gain the desired understanding of the
+system. SrFit helps users combine these views of the system in a coherent and
+consistent manner.
+
+To achieve this purpose, SrFit provides:
+
+1. a function to be optimized (the residual) given one or more measured
+   profiles, one or more profile generators and variables to be steered by an
+   optimizer.
+2. constraints and restraints that encapsulate known information about the
+   system.
+3. a clearly defined programming interface that developers can use to add their
+   own profile generators, thereby enabling the combination of more views of a
+   system.
+4. an equation building interface that allows users to tweak profile generators
+   when scientific understanding of a system is more advanced than the existing
+   software.
+
+The examples described below will go into detail about each of these points.
+
+## Examples
+
+The following examples can be copied using diffpy.cmi command-line interface.
+Additionally, the are contained in the _docs/examples/_ directory of the
+SrFit source distribution. They can be downloaded from
+http://dev.danse.us/packages/srfit_examples-alpha9.zip
+
+For each example, start by running the example by typing in the command line ::
+
+    python example.py
+
+where _example.py_ represents the example file. The output will show on screen
+and a plot window will display. Once you've studied the output and plot, close
+the plot window and open the example file. In the file there will be a
+description of what the script is doing and the purpose of the example. By
+reading through the example, you will be introduced to the SrFit programming
+interface.

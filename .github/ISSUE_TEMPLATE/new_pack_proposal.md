@@ -16,6 +16,7 @@ assignees: ""
 - [ ] Create a requirements file by running `touch requirements/packs/<your-pack-name>.txt`. List all dependencies for your pack.
 - [ ] (OPTIONAL) Create a directory to place your examples, if applicable, by running `mkdir docs/examples/<your-pack-name>/<your-example-name>`.
 - [ ] (OPTIONAL) Copy your example scripts and data under the directory you just made. If you have multiple examples, house them under their own separate directory (i.e. `.../<your-pack-name>/example1` and `.../<your-pack-name>/example2`).
+- [ ] (OPTIONAL) Make a file under `docs/source/tutorial/` call `<your-pack-name>.rst` with `cp docs/source/tutorial/core.rst docs/source/tutorial/<your-pack-name>.rst`. Add your examples to the file in the same format as listed.
 - [ ] List your pack and its dependencies under `docs/source/available-packs.rst` using the same format as the other packs. In this same file, add a description of your pack (1-2 sentences is recommended).
 - [ ] Give yourself credit by listing your name and contributors to the pack you've created!
 

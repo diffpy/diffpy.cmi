@@ -6,3 +6,6 @@ mater
 
 ;; Frobenius norm used in np.linalg.norm
 fro
+
+;; variable used in docs/examples/srfit_ex/debyemodelII.py
+highT
