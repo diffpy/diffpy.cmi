@@ -92,38 +92,82 @@ Use the `cmi` command-line interface to install and manage modular optional depe
 and to configure or execute user-defined workflows that combine multiple packs with optional post-installation steps,
 known as `profiles`. To use `cmi`, you can run the following example commands:
 
- Show available commands and options,
+The ``-h`` flag is available for **all** cmi commands and subcommands.
+It's highly recommended to use it wherever necessary.
+
+To display help for the main CLI, type
 
 .. code-block:: bash
 
-        cmi -h
+    cmi -h
+    cmi --help
 
-List installed and available packs and profiles,
-
-.. code-block:: bash
-
-        cmi pack list
-        cmi profile list
-
-Show details of a specific pack or profile,
+Display help for a specific subcommand with,
 
 .. code-block:: bash
 
-        cmi pack show <pack_name>
-        cmi profile show <profile_name>
+    cmi <subcommand> -h
 
-Install a pack or profile (by name or path),
-
-.. code-block:: bash
-
-        cmi install <pack_name|profile_name|/absolute/path/to/profile>
-
-List and get installed examples,
+Open the full online manual in a web browser by typing,
 
 .. code-block:: bash
 
-        cmi example list
-        cmi example (copy) <example_name>
+    cmi --manual
+
+To print information about available and installed packs, profiles, and examples, type,
+
+.. code-block:: bash
+
+   cmi info
+
+To print information about packs, profiles, or examples, type
+
+.. code-block:: bash
+
+   cmi info packs
+   cmi info profiles
+   cmi info examples
+
+To install packs or profiles into your environment, type
+
+.. code-block:: bash
+
+    cmi install <pack-name>
+    cmi install <profile-name>
+
+
+To view all examples available to copy, type
+
+.. code-block:: bash
+
+    cmi info examples
+
+To copy an example or list of examples to cwd, type
+
+.. code-block:: bash
+
+    cmi copy <example-name>
+    cmi copy <example-name1> <example-name2>
+
+To copy all examples from a pack or list of packs to cwd, type
+
+.. code-block:: bash
+
+    cmi copy <pack-name>
+    cmi copy <pack-name1> <pack-name2>
+
+To copy all examples to cwd, type
+
+.. code-block:: bash
+
+    cmi copy all
+
+To show basic information about your current conda environment, type
+
+.. code-block:: bash
+
+   cmi env
+
 
 You may consult our `online documentation <https://diffpy.github.io/diffpy.cmi>`_ for more information,
 tutorials, and API references.
