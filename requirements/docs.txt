@@ -1,5 +1,5 @@
 make
-sphinx
+sphinx<9
 sphinx_rtd_theme
 sphinx-copybutton
 doctr
