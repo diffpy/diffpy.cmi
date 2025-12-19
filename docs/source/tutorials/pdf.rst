@@ -12,6 +12,7 @@ Available Examples
 - ch07StructuralPhaseTransitions
 - ch08NPRefinement
 - ch11ClusterXYZ
+- nanoparticle-fit
 
 Ni PDF Fitting Tutorial
 -----------------------
