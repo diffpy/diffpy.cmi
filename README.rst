@@ -136,12 +136,6 @@ To install packs or profiles into your environment, type
     cmi install <profile-name>
 
 
-To view all examples available to copy, type
-
-.. code-block:: bash
-
-    cmi info examples
-
 To copy an example or list of examples to cwd, type
 
 .. code-block:: bash
