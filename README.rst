@@ -90,7 +90,8 @@ Getting Started
 
 Use the `cmi` command-line interface to install and manage modular optional dependencies, known as `packs`,
 and to configure or execute user-defined workflows that combine multiple packs with optional post-installation steps,
-known as `profiles`. To use `cmi`, you can run the following example commands:
+known as `profiles`. You may consult our `online documentation <https://diffpy.github.io/diffpy.cmi>`_ for more information,
+tutorials, and API references.
 
 The ``-h`` flag is available for **all** cmi commands and subcommands.
 It's highly recommended to use it wherever necessary.
@@ -162,9 +163,6 @@ To show basic information about your current conda environment, type
 
    cmi env
 
-
-You may consult our `online documentation <https://diffpy.github.io/diffpy.cmi>`_ for more information,
-tutorials, and API references.
 
 Support and Contribute
 ----------------------
