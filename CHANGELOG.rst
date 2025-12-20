@@ -4,6 +4,25 @@ Release notes
 
 .. current developments
 
+3.1.2
+=====
+
+**Added:**
+
+* Add color to console print statements.
+* Add ``diffpy.srfit`` examples to ``core`` pack.
+* Add test for ``print_profiles``.
+
+**Changed:**
+
+* Update command-line interface instructions in the README.
+* Pin ``sphinx<9`` until ``sphinx_rt_theme`` supports sphinx 9.
+
+**Removed:**
+
+* Remove Python 2 code from ``linefit`` example.
+
+
 3.1.1
 =====
 
