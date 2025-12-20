@@ -43,6 +43,14 @@ diffpy.cmi.installer module
     :undoc-members:
     :show-inheritance:
 
+diffpy.cmi.fit_tools module
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. automodule:: diffpy.cmi.fit_tools
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 diffpy.cmi.cli module
 ^^^^^^^^^^^^^^^^^^^^^
 

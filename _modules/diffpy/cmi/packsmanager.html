@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>diffpy.cmi.packsmanager &mdash; diffpy.cmi 3.1.1 documentation</title>
+  <title>diffpy.cmi.packsmanager &mdash; diffpy.cmi 3.1.2 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
@@ -14,7 +14,7 @@
   
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=a6bc5d30"></script>
+      <script src="../../../_static/documentation_options.js?v=860dc7db"></script>
       <script src="../../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -122,6 +122,20 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">diffpy.cmi.log</span><span class="w"> </span><span class="kn">import</span> <span class="n">plog</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;PacksManager&quot;</span><span class="p">,</span> <span class="s2">&quot;get_package_dir&quot;</span><span class="p">]</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">Styles</span><span class="p">:</span>
+    <span class="n">RESET</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[0m&quot;</span>
+    <span class="c1"># styles</span>
+    <span class="n">BOLD</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[1m&quot;</span>
+    <span class="n">UNDER</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[4m&quot;</span>
+    <span class="c1"># colors</span>
+    <span class="n">RED</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[31m&quot;</span>
+    <span class="n">GREEN</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[32m&quot;</span>
+    <span class="n">YELLOW</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[33m&quot;</span>
+    <span class="n">BLUE</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[34m&quot;</span>
+    <span class="n">MAGENTA</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[35m&quot;</span>
+    <span class="n">CYAN</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[36m&quot;</span>
 
 
 <div class="viewcode-block" id="get_package_dir">
@@ -474,20 +488,19 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">print_packs</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Print information about available packs.&quot;&quot;&quot;</span>
         <span class="n">uninstalled_packs</span><span class="p">,</span> <span class="n">installed_packs</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">Styles</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">pack</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">available_packs</span><span class="p">():</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_pack</span><span class="p">(</span><span class="n">pack</span><span class="p">):</span>
                 <span class="n">installed_packs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pack</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">uninstalled_packs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pack</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Installed Packs:&quot;</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;----------------&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">s</span><span class="o">.</span><span class="n">BOLD</span><span class="si">}{</span><span class="n">s</span><span class="o">.</span><span class="n">UNDER</span><span class="si">}{</span><span class="n">s</span><span class="o">.</span><span class="n">BLUE</span><span class="si">}</span><span class="s2">Installed Packs:</span><span class="si">{</span><span class="n">s</span><span class="o">.</span><span class="n">RESET</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">pack</span> <span class="ow">in</span> <span class="n">installed_packs</span><span class="p">:</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">installed_packs</span><span class="p">:</span>
                 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;  (none)&quot;</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="n">pack</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Available Packs:&quot;</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;----------------&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="si">{</span><span class="n">s</span><span class="o">.</span><span class="n">BOLD</span><span class="si">}{</span><span class="n">s</span><span class="o">.</span><span class="n">UNDER</span><span class="si">}{</span><span class="n">s</span><span class="o">.</span><span class="n">BLUE</span><span class="si">}</span><span class="s2">Available Packs:</span><span class="si">{</span><span class="n">s</span><span class="o">.</span><span class="n">RESET</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">uninstalled_packs</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;  (all packs installed)&quot;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
@@ -499,11 +512,11 @@
 <a class="viewcode-back" href="../../../api/diffpy.cmi.html#diffpy.cmi.packsmanager.PacksManager.print_examples">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">print_examples</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Print information about available examples.&quot;&quot;&quot;</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Examples:&quot;</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;---------&quot;</span><span class="p">)</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">Styles</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="si">{</span><span class="n">s</span><span class="o">.</span><span class="n">BOLD</span><span class="si">}{</span><span class="n">s</span><span class="o">.</span><span class="n">UNDER</span><span class="si">}{</span><span class="n">s</span><span class="o">.</span><span class="n">CYAN</span><span class="si">}</span><span class="s2">Examples:</span><span class="si">{</span><span class="n">s</span><span class="o">.</span><span class="n">RESET</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="n">examples_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">available_examples</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">pack</span><span class="p">,</span> <span class="n">examples</span> <span class="ow">in</span> <span class="n">examples_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="n">pack</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="n">s</span><span class="o">.</span><span class="n">BOLD</span><span class="si">}{</span><span class="n">pack</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">s</span><span class="o">.</span><span class="n">RESET</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">ex_name</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">examples</span><span class="p">:</span>
                 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   - </span><span class="si">{</span><span class="n">ex_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
 

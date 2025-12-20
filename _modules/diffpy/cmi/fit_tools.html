@@ -1,0 +1,223 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>diffpy.cmi.fit_tools &mdash; diffpy.cmi 3.1.2 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/wrap_table.css?v=dc09091b" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=860dc7db"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../_static/copybutton.js?v=cca77546"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html">
+            
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">WHAT IS DIFFPY.CMI?</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html">Overview</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">GETTING STARTED</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../cli-commands.html">Command-Line Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../writing-script.html">Tutorial diffpy.cmi Script</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/diffpy.cmi.html">Package API</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">AVAILABLE PACKS &amp; PROFILES</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../available-packs.html">Packs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../available-profiles.html">Profiles</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">EXAMPLES &amp; MORE</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/index.html">Examples</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">REFERENCE</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../release.html">Release notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../license.html">License</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">diffpy.cmi</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">diffpy.cmi.fit_tools</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for diffpy.cmi.fit_tools</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">scipy.optimize</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">opt</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">bg_mpl_stylesheets.styles</span><span class="w"> </span><span class="kn">import</span> <span class="n">all_styles</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="n">all_styles</span><span class="p">[</span><span class="s2">&quot;bg-style&quot;</span><span class="p">])</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="k">pass</span>
+
+<span class="n">optimizers</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;leastsq&quot;</span><span class="p">:</span> <span class="n">opt</span><span class="o">.</span><span class="n">leastsq</span><span class="p">,</span>
+<span class="p">}</span>
+
+
+<div class="viewcode-block" id="optimize_recipe">
+<a class="viewcode-back" href="../../../api/diffpy.cmi.html#diffpy.cmi.fit_tools.optimize_recipe">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">optimize_recipe</span><span class="p">(</span><span class="n">recipe</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;leastsq&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Optimize the recipe using any selected SciPy optimizer.</span>
+
+<span class="sd">    minimize the residuals (`FitRecipe().residual`) of a FitRecipe by</span>
+<span class="sd">    using a SciPy optimization function.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    recipe : FitRecipe</span>
+<span class="sd">        The FitRecipe to be optimized.</span>
+<span class="sd">    optimizer : str, optional</span>
+<span class="sd">        The SciPy optimizer to use. Options are:</span>
+<span class="sd">        &#39;leastsq&#39;, &#39;least_squares&#39;, &#39;minimize&#39;. Default is &#39;leastsq&#39;.</span>
+<span class="sd">    **kwargs</span>
+<span class="sd">        Additional keyword arguments to pass to the optimizer.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">optimizer</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">optimizers</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Unknown optimizer &#39;</span><span class="si">{</span><span class="n">optimizer</span><span class="si">}</span><span class="s2">&#39;. &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;Choose from </span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="n">optimizers</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span>
+
+    <span class="n">function</span> <span class="o">=</span> <span class="n">optimizers</span><span class="p">[</span><span class="n">optimizer</span><span class="p">]</span>
+    <span class="n">x0</span> <span class="o">=</span> <span class="n">recipe</span><span class="o">.</span><span class="n">getValues</span><span class="p">()</span>
+    <span class="n">residuals</span> <span class="o">=</span> <span class="n">recipe</span><span class="o">.</span><span class="n">residual</span>
+    <span class="k">if</span> <span class="n">optimizer</span> <span class="o">==</span> <span class="s2">&quot;leastsq&quot;</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Optimizing using scipy.optimize.leastsq&quot;</span><span class="p">)</span>
+        <span class="n">function</span><span class="p">(</span><span class="n">residuals</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">return</span></div>
+
+
+
+<div class="viewcode-block" id="plot_results">
+<a class="viewcode-back" href="../../../api/diffpy.cmi.html#diffpy.cmi.fit_tools.plot_results">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">plot_results</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">yobs</span><span class="p">,</span> <span class="n">ycalc</span><span class="p">,</span> <span class="n">difference_offset</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Plot the results contained within a refined FitRecipe.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    x : array-like</span>
+<span class="sd">        The independent variable.</span>
+<span class="sd">    yobs : array-like</span>
+<span class="sd">        The observed/experimental data.</span>
+<span class="sd">    ycalc : array-like</span>
+<span class="sd">        The calculated/fitted data.</span>
+<span class="sd">    difference_offset : int or float, optional</span>
+<span class="sd">        The y-axis offset for the difference curve. If None, defaults to</span>
+<span class="sd">        -0.8 * max(yobs).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">difference_offset</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">difference_offset</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.8</span> <span class="o">*</span> <span class="nb">max</span><span class="p">(</span><span class="n">yobs</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">yobs</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">difference_offset</span> <span class="o">=</span> <span class="n">difference_offset</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">yobs</span><span class="p">)</span>
+
+    <span class="n">diff</span> <span class="o">=</span> <span class="n">yobs</span> <span class="o">-</span> <span class="n">ycalc</span> <span class="o">+</span> <span class="n">difference_offset</span>
+    <span class="n">ls</span> <span class="o">=</span> <span class="s2">&quot;None&quot;</span>
+    <span class="n">marker</span> <span class="o">=</span> <span class="s2">&quot;o&quot;</span>
+    <span class="n">ms</span> <span class="o">=</span> <span class="mi">5</span>
+    <span class="n">mew</span> <span class="o">=</span> <span class="mf">0.5</span>
+    <span class="n">mfc</span> <span class="o">=</span> <span class="s2">&quot;None&quot;</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+        <span class="n">x</span><span class="p">,</span>
+        <span class="n">yobs</span><span class="p">,</span>
+        <span class="n">ls</span><span class="o">=</span><span class="n">ls</span><span class="p">,</span>
+        <span class="n">marker</span><span class="o">=</span><span class="n">marker</span><span class="p">,</span>
+        <span class="n">ms</span><span class="o">=</span><span class="n">ms</span><span class="p">,</span>
+        <span class="n">mew</span><span class="o">=</span><span class="n">mew</span><span class="p">,</span>
+        <span class="n">mfc</span><span class="o">=</span><span class="n">mfc</span><span class="p">,</span>
+        <span class="n">label</span><span class="o">=</span><span class="s2">&quot;data&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">ycalc</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;calculated&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">diff</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;diff&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">difference_offset</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$r (\AA)$&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$G (\AA^{-2})$&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="k">return</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, The Trustees of Columbia University in the City of New York.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

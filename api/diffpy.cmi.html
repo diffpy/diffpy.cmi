@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>diffpy.cmi package &mdash; diffpy.cmi 3.1.1 documentation</title>
+  <title>diffpy.cmi package &mdash; diffpy.cmi 3.1.2 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
@@ -15,7 +15,7 @@
   
       <script src="../_static/jquery.js?v=5d32c60e"></script>
       <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../_static/documentation_options.js?v=a6bc5d30"></script>
+      <script src="../_static/documentation_options.js?v=860dc7db"></script>
       <script src="../_static/doctools.js?v=9bcbadda"></script>
       <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -85,6 +85,11 @@
 <li class="toctree-l4"><a class="reference internal" href="#diffpy.cmi.installer.install_requirements"><code class="docutils literal notranslate"><span class="pre">install_requirements()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#diffpy.cmi.installer.parse_requirement_line"><code class="docutils literal notranslate"><span class="pre">parse_requirement_line()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#diffpy.cmi.installer.presence_check"><code class="docutils literal notranslate"><span class="pre">presence_check()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-diffpy.cmi.fit_tools">diffpy.cmi.fit_tools module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#diffpy.cmi.fit_tools.optimize_recipe"><code class="docutils literal notranslate"><span class="pre">optimize_recipe()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#diffpy.cmi.fit_tools.plot_results"><code class="docutils literal notranslate"><span class="pre">plot_results()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#module-diffpy.cmi.cli">diffpy.cmi.cli module</a><ul>
@@ -688,6 +693,44 @@ Defaults to <code class="docutils literal notranslate"><span class="pre">True</s
 </dd></dl>
 
 </section>
+<section id="module-diffpy.cmi.fit_tools">
+<span id="diffpy-cmi-fit-tools-module"></span><h3>diffpy.cmi.fit_tools module<a class="headerlink" href="#module-diffpy.cmi.fit_tools" title="Link to this heading"></a></h3>
+<dl class="py function">
+<dt class="sig sig-object py" id="diffpy.cmi.fit_tools.optimize_recipe">
+<span class="sig-prename descclassname"><span class="pre">diffpy.cmi.fit_tools.</span></span><span class="sig-name descname"><span class="pre">optimize_recipe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">recipe</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optimizer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'leastsq'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/diffpy/cmi/fit_tools.html#optimize_recipe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#diffpy.cmi.fit_tools.optimize_recipe" title="Link to this definition"></a></dt>
+<dd><p>Optimize the recipe using any selected SciPy optimizer.</p>
+<p>minimize the residuals (<cite>FitRecipe().residual</cite>) of a FitRecipe by
+using a SciPy optimization function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>recipe</strong> (<em>FitRecipe</em>) – The FitRecipe to be optimized.</p></li>
+<li><p><strong>optimizer</strong> (<em>str</em><em>, </em><em>optional</em>) – The SciPy optimizer to use. Options are:
+‘leastsq’, ‘least_squares’, ‘minimize’. Default is ‘leastsq’.</p></li>
+<li><p><strong>**kwargs</strong> – Additional keyword arguments to pass to the optimizer.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="diffpy.cmi.fit_tools.plot_results">
+<span class="sig-prename descclassname"><span class="pre">diffpy.cmi.fit_tools.</span></span><span class="sig-name descname"><span class="pre">plot_results</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yobs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ycalc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">difference_offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/diffpy/cmi/fit_tools.html#plot_results"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#diffpy.cmi.fit_tools.plot_results" title="Link to this definition"></a></dt>
+<dd><p>Plot the results contained within a refined FitRecipe.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>array-like</em>) – The independent variable.</p></li>
+<li><p><strong>yobs</strong> (<em>array-like</em>) – The observed/experimental data.</p></li>
+<li><p><strong>ycalc</strong> (<em>array-like</em>) – The calculated/fitted data.</p></li>
+<li><p><strong>difference_offset</strong> (<em>int</em><em> or </em><em>float</em><em>, </em><em>optional</em>) – The y-axis offset for the difference curve. If None, defaults to
+-0.8 * max(yobs).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
 <section id="module-diffpy.cmi.cli">
 <span id="diffpy-cmi-cli-module"></span><h3>diffpy.cmi.cli module<a class="headerlink" href="#module-diffpy.cmi.cli" title="Link to this heading"></a></h3>
 <dl class="py function">
@@ -772,7 +815,7 @@ Defaults to <code class="docutils literal notranslate"><span class="pre">True</s
 
 <dl class="py class">
 <dt class="sig sig-object py" id="diffpy.cmi.profilesmanager.ProfilesManager">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">diffpy.cmi.profilesmanager.</span></span><span class="sig-name descname"><span class="pre">ProfilesManager</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">packs_mgr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#diffpy.cmi.packsmanager.PacksManager" title="diffpy.cmi.packsmanager.PacksManager"><span class="pre">PacksManager</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/diffpy/cmi/profilesmanager.html#ProfilesManager"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#diffpy.cmi.profilesmanager.ProfilesManager" title="Link to this definition"></a></dt>
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">diffpy.cmi.profilesmanager.</span></span><span class="sig-name descname"><span class="pre">ProfilesManager</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">packs_mgr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#diffpy.cmi.packsmanager.PacksManager" title="diffpy.cmi.packsmanager.PacksManager"><span class="pre">PacksManager</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">root_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/diffpy/cmi/profilesmanager.html#ProfilesManager"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#diffpy.cmi.profilesmanager.ProfilesManager" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Discovery, loading, checking and installation for profiles.</p>
 <dl class="py attribute">
