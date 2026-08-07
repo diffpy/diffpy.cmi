@@ -22,8 +22,8 @@ from diffpy.srfit.fitbase import (
     Profile,
 )
 from diffpy.srfit.pdf import PDFGenerator, PDFParser
-from diffpy.srfit.pdf.characteristicfunctions import sphericalCF
-from diffpy.srfit.structure import constrainAsSpaceGroup
+from diffpy.srfit.pdf.characteristicfunctions import spherical_particle
+from diffpy.srfit.structure import constrain_as_space_group
 from diffpy.structure.parsers import getParser
 
 # Config ##############################
@@ -103,9 +103,9 @@ def make_recipe_one_phase(cif_path, dat_path, adp_iso=True):
     # tell this profile the range and mesh of points in r-space.
     profile = Profile()
     parser = PDFParser()
-    parser.parseFile(dat_path)
-    profile.loadParsedData(parser)
-    profile.setCalculationRange(xmin=PDF_RMIN, xmax=PDF_RMAX, dx=PDF_RSTEP)
+    parser.parse_file(dat_path)
+    profile.load_parsed_data(parser)
+    profile.set_calculation_range(xmin=PDF_RMIN, xmax=PDF_RMAX, dx=PDF_RSTEP)
 
     # 12: Create a PDF Generator object for a periodic structure model.
     generator_crystal1 = PDFGenerator("G1")
@@ -113,7 +113,7 @@ def make_recipe_one_phase(cif_path, dat_path, adp_iso=True):
 
     # 13: Create a Fit Contribution object.
     contribution = FitContribution("crystal")
-    contribution.addProfileGenerator(generator_crystal1)
+    contribution.add_profile_generator(generator_crystal1)
 
     # If you have a multi-core computer (you probably do), run
     # your refinement in parallel!
@@ -137,7 +137,7 @@ def make_recipe_one_phase(cif_path, dat_path, adp_iso=True):
             )
 
     # 14: Set the Fit Contribution profile to the Profile object.
-    contribution.setProfile(profile, xname="r")
+    contribution.set_profile(profile, xname="r")
 
     # 15: Set an equation, based on your PDF generators.
     # Here we add an extra layer of complexity, incorporating
@@ -145,12 +145,12 @@ def make_recipe_one_phase(cif_path, dat_path, adp_iso=True):
     # incorporates damping to our PDF to model the effect of
     # finite crystallite size.
     # In this case we use a function which models a spherical NP.
-    contribution.registerFunction(sphericalCF, name="f")
-    contribution.setEquation("s1*G1*f")
+    contribution.register_function(spherical_particle, name="f")
+    contribution.set_equation("s1*G1*f")
 
     # 16: Create the Fit Recipe object that holds all the details of the fit.
     recipe = FitRecipe()
-    recipe.addContribution(contribution)
+    recipe.add_contribution(contribution)
 
     # 17: Initialize the instrument parameters, Q_damp and Q_broad, and
     # assign Q_max and Q_min.
@@ -161,9 +161,11 @@ def make_recipe_one_phase(cif_path, dat_path, adp_iso=True):
 
     # 18: Add, initialize, and tag variables in the Fit Recipe object.
     # In this case we also add psize, which is the NP size.
-    recipe.addVar(contribution.s1, SCALE_I, tag="scale")
-    recipe.addVar(contribution.psize, PSIZE_I, tag="psize")
-    recipe.addVar(
+    recipe.add_variable(contribution.s1, SCALE_I, tag="scale")
+    recipe.add_variable(
+        contribution.particle_diameter, PSIZE_I, name="psize", tag="psize"
+    )
+    recipe.add_variable(
         generator_crystal1.delta2, name="Delta2", value=DELTA2_I, tag="d2"
     )
 
@@ -175,33 +177,37 @@ def make_recipe_one_phase(cif_path, dat_path, adp_iso=True):
         # We pass in the boolean 'False' to the anisotropy attribute
         # of the structure.
         stru1.anisotropy = False
-        # 21: Use the srfit function constrainAsSpaceGroup to constrain
+        # 21: Use the srfit function constrain_as_space_group to constrain
         # the lattice and atomic positions according to the space group.
         # Note we do not include ADPs in the following.
-        spacegroupparams = constrainAsSpaceGroup(
+        spacegroupparams = constrain_as_space_group(
             generator_crystal1.phase, sg, constrainadps=False
         )
 
         for par in spacegroupparams.latpars:
-            recipe.addVar(par, fixed=False, tag="lat")
+            recipe.add_variable(par, fixed=False, tag="lat")
         for par in spacegroupparams.xyzpars:
-            recipe.addVar(par, fixed=False, tag="xyz")
+            recipe.add_variable(par, fixed=False, tag="xyz")
 
         # 22: We create the variables of isotropic ADP and assign the initial
         # value to them,
         # specified above. In this portion of the 'if' statement, we use
         # isotropic ADP for all atoms
-        cd_uiso = recipe.newVar("Cd_Uiso", value=UISO_I, tag="adp")
-        se_uiso = recipe.newVar("Se_Uiso", value=UISO_I, tag="adp")
+        cd_uiso = recipe.create_new_variable(
+            "Cd_Uiso", value=UISO_I, tag="adp"
+        )
+        se_uiso = recipe.create_new_variable(
+            "Se_Uiso", value=UISO_I, tag="adp"
+        )
 
         # 23: For all atoms in the structure model, we constrain their
         # Uiso according to their species.
         atoms = generator_crystal1.phase.getScatterers()
         for atom in atoms:
             if atom.element == "Cd":
-                recipe.constrain(atom.Uiso, cd_uiso)
+                recipe.add_constraint(atom.Uiso, cd_uiso)
             elif atom.element == "Se":
-                recipe.constrain(atom.Uiso, se_uiso)
+                recipe.add_constraint(atom.Uiso, se_uiso)
 
     # 24: Now, we want to have one behavior if we desire isotropic ADPs
     # and another behavior if we desire anistropic ADPs. To achieve this we
@@ -212,17 +218,19 @@ def make_recipe_one_phase(cif_path, dat_path, adp_iso=True):
         # the structure.
         stru1.anisotropy = True
 
-        # 26: Use the srfit function constrainAsSpaceGroup to constrain
+        # 26: Use the srfit function constrain_as_space_group to constrain
         # the lattice and atomic positions according to the space group.
         # Note we do include ADPs in the following.
-        spacegroupparams = constrainAsSpaceGroup(generator_crystal1.phase, sg)
+        spacegroupparams = constrain_as_space_group(
+            generator_crystal1.phase, sg
+        )
 
         for par in spacegroupparams.latpars:
-            recipe.addVar(par, fixed=False, tag="lat")
+            recipe.add_variable(par, fixed=False, tag="lat")
         for par in spacegroupparams.adppars:
-            recipe.addVar(par, fixed=False, tag="adp")
+            recipe.add_variable(par, fixed=False, tag="adp")
         for par in spacegroupparams.xyzpars:
-            recipe.addVar(par, fixed=False, tag="xyz")
+            recipe.add_variable(par, fixed=False, tag="xyz")
 
     # 27: Return the Fit Recipe object to be optimized
     return recipe
@@ -265,9 +273,9 @@ def make_recipe_two_phase(cif_path1, cif_path2, dat_path):
     # tell this profile the range and mesh of points in r-space.
     profile = Profile()
     parser = PDFParser()
-    parser.parseFile(dat_path)
-    profile.loadParsedData(parser)
-    profile.setCalculationRange(xmin=PDF_RMIN, xmax=PDF_RMAX, dx=PDF_RSTEP)
+    parser.parse_file(dat_path)
+    profile.load_parsed_data(parser)
+    profile.set_calculation_range(xmin=PDF_RMIN, xmax=PDF_RMAX, dx=PDF_RSTEP)
 
     # 32: Create a PDF Generator object for a periodic structure model
     # of phase 1.
@@ -288,8 +296,8 @@ def make_recipe_two_phase(cif_path1, cif_path2, dat_path):
     # represented by "generator_crystal1" AND the phase represented
     # by "generator_crystal2".
     contribution = FitContribution("crystal")
-    contribution.addProfileGenerator(generator_crystal1)
-    contribution.addProfileGenerator(generator_crystal2)
+    contribution.add_profile_generator(generator_crystal1)
+    contribution.add_profile_generator(generator_crystal2)
 
     # If you have a multi-core computer (you probably do), run your refinement
     # in parallel!
@@ -313,7 +321,7 @@ def make_recipe_two_phase(cif_path1, cif_path2, dat_path):
             )
 
     # 35: Set the Fit Contribution profile to the Profile object.
-    contribution.setProfile(profile, xname="r")
+    contribution.set_profile(profile, xname="r")
 
     # 36: Set an equation, based on your PDF generators. Here we add an
     # extra layer of complexity, incorporating "f" int our equation.
@@ -321,28 +329,34 @@ def make_recipe_two_phase(cif_path1, cif_path2, dat_path):
     # effect of finite crystallite size.
     # In this case we use a function which models a spherical NP.
     # We use the same function for each phase.
-    contribution.registerFunction(sphericalCF, name="f")
-    contribution.setEquation("data_scale*(s1*G1*f + (1.0-s1)*G2*f)")
+    contribution.register_function(spherical_particle, name="f")
+    contribution.set_equation("data_scale*(s1*G1*f + (1.0-s1)*G2*f)")
 
     # 37: Create the Fit Recipe object that holds all the details of the fit.
     recipe = FitRecipe()
-    recipe.addContribution(contribution)
+    recipe.add_contribution(contribution)
 
     # 38: Add, initialize, and tag both scale parameters, the crystal size
     # parameter,
     # and a correlated motion parameter. We will use one correlated motion
     # parameter across both phases.
-    recipe.addVar(contribution.s1, SCALE_PHASE_I, tag="phase_scale")
-    recipe.addVar(contribution.data_scale, DATA_SCALE_I, tag="scale")
-    recipe.addVar(contribution.psize, PSIZE_I, tag="psize")
-    delta2 = recipe.newVar("Delta2", value=DELTA2_I, tag="d2")
+    recipe.add_variable(contribution.s1, SCALE_PHASE_I, tag="phase_scale")
+    recipe.add_variable(contribution.data_scale, DATA_SCALE_I, tag="scale")
+    recipe.add_variable(
+        contribution.particle_diameter, PSIZE_I, name="psize", tag="psize"
+    )
+    delta2 = recipe.create_new_variable("Delta2", value=DELTA2_I, tag="d2")
 
     # 39: restrain our new parameters.
-    recipe.restrain("data_scale", lb=0.0, scaled=True, sig=0.00001)
+    recipe.add_soft_bounds(
+        "data_scale", lower_bound=0.0, scaled=True, sig=0.00001
+    )
 
-    recipe.restrain("s1", lb=0.0, ub=1.0, scaled=True, sig=0.00001)
+    recipe.add_soft_bounds(
+        "s1", lower_bound=0.0, upper_bound=1.0, scaled=True, sig=0.00001
+    )
 
-    recipe.restrain("psize", lb=0.0, scaled=True, sig=0.00001)
+    recipe.add_soft_bounds("psize", lower_bound=0.0, scaled=True, sig=0.00001)
 
     # 40: Initialize the instrument parameters, Q_damp and Q_broad, and
     # assign Q_max and Q_min.
@@ -354,8 +368,8 @@ def make_recipe_two_phase(cif_path1, cif_path2, dat_path):
     # 41: We create the variables of ADP and assign the initial value to them,
     # specified above. In this example, we use isotropic ADP for all atoms.
     # We will use these across both phases
-    cd_uiso = recipe.newVar("Cd_Uiso", value=UISO_I, tag="adp")
-    se_uiso = recipe.newVar("Se_Uiso", value=UISO_I, tag="adp")
+    cd_uiso = recipe.create_new_variable("Cd_Uiso", value=UISO_I, tag="adp")
+    se_uiso = recipe.create_new_variable("Se_Uiso", value=UISO_I, tag="adp")
 
     # 42: Now, we loop over our list of generators and space groups
     for generator, sg in zip(generators, sgs):
@@ -365,27 +379,27 @@ def make_recipe_two_phase(cif_path1, cif_path2, dat_path):
 
         # 44: constrain the delta2 parameter of each generator according to
         # our parameter
-        recipe.constrain(generator.delta2, delta2)
+        recipe.add_constraint(generator.delta2, delta2)
 
         # 45: turn off anisotropy
         generator.phase.stru.anisotropy = False
 
-        # 46: Use the srfit function constrainAsSpaceGroup to constrain
+        # 46: Use the srfit function constrain_as_space_group to constrain
         # the lattice, ADP parameters, and atomic positions according to the
         # space group.
-        spacegroupparams = constrainAsSpaceGroup(
+        spacegroupparams = constrain_as_space_group(
             generator.phase, sg, constrainadps=False
         )
 
         for par in spacegroupparams.latpars:
-            recipe.addVar(
+            recipe.add_variable(
                 par,
                 name=f"{par.name}_phase_{sg_clean}",
                 fixed=False,
                 tag="lat",
             )
         for par in spacegroupparams.xyzpars:
-            recipe.addVar(
+            recipe.add_variable(
                 par,
                 name=f"{par.name}_phase_{sg_clean}",
                 fixed=False,
@@ -397,9 +411,9 @@ def make_recipe_two_phase(cif_path1, cif_path2, dat_path):
         atoms = generator.phase.getScatterers()
         for atom in atoms:
             if atom.element == "Cd":
-                recipe.constrain(atom.Uiso, cd_uiso)
+                recipe.add_constraint(atom.Uiso, cd_uiso)
             elif atom.element == "Se":
-                recipe.constrain(atom.Uiso, se_uiso)
+                recipe.add_constraint(atom.Uiso, se_uiso)
 
     # 48: Return the Fit Recipe object to be optimized
     return recipe
@@ -570,11 +584,11 @@ def main():
 
         # 58: Print the fit results to the terminal.
         res = FitResults(recipe)
-        res.printResults()
+        res.print_results()
 
         # 59: Write the fit results to a file.
         header = "crystal_HF.\n"
-        res.saveResults(resdir / f"{basename}.res", header=header)
+        res.save_results(resdir / f"{basename}.res", header=header)
 
         # 60: Write a plot of the fit to a (pdf) file.
         plot_results(recipe, figdir / basename)
@@ -616,7 +630,7 @@ def main():
                 recipe.fix("all")
                 recipe.free("adp")
                 if (
-                    np.all(["iso" in par for par in recipe.getNames()])
+                    np.all(["iso" in par for par in recipe.get_names()])
                     and adp_symm == "anisotropic"
                 ):
                     continue
@@ -641,11 +655,11 @@ def main():
 
                 # 68: Print the fit results to the terminal.
                 res = FitResults(recipe)
-                res.printResults()
+                res.print_results()
 
                 # 69: Write the fit results to a file.
                 header = "crystal_HF.\n"
-                res.saveResults(resdir / f"{basename}.res", header=header)
+                res.save_results(resdir / f"{basename}.res", header=header)
 
                 # 70: Write a plot of the fit to a (pdf) file.
                 plot_results(recipe, figdir / basename)

@@ -23,7 +23,7 @@ from diffpy.srfit.fitbase import (
     Profile,
 )
 from diffpy.srfit.pdf import PDFGenerator, PDFParser
-from diffpy.srfit.structure import constrainAsSpaceGroup
+from diffpy.srfit.structure import constrain_as_space_group
 from diffpy.structure.atom import Atom
 from diffpy.structure.parsers import getParser
 
@@ -108,9 +108,9 @@ def make_recipe(cif_path, dat_path):
     # tell this profile the range and mesh of points in r-space.
     profile = Profile()
     parser = PDFParser()
-    parser.parseFile(dat_path)
-    profile.loadParsedData(parser)
-    profile.setCalculationRange(xmin=PDF_RMIN, xmax=PDF_RMAX, dx=PDF_RSTEP)
+    parser.parse_file(dat_path)
+    profile.load_parsed_data(parser)
+    profile.set_calculation_range(xmin=PDF_RMIN, xmax=PDF_RMAX, dx=PDF_RSTEP)
 
     # 12: Create a PDF Generator object for a periodic structure model.
     generator_crystal1 = PDFGenerator("G1")
@@ -118,7 +118,7 @@ def make_recipe(cif_path, dat_path):
 
     # 13: Create a Fit Contribution object.
     contribution = FitContribution("crystal")
-    contribution.addProfileGenerator(generator_crystal1)
+    contribution.add_profile_generator(generator_crystal1)
 
     # If you have a multi-core computer (you probably do), run your refinement
     # in parallel!
@@ -141,15 +141,15 @@ def make_recipe(cif_path, dat_path):
         generator_crystal1.parallel(ncpu=ncpu, mapfunc=pool.map)
 
     # 14: Set the Fit Contribution profile to the Profile object.
-    contribution.setProfile(profile, xname="r")
+    contribution.set_profile(profile, xname="r")
 
     # 15: Set an equation, based on your PDF generators. This is
     # again a simple case, with only a scale and a single PDF generator.
-    contribution.setEquation("s1*G1")
+    contribution.set_equation("s1*G1")
 
     # 16: Create the Fit Recipe object that holds all the details of the fit.
     recipe = FitRecipe()
-    recipe.addContribution(contribution)
+    recipe.add_contribution(contribution)
 
     # 17: Initialize the instrument parameters, Q_damp and Q_broad, and
     # assign Q_max and Q_min.
@@ -159,22 +159,22 @@ def make_recipe(cif_path, dat_path):
     generator_crystal1.setQmin(QMIN)
 
     # 18: Add, initialize, and tag the scale variable.
-    recipe.addVar(contribution.s1, SCALE_I, tag="scale")
+    recipe.add_variable(contribution.s1, SCALE_I, tag="scale")
 
-    # 19: Use the srfit function constrainAsSpaceGroup to constrain
+    # 19: Use the srfit function constrain_as_space_group to constrain
     # the lattice and ADP parameters according to the I4/mmm space
     # group setting.
-    spacegroupparams = constrainAsSpaceGroup(generator_crystal1.phase, sg)
+    spacegroupparams = constrain_as_space_group(generator_crystal1.phase, sg)
 
     for par in spacegroupparams.latpars:
-        recipe.addVar(par, fixed=False, tag="lat")
+        recipe.add_variable(par, fixed=False, tag="lat")
     for par in spacegroupparams.adppars:
-        recipe.addVar(par, fixed=False, tag="adp")
+        recipe.add_variable(par, fixed=False, tag="adp")
     for par in spacegroupparams.xyzpars:
-        recipe.addVar(par, fixed=False, tag="xyz")
+        recipe.add_variable(par, fixed=False, tag="xyz")
 
     # 20: Add delta, but not instrumental parameters to Fit Recipe.
-    recipe.addVar(
+    recipe.add_variable(
         generator_crystal1.delta1, name="Delta1", value=DELTA1_I, tag="d1"
     )
 
@@ -182,21 +182,25 @@ def make_recipe(cif_path, dat_path):
     # both Mn and K, so we need to add two new parameters, here called
     # 'Mn_occ' and 'K_occ.' We give them the tag 'occs' and we initialize
     # them with reasonable values as defined above.
-    recipe.newVar(name="Mn_occ", value=MN_FRAC_I, fixed=True, tag="occs")
-    recipe.newVar(name="K_occ", value=K_FRAC_I, fixed=True, tag="occs")
+    recipe.create_new_variable(
+        name="Mn_occ", value=MN_FRAC_I, fixed=True, tag="occs"
+    )
+    recipe.create_new_variable(
+        name="K_occ", value=K_FRAC_I, fixed=True, tag="occs"
+    )
 
     # 22: Now, we want to constrain the occupancy of sites appropriately.
     # To do this, we loop over all atoms in the structure, and if the
     # atom label matches a pattern, we constrain the occuapncy appropriately.
     for atom in recipe.crystal.G1.phase.atoms:
         if "Ba" in atom.atom.label:
-            recipe.constrain(atom.occupancy, "1.0 - K_occ")
+            recipe.add_constraint(atom.occupancy, "1.0 - K_occ")
         if "K" in atom.atom.label:
-            recipe.constrain(atom.occupancy, "K_occ")
+            recipe.add_constraint(atom.occupancy, "K_occ")
         if "Zn" in atom.atom.label:
-            recipe.constrain(atom.occupancy, "1.0 - Mn_occ")
+            recipe.add_constraint(atom.occupancy, "1.0 - Mn_occ")
         if "Mn" in atom.atom.label:
-            recipe.constrain(atom.occupancy, "Mn_occ")
+            recipe.add_constraint(atom.occupancy, "Mn_occ")
 
     # 23: Return the Fit Recipe object to be optimized.
     return recipe
@@ -346,11 +350,11 @@ def main():
 
     # 29: Print the fit results to the terminal.
     res = FitResults(recipe)
-    res.printResults()
+    res.print_results()
 
     # 30: Write the fit results to a file.
     header = "crystal_HF.\n"
-    res.saveResults(resdir / f"{basename}.res", header=header)
+    res.save_results(resdir / f"{basename}.res", header=header)
 
     # 31: Write a plot of the fit to a (pdf) file.
     plot_results(recipe, figdir / basename)

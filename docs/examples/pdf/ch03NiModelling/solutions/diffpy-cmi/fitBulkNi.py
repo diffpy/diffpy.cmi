@@ -22,7 +22,7 @@ from diffpy.srfit.fitbase import (
     Profile,
 )
 from diffpy.srfit.pdf import PDFGenerator, PDFParser
-from diffpy.srfit.structure import constrainAsSpaceGroup
+from diffpy.srfit.structure import constrain_as_space_group
 from diffpy.structure.parsers import getParser
 
 plt.style.use(all_styles["bg-style"])
@@ -107,9 +107,9 @@ def make_recipe(cif_path, dat_path):
     # Q_max from the *.gr file, if the information is present.
     profile = Profile()
     parser = PDFParser()
-    parser.parseFile(dat_path)
-    profile.loadParsedData(parser)
-    profile.setCalculationRange(xmin=PDF_RMIN, xmax=PDF_RMAX, dx=PDF_RSTEP)
+    parser.parse_file(dat_path)
+    profile.load_parsed_data(parser)
+    profile.set_calculation_range(xmin=PDF_RMIN, xmax=PDF_RMAX, dx=PDF_RSTEP)
 
     # 11: Create a PDF Generator object for a periodic structure model.
     # Here we name it arbitrarily 'G1' and we give it the structure object.
@@ -123,7 +123,7 @@ def make_recipe(cif_path, dat_path):
     # to this Fit Contribution object. The Fit Contribution holds
     # the equation used to fit the PDF.
     contribution = FitContribution("crystal")
-    contribution.addProfileGenerator(generator_crystal1)
+    contribution.add_profile_generator(generator_crystal1)
 
     # If you have a multi-core computer (you probably do),
     # run your refinement in parallel!
@@ -148,7 +148,7 @@ def make_recipe(cif_path, dat_path):
 
     # 13: Set the experimental profile, within the Fit Contribution object,
     # to the Profile object we created earlier.
-    contribution.setProfile(profile, xname="r")
+    contribution.set_profile(profile, xname="r")
 
     # 14: Set an equation, within the Fit Contribution, based on your PDF
     # Generators. Here we simply have one Generator, 'G1', and a scale
@@ -156,13 +156,13 @@ def make_recipe(cif_path, dat_path):
     # additional Generators (ie. multiple structural phases), experimental
     # Profiles, PDF characteristic functions (ie. shape envelopes),
     # and more.
-    contribution.setEquation("s1*G1")
+    contribution.set_equation("s1*G1")
 
     # 15: Create the Fit Recipe object that holds all the details of the fit,
     # defined in previous lines above. We give the Fit Recipe the Fit
     # Contribution we created earlier.
     recipe = FitRecipe()
-    recipe.addContribution(contribution)
+    recipe.add_contribution(contribution)
 
     # 16: Initialize the instrument parameters, Q_damp and Q_broad, and
     # assign Q_max and Q_min, all part of the PDF Generator object.
@@ -180,21 +180,21 @@ def make_recipe(cif_path, dat_path):
     # with some value, and tag it with an arbitrary string. Here we add the
     # scale parameter from the Fit Contribution. The '.addVar' method can be
     # used to add variables to the Fit Recipe.
-    recipe.addVar(contribution.s1, SCALE_I, tag="scale")
+    recipe.add_variable(contribution.s1, SCALE_I, tag="scale")
 
     # 18: Configure some additional fit variables pertaining to symmetry.
-    # We can use the srfit function 'constrainAsSpaceGroup' to constrain
+    # We can use the srfit function 'constrain_as_space_group' to constrain
     # the lattice and ADP parameters according to the Fm-3m space group.
     # First we establish the relevant parameters, then we loop through
     # the parameters and activate and tag them. We must explicitly set the
     # ADP parameters using 'value=' because CIF had no ADP data.
-    spacegroupparams = constrainAsSpaceGroup(generator_crystal1.phase, sg)
+    spacegroupparams = constrain_as_space_group(generator_crystal1.phase, sg)
     for par in spacegroupparams.latpars:
-        recipe.addVar(
+        recipe.add_variable(
             par, value=CUBICLAT_I, fixed=False, name="fcc_Lat", tag="lat"
         )
     for par in spacegroupparams.adppars:
-        recipe.addVar(
+        recipe.add_variable(
             par, value=UISO_I, fixed=False, name="fcc_ADP", tag="adp"
         )
 
@@ -202,11 +202,11 @@ def make_recipe(cif_path, dat_path):
     # These parameters are contained as part of the PDF Generator object
     # and initialized with values as defined in the opening of the script.
     # We give them unique names, and tag them with relevant strings.
-    recipe.addVar(
+    recipe.add_variable(
         generator_crystal1.delta2, name="Ni_Delta2", value=DELTA2_I, tag="d2"
     )
 
-    recipe.addVar(
+    recipe.add_variable(
         generator_crystal1.qdamp,
         fixed=False,
         name="Calib_Qdamp",
@@ -214,7 +214,7 @@ def make_recipe(cif_path, dat_path):
         tag="inst",
     )
 
-    recipe.addVar(
+    recipe.add_variable(
         generator_crystal1.qbroad,
         fixed=False,
         name="Calib_Qbroad",
@@ -387,14 +387,14 @@ def main():
     # the optimized Fit Recipe, and 'printResults' to print them
     # to the terminal.
     res = FitResults(recipe)
-    res.printResults()
+    res.print_results()
 
     # 27: We use the 'saveResults' method of 'FitResults' to write a text file
     # containing the fitted parameters and fit quality indices to disk.
     # The file is named based on the basename we created earlier, and
     # written to the 'resdir' directory.
     header = "crystal_HF.\n"
-    res.saveResults(resdir / f"{basename}.res", header=header)
+    res.save_results(resdir / f"{basename}.res", header=header)
 
     # 28: We use the 'plot_results' method we created earlier to write a pdf
     # file containing the measured and fitted PDF with residual to disk.

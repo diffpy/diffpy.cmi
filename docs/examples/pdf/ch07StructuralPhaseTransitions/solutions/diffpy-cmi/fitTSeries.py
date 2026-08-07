@@ -22,7 +22,7 @@ from diffpy.srfit.fitbase import (
     Profile,
 )
 from diffpy.srfit.pdf import PDFGenerator, PDFParser
-from diffpy.srfit.structure import constrainAsSpaceGroup
+from diffpy.srfit.structure import constrain_as_space_group
 from diffpy.structure.parsers import getParser
 
 plt.style.use(all_styles["bg-style"])
@@ -105,9 +105,9 @@ def make_recipe(cif_path, dat_path):
     # tell this profile the range and mesh of points in r-space.
     profile = Profile()
     parser = PDFParser()
-    parser.parseFile(dat_path)
-    profile.loadParsedData(parser)
-    profile.setCalculationRange(xmin=PDF_RMIN, xmax=PDF_RMAX, dx=PDF_RSTEP)
+    parser.parse_file(dat_path)
+    profile.load_parsed_data(parser)
+    profile.set_calculation_range(xmin=PDF_RMIN, xmax=PDF_RMAX, dx=PDF_RSTEP)
 
     # 11: Create a PDF Generator object for a periodic structure model.
     generator_crystal1 = PDFGenerator("G1")
@@ -115,7 +115,7 @@ def make_recipe(cif_path, dat_path):
 
     # 12: Create a Fit Contribution object.
     contribution = FitContribution("crystal")
-    contribution.addProfileGenerator(generator_crystal1)
+    contribution.add_profile_generator(generator_crystal1)
 
     # If you have a multi-core computer (you probably do), run your
     # refinement in parallel!
@@ -138,15 +138,15 @@ def make_recipe(cif_path, dat_path):
         generator_crystal1.parallel(ncpu=ncpu, mapfunc=pool.map)
 
     # 13: Set the Fit Contribution profile to the Profile object.
-    contribution.setProfile(profile, xname="r")
+    contribution.set_profile(profile, xname="r")
 
     # 14: Set an equation, based on your PDF generators. This is
     # again a simple case, with only a scale and a single PDF generator.
-    contribution.setEquation("s1*G1")
+    contribution.set_equation("s1*G1")
 
     # 15: Create the Fit Recipe object that holds all the details of the fit.
     recipe = FitRecipe()
-    recipe.addContribution(contribution)
+    recipe.add_contribution(contribution)
 
     # 16: Initialize the instrument parameters, Q_damp and Q_broad, and
     # assign Q_max and Q_min.
@@ -156,21 +156,21 @@ def make_recipe(cif_path, dat_path):
     generator_crystal1.setQmin(QMIN)
 
     # 17: Add, initialize, and tag the scale variable.
-    recipe.addVar(contribution.s1, SCALE_I, tag="scale")
+    recipe.add_variable(contribution.s1, SCALE_I, tag="scale")
 
-    # 18: Use the srfit function constrainAsSpaceGroup to constrain
+    # 18: Use the srfit function constrain_as_space_group to constrain
     # the lattice, ADP parameters, and atomic positions according to
     # the space group.
-    spacegroupparams = constrainAsSpaceGroup(generator_crystal1.phase, sg)
+    spacegroupparams = constrain_as_space_group(generator_crystal1.phase, sg)
     for par in spacegroupparams.latpars:
-        recipe.addVar(par, fixed=False, tag="lat")
+        recipe.add_variable(par, fixed=False, tag="lat")
     for par in spacegroupparams.adppars:
-        recipe.addVar(par, fixed=False, tag="adp")
+        recipe.add_variable(par, fixed=False, tag="adp")
     for par in spacegroupparams.xyzpars:
-        recipe.addVar(par, fixed=False, tag="xyz")
+        recipe.add_variable(par, fixed=False, tag="xyz")
 
     # 19: Add delta, but not instrumental parameters to Fit Recipe.
-    recipe.addVar(
+    recipe.add_variable(
         generator_crystal1.delta2, name="Delta2", value=DELTA2_I, tag="d2"
     )
 
@@ -340,10 +340,10 @@ def main():
             # fit over.
             profile = Profile()
             parser = PDFParser()
-            parser.parseFile(file)
-            profile.loadParsedData(parser)
-            recipe.crystal.setProfile(profile)
-            recipe.crystal.profile.setCalculationRange(
+            parser.parse_file(file)
+            profile.load_parsed_data(parser)
+            recipe.crystal.set_profile(profile)
+            recipe.crystal.profile.set_calculation_range(
                 xmin=PDF_RMIN, xmax=PDF_RMAX, dx=PDF_RSTEP
             )
 
@@ -363,11 +363,11 @@ def main():
 
             # 34: Print the fit results to the terminal.
             res = FitResults(recipe)
-            res.printResults()
+            res.print_results()
 
             # 35: Write the fit results to a file.
             header = "crystal_HF.\n"
-            res.saveResults(resdir / f"{basename}.res", header=header)
+            res.save_results(resdir / f"{basename}.res", header=header)
 
             # 36: Write a plot of the fit to a (pdf) file.
             plot_results(recipe, figdir / basename)

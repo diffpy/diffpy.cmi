@@ -86,9 +86,9 @@ def make_recipe(stru_path, dat_path):
     # tell this profile the range and mesh of points in r-space.
     profile = Profile()
     parser = PDFParser()
-    parser.parseFile(dat_path)
-    profile.loadParsedData(parser)
-    profile.setCalculationRange(xmin=PDF_RMIN, xmax=PDF_RMAX, dx=PDF_RSTEP)
+    parser.parse_file(dat_path)
+    profile.load_parsed_data(parser)
+    profile.set_calculation_range(xmin=PDF_RMIN, xmax=PDF_RMAX, dx=PDF_RSTEP)
 
     # 10: Create a Debye PDF Generator object for the discrete structure model.
     generator_cluster1 = DebyePDFGenerator("G1")
@@ -96,7 +96,7 @@ def make_recipe(stru_path, dat_path):
 
     # 11: Create a Fit Contribution object.
     contribution = FitContribution("cluster")
-    contribution.addProfileGenerator(generator_cluster1)
+    contribution.add_profile_generator(generator_cluster1)
 
     # If you have a multi-core computer (you probably do),
     # run your refinement in parallel!
@@ -119,14 +119,14 @@ def make_recipe(stru_path, dat_path):
         pool = Pool(processes=ncpu)
         generator_cluster1.parallel(ncpu=ncpu, mapfunc=pool.map)
     # 12: Set the Fit Contribution profile to the Profile object.
-    contribution.setProfile(profile, xname="r")
+    contribution.set_profile(profile, xname="r")
 
     # 13: Set an equation, based on your PDF generators.
-    contribution.setEquation("s1*G1")
+    contribution.set_equation("s1*G1")
 
     # 14: Create the Fit Recipe object that holds all the details of the fit.
     recipe = FitRecipe()
-    recipe.addContribution(contribution)
+    recipe.add_contribution(contribution)
 
     # 15: Initialize the instrument parameters, Q_damp and Q_broad, and
     # assign Q_max and Q_min.
@@ -137,7 +137,7 @@ def make_recipe(stru_path, dat_path):
 
     # 16: Add, initialize, and tag variables in the Fit Recipe object.
     # In this case we also add psize, which is the NP size.
-    recipe.addVar(contribution.s1, SCALE_I, tag="scale")
+    recipe.add_variable(contribution.s1, SCALE_I, tag="scale")
 
     # 17: Define a phase and lattice from the Debye PDF Generator
     # object and assign an isotropic lattice expansion factor tagged
@@ -147,28 +147,28 @@ def make_recipe(stru_path, dat_path):
 
     lattice1 = phase_cluster1.getLattice()
 
-    recipe.newVar("zoomscale", ZOOMSCALE_I, tag="lat")
+    recipe.create_new_variable("zoomscale", ZOOMSCALE_I, tag="lat")
 
-    recipe.constrain(lattice1.a, "zoomscale")
-    recipe.constrain(lattice1.b, "zoomscale")
-    recipe.constrain(lattice1.c, "zoomscale")
+    recipe.add_constraint(lattice1.a, "zoomscale")
+    recipe.add_constraint(lattice1.b, "zoomscale")
+    recipe.add_constraint(lattice1.c, "zoomscale")
 
     # 18: Initialize an atoms object and constrain the isotropic
     # Atomic Displacement Parameters (ADPs) per element.
 
     atoms1 = phase_cluster1.getScatterers()
 
-    recipe.newVar("Cd_Uiso", UISO_Cd_I, tag="adp")
-    recipe.newVar("Se_Uiso", UISO_Se_I, tag="adp")
+    recipe.create_new_variable("Cd_Uiso", UISO_Cd_I, tag="adp")
+    recipe.create_new_variable("Se_Uiso", UISO_Se_I, tag="adp")
 
     for atom in atoms1:
         if atom.element.title() == "Cd":
-            recipe.constrain(atom.Uiso, "Cd_Uiso")
+            recipe.add_constraint(atom.Uiso, "Cd_Uiso")
         elif atom.element.title() == "Se":
-            recipe.constrain(atom.Uiso, "Se_Uiso")
+            recipe.add_constraint(atom.Uiso, "Se_Uiso")
 
     # 19: Add and tag a variable for correlated motion effects
-    recipe.addVar(
+    recipe.add_variable(
         generator_cluster1.delta2, name="CdSe_Delta2", value=DELTA2_I, tag="d2"
     )
 
@@ -283,11 +283,11 @@ def main():
 
     # Print the fit results to the terminal.
     res = FitResults(recipe)
-    res.printResults()
+    res.print_results()
 
     # Write the fit results to a file.
     header = "crystal_HF.\n"
-    res.saveResults(resdir / f"{basename}.res", header=header)
+    res.save_results(resdir / f"{basename}.res", header=header)
 
     # Write a plot of the fit to a (pdf) file.
     plot_results(recipe, figdir / basename)
