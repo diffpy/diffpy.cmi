@@ -51,22 +51,23 @@ def _build_parser() -> argparse.ArgumentParser:
     """
     p = argparse.ArgumentParser(
         prog="cmi",
-        description=("""\
-Welcome to diffpy.cmi, a complex modeling infrastructure for
-multi-modal analysis of scientific data.
-
-Diffpy.cmi is designed as an extensible complex modeling
-infrastructure. Users and developers can readily integrate
-novel data types and constraints into custom workflows. While
-widely used for advanced analysis of structural data, the
-framework is general and can be applied to any problem where
-model parameters are refined to fit calculated quantities to
-data.
-
-Diffpy.cmi is comprised of modular units called 'packs' and
-'profiles' that facilitate tailored installations for specific
-scientific applications. Run 'cmi info -h' for more details.
-"""),
+        description=(
+            "\nWelcome to diffpy.cmi, a complex modeling "
+            "infrastructure for multi-modal analysis of "
+            "scientific data. "
+            "Diffpy.cmi is designed as an extensible complex "
+            "modeling infrastructure. Users and developers can "
+            "readily integrate novel data types and constraints "
+            "into custom workflows. While widely used for "
+            "advanced analysis of structural data, the framework "
+            "is general and can be applied to any problem where "
+            "model parameters are refined to fit calculated "
+            "quantities to data. "
+            "Diffpy.cmi is comprised of modular units called "
+            "'packs' and 'profiles' that facilitate tailored "
+            "installations for specific scientific applications. "
+            "Run 'cmi info -h' for more details."
+        ),
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
     p.add_argument(
@@ -89,19 +90,26 @@ scientific applications. Run 'cmi info -h' for more details.
     p_info = sub.add_parser(
         "info",
         help=("Prints info about packs, profiles, and examples.\n "),
-        description=("""
-Definitions:
-pack:       A collection of data processing routines, models, and examples.
-            For example, the 'pdf' pack contains packages used for modeling
-            and refinement of the Atomic Pair Distribution Function (PDF).
-
-profile:    A set of pre-defined packs or configurations for a specific
-            scientific workflow. Profiles can be installed or customized
-            for different use cases.
-
-examples:   Example scripts or folders that can be copied locally using
-            'cmi copy <example_name>'.
-    """),
+        description=(
+            "\n"
+            "Definitions:\n"
+            "pack:       A collection of data processing routines, models, "
+            "and examples.\n"
+            "            For example, the 'pdf' pack contains packages used "
+            "for modeling\n"
+            "            and refinement of the Atomic Pair Distribution "
+            "Function (PDF).\n"
+            "\n"
+            "profile:    A set of pre-defined packs or configurations for a "
+            "specific\n"
+            "            scientific workflow. Profiles can be installed or "
+            "customized\n"
+            "            for different use cases.\n"
+            "\n"
+            "examples:   Example scripts or folders that can be copied "
+            "locally using\n"
+            "            'cmi copy <example_name>'.\n"
+        ),
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
     p_info.set_defaults()

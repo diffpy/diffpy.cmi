@@ -221,7 +221,6 @@ def main():
     ----------
     None
     """
-
     # Make some folders to store our output files.
     resdir = PWD / "res"
     fitdir = PWD / "fit"

@@ -77,7 +77,6 @@ def make_recipe(stru_path, dat_path):
     fitrecipe : The initialized Fit Recipe object using the datname and
                 structure provided.
     """
-
     stru1 = Structure(filename=str(stru_path))
 
     # 9: Create a Profile object for the experimental dataset and
@@ -187,7 +186,6 @@ def main():
     ----------
     None
     """
-
     # Make some folders to store our output files.
     resdir = PWD / "res"
     fitdir = PWD / "fit"

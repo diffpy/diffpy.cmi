@@ -29,7 +29,6 @@ from diffpy.srfit.fitbase import SimpleRecipe
 
 def main():
     """Set up a simple recipe in a few lines."""
-
     # The SimpleRecipe class is a type of FitRecipe. It provides attribute-like
     # access to variables and a residual function that can be minimized.
     recipe = SimpleRecipe()

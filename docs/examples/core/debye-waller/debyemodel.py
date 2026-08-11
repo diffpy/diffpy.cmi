@@ -85,7 +85,6 @@ def make_recipe():
     optimize for the data/equation pair. This can be modified, but we
     won't do that here.
     """
-
     # The Profile
     # Create a Profile to hold the experimental and calculated signal.
     profile = Profile()
@@ -160,7 +159,6 @@ def make_recipe():
 
 def main():
     """The workflow of creating, running and inspecting a fit."""
-
     # Create the recipe
     recipe = make_recipe()
 

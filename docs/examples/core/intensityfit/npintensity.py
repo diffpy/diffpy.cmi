@@ -182,7 +182,6 @@ def make_recipe(strufile, datname):
     This will create a FitContribution that uses the IntensityGenerator,
     associate this with a Profile, and use this to define a FitRecipe.
     """
-
     # The Profile
     # Create a Profile. This will hold the experimental and calculated signal.
     profile = Profile()
@@ -338,7 +337,6 @@ def main():
 
 def plot_results(recipe):
     """Plot the results contained within a refined FitRecipe."""
-
     # The background is not part of the standard observed/fit/diff plot
     # that plot_recipe produces, so we overlay it afterwards.
     q = recipe.bucky.profile.x
@@ -488,7 +486,6 @@ def make_data(strufile, q, datname, scale, a, Uiso, sig, bkgc, nl=1):
     bkgc    --  A parameter that gives minor control of the background.
     nl      --  Noise level (0, inf), default 1, larger -> less noise.
     """
-
     from diffpy.structure import Structure
 
     S = Structure()

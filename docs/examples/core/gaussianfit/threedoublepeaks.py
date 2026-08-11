@@ -29,7 +29,6 @@ def make_recipe():
     Robust version with safe defaults for dy, safe peak location
     constraint, and stable delta/gaussian handling.
     """
-
     # Profile - load data and ensure y/dy are set
     profile = Profile()
     data = str(Path(__file__).parent / "threedoublepeaks.dat")

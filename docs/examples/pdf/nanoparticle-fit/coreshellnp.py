@@ -38,7 +38,6 @@ from diffpy.srfit.pdf import PDFGenerator, PDFParser
 
 def make_recipe(stru1, stru2, datname):
     """Create a fitting recipe for crystalline PDF data."""
-
     # The Profile
     profile = Profile()
 
@@ -141,7 +140,6 @@ def make_recipe(stru1, stru2, datname):
 
 def main():
     """Set up and refine the recipe."""
-
     # Make the data and the recipe
     base_path = Path(__file__).parent
     cdsciffile = base_path / "CdS.cif"

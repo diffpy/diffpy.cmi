@@ -58,8 +58,8 @@ repos:
         additional_dependencies:
           - "prettier@^3.2.4"
   # docformatter - PEP 257 compliant docstring formatter
-  - repo: https://github.com/s-weigand/docformatter
-    rev: 5757c5190d95e5449f102ace83df92e7d3b06c6c
+  - repo: https://github.com/PyCQA/docformatter
+    rev: v1.7.8
     hooks:
       - id: docformatter
         additional_dependencies: [tomli]
