@@ -37,7 +37,7 @@ def optimize_recipe(recipe, optimizer: str = "leastsq", **kwargs):
         )
 
     function = optimizers[optimizer]
-    x0 = recipe.getValues()
+    x0 = recipe.get_values()
     residuals = recipe.residual
     if optimizer == "leastsq":
         print("Optimizing using scipy.optimize.leastsq")

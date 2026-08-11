@@ -93,8 +93,8 @@ def make_recipe(cif_path1, cif_path2, dat_path):
     # and grab the space group names.
     p_cif1 = getParser("cif")
     p_cif2 = getParser("cif")
-    stru1 = p_cif1.parseFile(cif_path1)
-    stru2 = p_cif2.parseFile(cif_path2)
+    stru1 = p_cif1.parse_file(cif_path1)
+    stru2 = p_cif2.parse_file(cif_path2)
     sg1 = p_cif1.spacegroup.short_name
     sg2 = p_cif2.spacegroup.short_name
 

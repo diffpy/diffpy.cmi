@@ -1,8 +1,6 @@
 import typing
 from pathlib import Path
 
-import matplotlib.pyplot as plt
-import numpy as np
 from pyobjcryst import loadCrystal
 from pyobjcryst.crystal import Crystal
 from scipy.optimize import least_squares
@@ -383,28 +381,18 @@ def visualize_fits(
     -------
     None.
     """
-    # get data
-    fc = getattr(recipe, fc_name)
-    r = fc.profile.x
-    g = fc.profile.y
-    gcalc = fc.profile.ycalc
-    if xlim is not None:
-        sel = np.logical_and(r >= xlim[0], r <= xlim[1])
-        r = r[sel]
-        g = g[sel]
-        gcalc = gcalc[sel]
-    gdiff = g - gcalc
-    diffzero = -0.8 * np.max(g) * np.ones_like(g)
-    # plot figure
-    _, ax = plt.subplots()
-    ax.plot(r, g, "bo", label="G(r) Data")
-    ax.plot(r, gcalc, "r-", label="G(r) Fit")
-    ax.plot(r, gdiff + diffzero, "g-", label="G(r) Diff")
-    ax.plot(r, diffzero, "k-")
-    ax.set_xlabel(r"$r (\AA)$")
-    ax.set_ylabel(r"$G (\AA^{-2})$")
-    ax.legend(loc=1)
-    plt.show()
+    xmin, xmax = xlim if xlim is not None else (None, None)
+    recipe.plot_recipe(
+        xmin=xmin,
+        xmax=xmax,
+        data_style="o",
+        data_label="G(r) Data",
+        fit_label="G(r) Fit",
+        diff_label="G(r) Diff",
+        xlabel=r"$r (\AA)$",
+        ylabel=r"$G (\AA^{-2})$",
+        legend_loc=1,
+    )
     return
 
 

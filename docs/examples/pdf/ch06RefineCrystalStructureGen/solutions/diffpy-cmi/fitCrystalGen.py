@@ -89,7 +89,7 @@ def make_recipe(cif_path, dat_path):
     # 9: Create a CIF file parsing object, parse and load the structure, and
     # grab the space group name.
     p_cif = getParser("cif")
-    stru1 = p_cif.parseFile(cif_path)
+    stru1 = p_cif.parse_file(cif_path)
     sg = p_cif.spacegroup.short_name
     stru1.anisotropy = True
 
@@ -100,9 +100,9 @@ def make_recipe(cif_path, dat_path):
     # coordinates, respectively.
     for atom in stru1:
         if "Ba" in atom.element:
-            stru1.addNewAtom(Atom("K", xyz=atom.xyz))
+            stru1.add_new_atom(Atom("K", xyz=atom.xyz))
         elif "Zn" in atom.element:
-            stru1.addNewAtom(Atom("Mn", xyz=atom.xyz))
+            stru1.add_new_atom(Atom("Mn", xyz=atom.xyz))
 
     # 11: Create a Profile object for the experimental dataset and
     # tell this profile the range and mesh of points in r-space.
@@ -230,60 +230,26 @@ def plot_results(recipe, fig_name):
     plt.clf()
     plt.close("all")
 
-    # Get an array of the r-values we fitted over.
     r = recipe.crystal.profile.x
 
-    # Get an array of the observed PDF.
-    g = recipe.crystal.profile.y
-
-    # Get an array of the calculated PDF.
-    gcalc = recipe.crystal.profile.ycalc
-
-    # Make an array of identical shape as g which is offset from g.
-    diffzero = -0.65 * max(g) * np.ones_like(g)
-
-    # Calculate the residual (difference) array and offset it vertically.
-    diff = g - gcalc + diffzero
-
-    # Create a figure and an axis on which to plot
-    fig, ax1 = plt.subplots(1, 1)
-
-    # Plot the difference offset line
-    ax1.plot(r, diffzero, lw=1.0, ls="--", c="black")
-
-    # Plot the measured data
-    ax1.plot(
-        r,
-        g,
-        ls="None",
-        marker="o",
-        ms=5,
-        mew=0.2,
-        mfc="None",
-        label="G(r) Data",
+    # Create the standard observed/fit/diff plot using the recipe.
+    fig, ax1 = recipe.plot_recipe(
+        show=False,
+        return_fig=True,
+        data_style="o",
+        data_label="G(r) Data",
+        fit_label="G(r) Fit",
+        diff_label="G(r) diff",
+        xlabel=r"r ($\mathrm{\AA}$)",
+        ylabel=r"G ($\mathrm{\AA}$$^{-2}$)",
+        offset_scale=0.65,
     )
-
-    # Plot the calculated data
-    ax1.plot(r, gcalc, lw=1.3, label="G(r) Fit")
-
-    # Plot the difference
-    ax1.plot(r, diff, lw=1.2, label="G(r) diff")
-
-    # Let's label the axes!
-    ax1.set_xlabel(r"r ($\mathrm{\AA}$)")
-    ax1.set_ylabel(r"G ($\mathrm{\AA}$$^{-2}$)")
 
     # Tune the tick markers. We are picky!
     ax1.tick_params(axis="both", which="major", top=True, right=True)
 
     # Set the boundaries on the x-axis
     ax1.set_xlim(r[0], r[-1])
-
-    # We definitely want a legend!
-    ax1.legend()
-
-    # Let's use a tight layout. Shun wasted space!
-    plt.tight_layout()
 
     # This is going to make a figure pop up on screen for you to view.
     # The script will pause until you close the figure!
