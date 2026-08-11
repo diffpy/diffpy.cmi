@@ -208,59 +208,6 @@ def make_recipe(cif_path, dat_path):
     # End of function
 
 
-# 24: We create a useful function 'plot_results' for writing a plot
-# of the fit to disk.
-def plot_results(recipe, fig_name):
-    """Creates plots of the fitted PDF and residual, and writes them to
-    disk as *.pdf files.
-
-    Parameters
-    ----------
-    recipe :    The optimized Fit Recipe object containing the PDF data
-                we wish to plot.
-    fig_name :  Path object, the full path to the figure file to create..
-
-    Returns
-    ----------
-    None
-    """
-    if not isinstance(fig_name, Path):
-        fig_name = Path(fig_name)
-
-    plt.clf()
-    plt.close("all")
-
-    r = recipe.crystal.profile.x
-
-    # Create the standard observed/fit/diff plot using the recipe.
-    fig, ax1 = recipe.plot_recipe(
-        show=False,
-        return_fig=True,
-        data_style="o",
-        data_label="G(r) Data",
-        fit_label="G(r) Fit",
-        diff_label="G(r) diff",
-        xlabel=r"r ($\mathrm{\AA}$)",
-        ylabel=r"G ($\mathrm{\AA}$$^{-2}$)",
-        offset_scale=0.65,
-    )
-
-    # Tune the tick markers. We are picky!
-    ax1.tick_params(axis="both", which="major", top=True, right=True)
-
-    # Set the boundaries on the x-axis
-    ax1.set_xlim(r[0], r[-1])
-
-    # This is going to make a figure pop up on screen for you to view.
-    # The script will pause until you close the figure!
-    plt.show()
-
-    # Let's save the figure!
-    fig.savefig(fig_name.parent / f"{fig_name.name}.pdf", format="pdf")
-
-    # End of function
-
-
 # 25: We again create a 'main' function to be run when we execute the script.
 def main():
     """This will run by default when the file is executed using "python
@@ -323,7 +270,12 @@ def main():
     res.save_results(resdir / f"{basename}.res", header=header)
 
     # 31: Write a plot of the fit to a (pdf) file.
-    plot_results(recipe, figdir / basename)
+    fig, ax1 = recipe.plot_recipe(
+        return_fig=True,
+        xlabel=r"r ($\mathrm{\AA}$)",
+        ylabel=r"G ($\mathrm{\AA}$$^{-2}$)",
+    )
+    fig.savefig(figdir / f"{basename}.pdf", format="pdf")
 
     # End of function
 

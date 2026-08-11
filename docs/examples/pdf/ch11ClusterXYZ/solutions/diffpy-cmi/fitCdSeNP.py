@@ -8,8 +8,6 @@
 # 1: Import packages that we will need
 from pathlib import Path
 
-import matplotlib as mpl
-import matplotlib.pyplot as plt
 import numpy as np
 from scipy.optimize import least_squares
 
@@ -177,46 +175,6 @@ def make_recipe(stru_path, dat_path):
     # End of function
 
 
-def plot_results(recipe, figname):
-    """Creates plots of the fitted PDF and residual, and writes them to
-    disk as *.pdf files.
-
-    Parameters
-    ----------
-    recipe :    The optimized Fit Recipe object containing the PDF data
-                we wish to plot
-    figname :   string, the location and name of the figure file to create
-
-    Returns
-    ----------
-    None
-    """
-    r = recipe.cluster.profile.x
-
-    mpl.rcParams.update(mpl.rcParamsDefault)
-
-    # Create the standard observed/fit/diff plot using the recipe.
-    fig, ax1 = recipe.plot_recipe(
-        show=False,
-        return_fig=True,
-        data_style="o",
-        data_label="G(r) Data",
-        fit_label="G(r) Fit",
-        diff_label="G(r) diff",
-        xlabel=r"r($\mathrm{\AA}$)",
-        ylabel=r"G($\mathrm{\AA}$$^{-2}$)",
-        offset_scale=0.65,
-    )
-
-    ax1.tick_params(axis="both", which="major", top=True, right=True)
-    ax1.set_xlim(r[0], r[-1])
-
-    plt.show()
-    fig.savefig(figname.parent / f"{figname.name}.pdf", format="pdf")
-
-    # End of function
-
-
 def main():
     """This will run by default when the file is executed using "python
     file.py" in the command line.
@@ -276,7 +234,12 @@ def main():
     res.save_results(resdir / f"{basename}.res", header=header)
 
     # Write a plot of the fit to a (pdf) file.
-    plot_results(recipe, figdir / basename)
+    fig, ax1 = recipe.plot_recipe(
+        return_fig=True,
+        xlabel=r"r($\mathrm{\AA}$)",
+        ylabel=r"G($\mathrm{\AA}$$^{-2}$)",
+    )
+    fig.savefig(figdir / f"{basename}.pdf", format="pdf")
 
     # End of function
 
