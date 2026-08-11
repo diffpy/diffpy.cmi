@@ -33,6 +33,7 @@ Extensions
   mistakes in the code. This encapsulation of configuration workflow is the
   first step towards writing a user interface.
 """
+
 from pathlib import Path
 
 import matplotlib.pyplot as plt

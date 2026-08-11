@@ -41,7 +41,6 @@ will leave you with a much better understanding of how SrFit works.
   file.
 """
 
-
 from pathlib import Path
 
 from diffpy.srfit.fitbase import (

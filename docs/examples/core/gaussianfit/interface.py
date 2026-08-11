@@ -17,6 +17,7 @@
 This is like gaussianrecipe.py, but it uses a shorthand interface
 defined in the diffpy.srfit.interface.interface.py module.
 """
+
 from pathlib import Path
 
 from diffpy.srfit.fitbase import (

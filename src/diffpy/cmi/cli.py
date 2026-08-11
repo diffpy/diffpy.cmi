@@ -51,8 +51,7 @@ def _build_parser() -> argparse.ArgumentParser:
     """
     p = argparse.ArgumentParser(
         prog="cmi",
-        description=(
-            """\
+        description=("""\
 Welcome to diffpy.cmi, a complex modeling infrastructure for
 multi-modal analysis of scientific data.
 
@@ -67,8 +66,7 @@ data.
 Diffpy.cmi is comprised of modular units called 'packs' and
 'profiles' that facilitate tailored installations for specific
 scientific applications. Run 'cmi info -h' for more details.
-"""
-        ),
+"""),
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
     p.add_argument(
@@ -91,8 +89,7 @@ scientific applications. Run 'cmi info -h' for more details.
     p_info = sub.add_parser(
         "info",
         help=("Prints info about packs, profiles, and examples.\n "),
-        description=(
-            """
+        description=("""
 Definitions:
 pack:       A collection of data processing routines, models, and examples.
             For example, the 'pdf' pack contains packages used for modeling
@@ -104,8 +101,7 @@ profile:    A set of pre-defined packs or configurations for a specific
 
 examples:   Example scripts or folders that can be copied locally using
             'cmi copy <example_name>'.
-    """
-        ),
+    """),
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
     p_info.set_defaults()
