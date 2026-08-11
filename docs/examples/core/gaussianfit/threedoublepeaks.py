@@ -140,19 +140,19 @@ def make_recipe():
     recipe.add_constraint(
         contribution.sig12,
         "sig(sig0, dsig, mu12)",
-        params={"mu12": contribution.mu12},
+        ns={"mu12": contribution.mu12},
     )
     recipe.add_constraint(contribution.sig21, "sig(sig0, dsig, mu21)")
     recipe.add_constraint(
         contribution.sig22,
         "sig(sig0, dsig, mu22)",
-        params={"mu22": contribution.mu22},
+        ns={"mu22": contribution.mu22},
     )
     recipe.add_constraint(contribution.sig31, "sig(sig0, dsig, mu31)")
     recipe.add_constraint(
         contribution.sig32,
         "sig(sig0, dsig, mu32)",
-        params={"mu32": contribution.mu32},
+        ns={"mu32": contribution.mu32},
     )
 
     # background variables
