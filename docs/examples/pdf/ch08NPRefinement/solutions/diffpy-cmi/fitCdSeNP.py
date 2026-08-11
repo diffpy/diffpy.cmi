@@ -24,7 +24,7 @@ from diffpy.srfit.fitbase import (
 from diffpy.srfit.pdf import PDFGenerator, PDFParser
 from diffpy.srfit.pdf.characteristicfunctions import spherical_particle
 from diffpy.srfit.structure import constrain_as_space_group
-from diffpy.structure.parsers import getParser
+from diffpy.structure.parsers import get_parser
 
 # Config ##############################
 # 2: Give a file path to where your pdf (.gr) and (.cif) files are located.
@@ -95,7 +95,7 @@ def make_recipe_one_phase(cif_path, dat_path, adp_iso=True):
     """
     # 10: Create a CIF file parsing object, parse and load the structure, and
     # grab the space group name.
-    p_cif = getParser("cif")
+    p_cif = get_parser("cif")
     stru1 = p_cif.parse_file(cif_path)
     sg = p_cif.spacegroup.short_name
 
@@ -259,13 +259,13 @@ def make_recipe_two_phase(cif_path1, cif_path2, dat_path):
     """
     # 29: Create a CIF file parsing object, parse and load the structure, and
     # grab the space group name for the first structure.
-    p_cif1 = getParser("cif")
+    p_cif1 = get_parser("cif")
     stru1 = p_cif1.parse_file(cif_path1)
     sg1 = p_cif1.spacegroup.short_name
 
     # 30: Create a CIF file parsing object, parse and load the structure, and
     # grab the space group name for the second structure.
-    p_cif2 = getParser("cif")
+    p_cif2 = get_parser("cif")
     stru2 = p_cif2.parse_file(cif_path2)
     sg2 = p_cif2.spacegroup.short_name
 

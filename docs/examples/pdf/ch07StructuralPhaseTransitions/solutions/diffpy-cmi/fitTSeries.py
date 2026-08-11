@@ -23,7 +23,7 @@ from diffpy.srfit.fitbase import (
 )
 from diffpy.srfit.pdf import PDFGenerator, PDFParser
 from diffpy.srfit.structure import constrain_as_space_group
-from diffpy.structure.parsers import getParser
+from diffpy.structure.parsers import get_parser
 
 plt.style.use(all_styles["bg-style"])
 
@@ -97,7 +97,7 @@ def make_recipe(cif_path, dat_path):
     # relevant info and load the structure in the CIF file. This
     # includes the space group of the structure. We need this so we
     # can constrain the structure parameters later on.
-    p_cif = getParser("cif")
+    p_cif = get_parser("cif")
     stru1 = p_cif.parse_file(cif_path)
     sg = p_cif.spacegroup.short_name
 
@@ -280,7 +280,7 @@ def main():
         # the structure.
         # Specifically, the short space group name. We need to replace any
         # "/" with something else, as this will cause issues with naming.
-        p_cif = getParser("cif")
+        p_cif = get_parser("cif")
         p_cif.parse_file(str(cif))
         stru_type = p_cif.spacegroup.short_name.replace("/", "_on_")
 

@@ -79,7 +79,7 @@ to fit the same Ni PDF with PDFgui.
       from diffpy.srfit.fitbase import FitContribution, FitRecipe
       from diffpy.srfit.fitbase import Profile
       from diffpy.srfit.pdf import PDFParser, PDFGenerator
-      from diffpy.structure.parsers import getParser
+      from diffpy.structure.parsers import get_parser
       from diffpy.srfit.structure import constrainAsSpaceGroup
 
 2. As a sanity check, lets load the cif and PDF data to see what they look like.
@@ -146,7 +146,7 @@ to fit the same Ni PDF with PDFgui.
       def make_recipe(cif_path, dat_path):
 
           # 1. Get structural info
-          p_cif = getParser('cif') # Get the parser for CIF files
+          p_cif = get_parser('cif') # Get the parser for CIF files
           stru = p_cif.parseFile(cif_path) # Using the parser, load the structure from the CIF
           sg = p_cif.spacegroup.short_name # Get the space group to constrain the fit later on
 

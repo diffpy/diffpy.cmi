@@ -25,7 +25,7 @@ from diffpy.srfit.fitbase import (
 from diffpy.srfit.pdf import PDFGenerator, PDFParser
 from diffpy.srfit.structure import constrain_as_space_group
 from diffpy.structure.atom import Atom
-from diffpy.structure.parsers import getParser
+from diffpy.structure.parsers import get_parser
 
 plt.style.use(all_styles["bg-style"])
 
@@ -88,7 +88,7 @@ def make_recipe(cif_path, dat_path):
     """
     # 9: Create a CIF file parsing object, parse and load the structure, and
     # grab the space group name.
-    p_cif = getParser("cif")
+    p_cif = get_parser("cif")
     stru1 = p_cif.parse_file(cif_path)
     sg = p_cif.spacegroup.short_name
     stru1.anisotropy = True
