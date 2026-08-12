@@ -5,18 +5,18 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>diffpy.cmi.cli &mdash; diffpy.cmi 3.1.2 documentation</title>
+  <title>diffpy.cmi.cli &mdash; diffpy.cmi 3.2.0rc0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
-      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
       <link rel="stylesheet" type="text/css" href="../../../_static/wrap_table.css?v=dc09091b" />
 
   
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=860dc7db"></script>
-      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
-      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../_static/documentation_options.js?v=7e2bcb0f"></script>
+      <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
       <script src="../../../_static/copybutton.js?v=cca77546"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -151,22 +151,21 @@
     <span class="n">p</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span>
         <span class="n">prog</span><span class="o">=</span><span class="s2">&quot;cmi&quot;</span><span class="p">,</span>
         <span class="n">description</span><span class="o">=</span><span class="p">(</span>
-<span class="w">            </span><span class="sd">&quot;&quot;&quot;\</span>
-<span class="sd">Welcome to diffpy.cmi, a complex modeling infrastructure for</span>
-<span class="sd">multi-modal analysis of scientific data.</span>
-
-<span class="sd">Diffpy.cmi is designed as an extensible complex modeling</span>
-<span class="sd">infrastructure. Users and developers can readily integrate</span>
-<span class="sd">novel data types and constraints into custom workflows. While</span>
-<span class="sd">widely used for advanced analysis of structural data, the</span>
-<span class="sd">framework is general and can be applied to any problem where</span>
-<span class="sd">model parameters are refined to fit calculated quantities to</span>
-<span class="sd">data.</span>
-
-<span class="sd">Diffpy.cmi is comprised of modular units called &#39;packs&#39; and</span>
-<span class="sd">&#39;profiles&#39; that facilitate tailored installations for specific</span>
-<span class="sd">scientific applications. Run &#39;cmi info -h&#39; for more details.</span>
-<span class="sd">&quot;&quot;&quot;</span>
+            <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Welcome to diffpy.cmi, a complex modeling &quot;</span>
+            <span class="s2">&quot;infrastructure for multi-modal analysis of &quot;</span>
+            <span class="s2">&quot;scientific data. &quot;</span>
+            <span class="s2">&quot;Diffpy.cmi is designed as an extensible complex &quot;</span>
+            <span class="s2">&quot;modeling infrastructure. Users and developers can &quot;</span>
+            <span class="s2">&quot;readily integrate novel data types and constraints &quot;</span>
+            <span class="s2">&quot;into custom workflows. While widely used for &quot;</span>
+            <span class="s2">&quot;advanced analysis of structural data, the framework &quot;</span>
+            <span class="s2">&quot;is general and can be applied to any problem where &quot;</span>
+            <span class="s2">&quot;model parameters are refined to fit calculated &quot;</span>
+            <span class="s2">&quot;quantities to data. &quot;</span>
+            <span class="s2">&quot;Diffpy.cmi is comprised of modular units called &quot;</span>
+            <span class="s2">&quot;&#39;packs&#39; and &#39;profiles&#39; that facilitate tailored &quot;</span>
+            <span class="s2">&quot;installations for specific scientific applications. &quot;</span>
+            <span class="s2">&quot;Run &#39;cmi info -h&#39; for more details.&quot;</span>
         <span class="p">),</span>
         <span class="n">formatter_class</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">RawDescriptionHelpFormatter</span><span class="p">,</span>
     <span class="p">)</span>
@@ -191,19 +190,24 @@
         <span class="s2">&quot;info&quot;</span><span class="p">,</span>
         <span class="n">help</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;Prints info about packs, profiles, and examples.</span><span class="se">\n</span><span class="s2"> &quot;</span><span class="p">),</span>
         <span class="n">description</span><span class="o">=</span><span class="p">(</span>
-<span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">Definitions:</span>
-<span class="sd">pack:       A collection of data processing routines, models, and examples.</span>
-<span class="sd">            For example, the &#39;pdf&#39; pack contains packages used for modeling</span>
-<span class="sd">            and refinement of the Atomic Pair Distribution Function (PDF).</span>
-
-<span class="sd">profile:    A set of pre-defined packs or configurations for a specific</span>
-<span class="sd">            scientific workflow. Profiles can be installed or customized</span>
-<span class="sd">            for different use cases.</span>
-
-<span class="sd">examples:   Example scripts or folders that can be copied locally using</span>
-<span class="sd">            &#39;cmi copy &lt;example_name&gt;&#39;.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+            <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="s2">&quot;Definitions:</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="s2">&quot;pack:       A collection of data processing routines, models, &quot;</span>
+            <span class="s2">&quot;and examples.</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="s2">&quot;            For example, the &#39;pdf&#39; pack contains packages used &quot;</span>
+            <span class="s2">&quot;for modeling</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="s2">&quot;            and refinement of the Atomic Pair Distribution &quot;</span>
+            <span class="s2">&quot;Function (PDF).</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="s2">&quot;profile:    A set of pre-defined packs or configurations for a &quot;</span>
+            <span class="s2">&quot;specific</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="s2">&quot;            scientific workflow. Profiles can be installed or &quot;</span>
+            <span class="s2">&quot;customized</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="s2">&quot;            for different use cases.</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="s2">&quot;examples:   Example scripts or folders that can be copied &quot;</span>
+            <span class="s2">&quot;locally using</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="s2">&quot;            &#39;cmi copy &lt;example_name&gt;&#39;.</span><span class="se">\n</span><span class="s2">&quot;</span>
         <span class="p">),</span>
         <span class="n">formatter_class</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">RawDescriptionHelpFormatter</span><span class="p">,</span>
     <span class="p">)</span>
@@ -484,7 +488,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2025, The Trustees of Columbia University in the City of New York.</p>
+    <p>&#169; Copyright 2026, The Trustees of Columbia University in the City of New York.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

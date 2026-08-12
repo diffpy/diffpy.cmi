@@ -6,18 +6,18 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>pdf &mdash; diffpy.cmi 3.1.2 documentation</title>
+  <title>pdf &mdash; diffpy.cmi 3.2.0rc0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
       <link rel="stylesheet" type="text/css" href="../_static/wrap_table.css?v=dc09091b" />
 
   
       <script src="../_static/jquery.js?v=5d32c60e"></script>
       <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../_static/documentation_options.js?v=860dc7db"></script>
-      <script src="../_static/doctools.js?v=9bcbadda"></script>
-      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/documentation_options.js?v=7e2bcb0f"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
       <script src="../_static/copybutton.js?v=cca77546"></script>
     <script src="../_static/js/theme.js"></script>
@@ -279,7 +279,7 @@ Below walks you through the code in the script step-by-step.</p>
 <span class="kn">from</span><span class="w"> </span><span class="nn">diffpy.srfit.fitbase</span><span class="w"> </span><span class="kn">import</span> <span class="n">FitContribution</span><span class="p">,</span> <span class="n">FitRecipe</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">diffpy.srfit.fitbase</span><span class="w"> </span><span class="kn">import</span> <span class="n">Profile</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">diffpy.srfit.pdf</span><span class="w"> </span><span class="kn">import</span> <span class="n">PDFParser</span><span class="p">,</span> <span class="n">PDFGenerator</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">diffpy.structure.parsers</span><span class="w"> </span><span class="kn">import</span> <span class="n">getParser</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">diffpy.structure.parsers</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_parser</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">diffpy.srfit.structure</span><span class="w"> </span><span class="kn">import</span> <span class="n">constrainAsSpaceGroup</span>
 </pre></div>
 </div>
@@ -338,7 +338,7 @@ here is a gist of what the function does.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">make_recipe</span><span class="p">(</span><span class="n">cif_path</span><span class="p">,</span> <span class="n">dat_path</span><span class="p">):</span>
 
     <span class="c1"># 1. Get structural info</span>
-    <span class="n">p_cif</span> <span class="o">=</span> <span class="n">getParser</span><span class="p">(</span><span class="s1">&#39;cif&#39;</span><span class="p">)</span> <span class="c1"># Get the parser for CIF files</span>
+    <span class="n">p_cif</span> <span class="o">=</span> <span class="n">get_parser</span><span class="p">(</span><span class="s1">&#39;cif&#39;</span><span class="p">)</span> <span class="c1"># Get the parser for CIF files</span>
     <span class="n">stru</span> <span class="o">=</span> <span class="n">p_cif</span><span class="o">.</span><span class="n">parseFile</span><span class="p">(</span><span class="n">cif_path</span><span class="p">)</span> <span class="c1"># Using the parser, load the structure from the CIF</span>
     <span class="n">sg</span> <span class="o">=</span> <span class="n">p_cif</span><span class="o">.</span><span class="n">spacegroup</span><span class="o">.</span><span class="n">short_name</span> <span class="c1"># Get the space group to constrain the fit later on</span>
 
@@ -453,7 +453,7 @@ here is a gist of what the function does.</p>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2025, The Trustees of Columbia University in the City of New York.</p>
+    <p>&#169; Copyright 2026, The Trustees of Columbia University in the City of New York.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
