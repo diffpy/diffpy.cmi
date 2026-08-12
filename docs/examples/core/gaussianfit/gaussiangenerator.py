@@ -33,8 +33,8 @@ section in gaussianrecipe.py.
 
 Extensions
 
-- Remove the amplitude from GaussianGenerator and instead use the 'setEquation'
-  method of the FitContribution to account for it. Note that the
+- Remove the amplitude from GaussianGenerator and instead use the
+  'set_equation' method of the FitContribution to account for it. Note that the
   GaussianGenerator will be accessible by its name, "g".
 """
 
@@ -126,7 +126,6 @@ def make_recipe():
     This will create a FitContribution that uses the GaussianGenerator,
     associate this with a Profile, and use this to define a FitRecipe.
     """
-
     # The Profile
     # Create a Profile to hold the experimental and calculated signal.
     profile = Profile()
@@ -147,13 +146,13 @@ def make_recipe():
     # attribute of the FitContribution by its name ("g"). Note that this will
     # set the fitting equation to "g", which calls the GaussianGenerator.
     contribution = FitContribution("g1")
-    contribution.addProfileGenerator(generator)
-    contribution.setProfile(profile)
+    contribution.add_profile_generator(generator)
+    contribution.set_profile(profile)
 
     # The FitRecipe
     # Now we create the FitRecipe and add the FitContribution.
     recipe = FitRecipe()
-    recipe.addContribution(contribution)
+    recipe.add_contribution(contribution)
 
     # Specify which Parameters we want to vary in the fit.  This will add
     # Variables to the FitRecipe that directly modify the Parameters of the

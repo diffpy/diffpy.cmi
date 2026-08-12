@@ -26,14 +26,14 @@ def main():
     # Create a Profile object to hold the data
     # ----------------------------------------------------------------------
     linedata = Profile()
-    linedata.setObservedProfile(xobs, yobs, dyobs)
+    linedata.set_observed_profile(xobs, yobs, dyobs)
 
     # ----------------------------------------------------------------------
     # Define a FitContribution: linear model A*x + B
     # ----------------------------------------------------------------------
     linefit = FitContribution("linefit")
-    linefit.setProfile(linedata)
-    linefit.setEquation("A * x + B")
+    linefit.set_profile(linedata)
+    linefit.set_equation("A * x + B")
 
     linefit.show()
 
@@ -55,13 +55,13 @@ def main():
     # Create a FitRecipe to manage fitting
     # ----------------------------------------------------------------------
     rec = FitRecipe()
-    rec.clearFitHooks()
-    rec.addContribution(linefit)
+    rec.clear_fit_hooks()
+    rec.add_contribution(linefit)
     rec.show()
 
     # Add variables to be refined
-    rec.addVar(rec.linefit.A)
-    rec.addVar(rec.linefit.B)
+    rec.add_variable(rec.linefit.A)
+    rec.add_variable(rec.linefit.B)
 
     print("rec.A =", rec.A)
     print("rec.A.value =", rec.A.value)
@@ -77,19 +77,15 @@ def main():
     print("After leastsq:", rec.names, "-->", rec.values)
     linefit.show()
 
-    plot(linedata.x, linedata.y, "x", linedata.x, linedata.ycalc, "-")
-    title("Line fit using leastsq optimizer")
-    plt.show()
+    rec.plot_recipe(show_diff=False, title="Line fit using leastsq optimizer")
 
     # ----------------------------------------------------------------------
     # Fit using scalar optimizer (fmin)
     # ----------------------------------------------------------------------
-    fmin(rec.scalarResidual, [1, 1])
+    fmin(rec.scalar_residual, [1, 1])
     print("After fmin:", rec.names, "-->", rec.values)
 
-    plot(linedata.x, linedata.y, "x", linedata.x, linedata.ycalc, "-")
-    title("Line fit using fmin optimizer")
-    plt.show()
+    rec.plot_recipe(show_diff=False, title="Line fit using fmin optimizer")
 
     # Display fit results
     res = FitResults(rec)
@@ -105,35 +101,31 @@ def main():
     leastsq(rec.residual, rec.values)
     print("Fit with B fixed to 0:", FitResults(rec))
 
-    plot(linedata.x, linedata.y, "x", linedata.x, linedata.ycalc, "-")
-    title("Line fit with B fixed at 0")
-    plt.show()
+    rec.plot_recipe(show_diff=False, title="Line fit with B fixed at 0")
 
     rec.free("all")
 
     # ----------------------------------------------------------------------
     # Example: Adding a constraint (A = 2*B)
     # ----------------------------------------------------------------------
-    rec.constrain(rec.A, "2 * B")
+    rec.add_constraint(rec.A, "2 * B")
     leastsq(rec.residual, rec.values)
     print("Fit with A constrained to 2*B:", FitResults(rec))
 
-    plot(linedata.x, linedata.y, "x", linedata.x, linedata.ycalc, "-")
-    title("Line fit with constraint A=2*B")
-    plt.show()
+    rec.plot_recipe(show_diff=False, title="Line fit with constraint A=2*B")
 
-    rec.unconstrain(rec.A)
+    rec.remove_constraint(rec.A)
 
     # ----------------------------------------------------------------------
     # Example: Adding a restraint (A close to <= 0.2 with penalty)
     # ----------------------------------------------------------------------
-    rec.restrain(rec.A, ub=0.2, sig=0.001)
+    rec.add_soft_bounds(rec.A, upper_bound=0.2, sig=0.001)
     leastsq(rec.residual, rec.values)
     print("Fit with A restrained to ub=0.2:", FitResults(rec))
 
-    plot(linedata.x, linedata.y, "x", linedata.x, linedata.ycalc, "-")
-    title("Line fit with restraint on A (ub=0.2)")
-    plt.show()
+    rec.plot_recipe(
+        show_diff=False, title="Line fit with restraint on A (ub=0.2)"
+    )
 
 
 if __name__ == "__main__":

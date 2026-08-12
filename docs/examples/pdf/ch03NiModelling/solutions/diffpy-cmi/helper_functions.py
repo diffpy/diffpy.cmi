@@ -1,8 +1,6 @@
 import typing
 from pathlib import Path
 
-import matplotlib.pyplot as plt
-import numpy as np
 from pyobjcryst import loadCrystal
 from pyobjcryst.crystal import Crystal
 from scipy.optimize import least_squares
@@ -54,12 +52,12 @@ def _create_recipe(
     for name, crystal in crystals.items():
         pg = PDFGenerator(name)
         pg.setStructure(crystal, periodic=True)
-        fc.addProfileGenerator(pg)
+        fc.add_profile_generator(pg)
     for name, (f, argnames) in functions.items():
-        fc.registerFunction(f, name=name, argnames=argnames)
-    fc.setEquation(equation)
-    fc.setProfile(profile, xname="r", yname="G", dyname="dG")
-    fr.addContribution(fc)
+        fc.register_function(f, name=name, argnames=argnames)
+    fc.set_equation(equation)
+    fc.set_profile(profile, xname="r", yname="G", dyname="dG")
+    fr.add_contribution(fc)
     return fr
 
 
@@ -128,56 +126,56 @@ def _add_params_in_pg(recipe: FitRecipe, pg: PDFGenerator) -> None:
     -------
     """
     name: str = pg.name
-    recipe.addVar(
+    recipe.add_variable(
         pg.scale,
         name=_get_name(name, "scale"),
         value=0.4,
         fixed=True,
         tags=_get_tags(name, "scale"),
-    ).boundRange(0.0)
-    recipe.addVar(  # Here we add Qdamp as a variable
+    ).bound_range(0.0)
+    recipe.add_variable(  # Here we add Qdamp as a variable
         pg.qdamp,
         name=_get_name(name, "qdamp"),
         value=0.04,
         fixed=True,
         tags=_get_tags(name, "qdamp"),
-    ).boundRange(0.0)
-    recipe.addVar(  # Here we add Qbroad as a variable
+    ).bound_range(0.0)
+    recipe.add_variable(  # Here we add Qbroad as a variable
         pg.qbroad,
         name=_get_name(name, "qbroad"),
         value=0.02,
         fixed=True,
         tags=_get_tags(name, "qbroad"),
-    ).boundRange(0.0)
-    recipe.addVar(
+    ).bound_range(0.0)
+    recipe.add_variable(
         pg.delta2,
         name=_get_name(name, "delta2"),
         value=2,
         fixed=True,
         tags=_get_tags(name, "delta2"),
-    ).boundRange(0.0)
+    ).bound_range(0.0)
     latpars = pg.phase.sgpars.latpars
     for par in latpars:
-        recipe.addVar(
+        recipe.add_variable(
             par,
             name=_get_name(name, par.name),
             fixed=True,
             tags=_get_tags(name, "lat"),
-        ).boundRange(0.0)
+        ).bound_range(0.0)
     atoms: typing.List[ParameterSet] = pg.phase.getScatterers()
     for atom in atoms:
         par = atom.Biso
-        recipe.addVar(
+        recipe.add_variable(
             par,
             name=_get_name(name, atom.name, "Biso"),
             value=0.02,
             fixed=True,
             tags=_get_tags(name, "adp"),
-        ).boundRange(0.0)
+        ).bound_range(0.0)
     xyzpars = pg.phase.sgpars.xyzpars
     for par in xyzpars:
         par_name = _rename_par(par.name, atoms)
-        recipe.addVar(
+        recipe.add_variable(
             par,
             name=_get_name(name, par_name),
             fixed=True,
@@ -206,7 +204,7 @@ def _add_params_in_fc(
     """
     for name in names:
         par = getattr(fc, name)
-        recipe.addVar(par, value=100.0, fixed=True, tags=tags)
+        recipe.add_variable(par, value=100.0, fixed=True, tags=tags)
     return
 
 
@@ -242,7 +240,7 @@ def _initialize_recipe(
     for name in crystals.keys():
         pg: PDFGenerator = getattr(fc, name)
         _add_params_in_pg(recipe, pg)
-    recipe.clearFitHooks()
+    recipe.clear_fit_hooks()
     return
 
 
@@ -285,9 +283,9 @@ def create_recipe_from_files(
         meta_data = {}
     crystals = {n: loadCrystal(f) for n, f in cif_files.items()}
     pp = PDFParser()
-    pp.parseFile(data_file)
+    pp.parse_file(data_file)
     profile = Profile()
-    profile.loadParsedData(pp)
+    profile.load_parsed_data(pp)
     profile.meta.update(meta_data)
     recipe = _create_recipe(
         equation, crystals, functions, profile, fc_name=fc_name
@@ -343,7 +341,7 @@ def optimize_params(
     n = len(steps)
     fc: FitContribution = getattr(recipe, fc_name)
     p: Profile = fc.profile
-    p.setCalculationRange(xmin=rmin, xmax=rmax, dx=rstep)
+    p.set_calculation_range(xmin=rmin, xmax=rmax, dx=rstep)
     for step in steps:
         recipe.fix(*step)
     for i, step in enumerate(steps):
@@ -351,14 +349,14 @@ def optimize_params(
         if print_step:
             print(
                 "Step {} / {}: refine {}".format(
-                    i + 1, n, ", ".join(recipe.getNames())
+                    i + 1, n, ", ".join(recipe.get_names())
                 ),
                 end="\r",
             )
         least_squares(
             recipe.residual,
-            recipe.getValues(),
-            bounds=recipe.getBounds2(),
+            recipe.get_values(),
+            bounds=recipe.get_bounds_array(),
             **kwargs,
         )
     return
@@ -383,28 +381,18 @@ def visualize_fits(
     -------
     None.
     """
-    # get data
-    fc = getattr(recipe, fc_name)
-    r = fc.profile.x
-    g = fc.profile.y
-    gcalc = fc.profile.ycalc
-    if xlim is not None:
-        sel = np.logical_and(r >= xlim[0], r <= xlim[1])
-        r = r[sel]
-        g = g[sel]
-        gcalc = gcalc[sel]
-    gdiff = g - gcalc
-    diffzero = -0.8 * np.max(g) * np.ones_like(g)
-    # plot figure
-    _, ax = plt.subplots()
-    ax.plot(r, g, "bo", label="G(r) Data")
-    ax.plot(r, gcalc, "r-", label="G(r) Fit")
-    ax.plot(r, gdiff + diffzero, "g-", label="G(r) Diff")
-    ax.plot(r, diffzero, "k-")
-    ax.set_xlabel(r"$r (\AA)$")
-    ax.set_ylabel(r"$G (\AA^{-2})$")
-    ax.legend(loc=1)
-    plt.show()
+    xmin, xmax = xlim if xlim is not None else (None, None)
+    recipe.plot_recipe(
+        xmin=xmin,
+        xmax=xmax,
+        data_style="o",
+        data_label="G(r) Data",
+        fit_label="G(r) Fit",
+        diff_label="G(r) Diff",
+        xlabel=r"$r (\AA)$",
+        ylabel=r"$G (\AA^{-2})$",
+        legend_loc=1,
+    )
     return
 
 
@@ -440,7 +428,7 @@ def save_results(
     d_path.mkdir(parents=True, exist_ok=True)
     f_path = d_path.joinpath(file_stem)
     fr = FitResults(recipe)
-    fr.saveResults(str(f_path.with_suffix(".res")))
+    fr.save_results(str(f_path.with_suffix(".res")))
     fc: FitContribution = getattr(recipe, fc_name)
     profile: Profile = fc.profile
     profile.savetxt(str(f_path.with_suffix(".fgr")))

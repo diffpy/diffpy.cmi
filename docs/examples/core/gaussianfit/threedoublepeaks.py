@@ -13,7 +13,7 @@ from pathlib import Path
 
 import numpy as np
 
-from diffpy.cmi.fit_tools import optimize_recipe, plot_results
+from diffpy.cmi.fit_tools import optimize_recipe
 from diffpy.srfit.fitbase import (
     FitContribution,
     FitRecipe,
@@ -29,7 +29,6 @@ def make_recipe():
     Robust version with safe defaults for dy, safe peak location
     constraint, and stable delta/gaussian handling.
     """
-
     # Profile - load data and ensure y/dy are set
     profile = Profile()
     data = str(Path(__file__).parent / "threedoublepeaks.dat")
@@ -44,7 +43,7 @@ def make_recipe():
 
     # FitContribution
     contribution = FitContribution("peaks")
-    contribution.setProfile(profile, xname="t")
+    contribution.set_profile(profile, xname="t")
 
     pi = np.pi
     exp = np.exp
@@ -58,7 +57,7 @@ def make_recipe():
             * exp(-0.5 * ((t - mu) / sig) ** 2)
         )
 
-    contribution.registerFunction(gaussian, name="peakshape")
+    contribution.register_function(gaussian, name="peakshape")
 
     # define a delta function (small width gaussian) for peak position
     def delta(t, mu):
@@ -67,14 +66,14 @@ def make_recipe():
         eps = max(1e-6, spacing * 0.1)
         return gaussian(t, mu, eps)
 
-    contribution.registerFunction(delta)
+    contribution.register_function(delta)
 
     # background string function: 6th degree polynomial
     bkgdstr = "b0 + b1*t + b2*t**2 + b3*t**3 + b4*t**4 + b5*t**5 + b6*t**6"
-    contribution.registerStringFunction(bkgdstr, "bkgd")
+    contribution.register_string_function(bkgdstr, "bkgd")
 
     # Define equation: three double-peaks with fixed amplitude ratio 0.23
-    contribution.setEquation(
+    contribution.set_equation(
         "A1 * ( convolve( delta(t, mu11), peakshape(t, c, sig11) ) "
         " + 0.23*convolve( delta(t, mu12), peakshape(t, c, sig12) ) ) + "
         "A2 * ( convolve( delta(t, mu21), peakshape(t, c, sig21) ) "
@@ -89,17 +88,17 @@ def make_recipe():
 
     # Build recipe
     recipe = FitRecipe()
-    recipe.addContribution(contribution)
+    recipe.add_contribution(contribution)
 
     # amplitudes
-    recipe.addVar(contribution.A1, 100)
-    recipe.addVar(contribution.A2, 100)
-    recipe.addVar(contribution.A3, 100)
+    recipe.add_variable(contribution.A1, 100)
+    recipe.add_variable(contribution.A2, 100)
+    recipe.add_variable(contribution.A3, 100)
 
     # primary peak positions
-    recipe.addVar(contribution.mu11, 13.0)
-    recipe.addVar(contribution.mu21, 24.0)
-    recipe.addVar(contribution.mu31, 33.0)
+    recipe.add_variable(contribution.mu11, 13.0)
+    recipe.add_variable(contribution.mu21, 24.0)
+    recipe.add_variable(contribution.mu31, 33.0)
 
     # Safe peak location constraint using arcsin with clipping
     l1 = 1.012
@@ -115,14 +114,16 @@ def make_recipe():
         out_rad = np.arcsin(arg)
         return np.rad2deg(out_rad)
 
-    recipe.registerFunction(peakloc)
-    recipe.constrain(contribution.mu12, "peakloc(mu11)")
-    recipe.constrain(contribution.mu22, "peakloc(mu21)")
-    recipe.constrain(contribution.mu32, "peakloc(mu31)")
+    recipe.register_function(peakloc)
+    recipe.add_constraint(contribution.mu12, "peakloc(mu11)")
+    recipe.add_constraint(contribution.mu22, "peakloc(mu21)")
+    recipe.add_constraint(contribution.mu32, "peakloc(mu31)")
 
     # Peak widths: use sig0 and dsig with a safer functional form (positive)
-    recipe.newVar("sig0", 0.1)  # base width in same units as t
-    recipe.newVar("dsig", 0.001)  # small quadratic broadening coefficient
+    recipe.create_new_variable("sig0", 0.1)  # base width in same units as t
+    recipe.create_new_variable(
+        "dsig", 0.001
+    )  # small quadratic broadening coefficient
 
     def sig(sig0, dsig, mu):
         """Compute sigma from base sig0, broadening dsig, and peak
@@ -132,22 +133,22 @@ def make_recipe():
         # enforce a minimum width
         return np.maximum(out, 1e-6)
 
-    recipe.registerFunction(sig)
+    recipe.register_function(sig)
     # Constrain the component sigmas
-    recipe.constrain(contribution.sig11, "sig(sig0, dsig, mu11)")
-    recipe.constrain(
+    recipe.add_constraint(contribution.sig11, "sig(sig0, dsig, mu11)")
+    recipe.add_constraint(
         contribution.sig12,
         "sig(sig0, dsig, mu12)",
         ns={"mu12": contribution.mu12},
     )
-    recipe.constrain(contribution.sig21, "sig(sig0, dsig, mu21)")
-    recipe.constrain(
+    recipe.add_constraint(contribution.sig21, "sig(sig0, dsig, mu21)")
+    recipe.add_constraint(
         contribution.sig22,
         "sig(sig0, dsig, mu22)",
         ns={"mu22": contribution.mu22},
     )
-    recipe.constrain(contribution.sig31, "sig(sig0, dsig, mu31)")
-    recipe.constrain(
+    recipe.add_constraint(contribution.sig31, "sig(sig0, dsig, mu31)")
+    recipe.add_constraint(
         contribution.sig32,
         "sig(sig0, dsig, mu32)",
         ns={"mu32": contribution.mu32},
@@ -155,9 +156,10 @@ def make_recipe():
 
     # background variables
     for i in range(7):
-        # addVar(param, startvalue, tag='bkgd') keeps them grouped for steering
+        # add_variable(param, startvalue, tag='bkgd') keeps them grouped for
+        # steering
         p = getattr(contribution, f"b{i}")
-        recipe.addVar(p, 0.0, tag="bkgd")
+        recipe.add_variable(p, 0.0, tag="bkgd")
 
     # Initialize sig0/dsig sensible values
     recipe.sig0.value = 0.1
@@ -166,7 +168,7 @@ def make_recipe():
     return recipe
 
 
-def steerFit(recipe):
+def steer_fit(recipe):
     """Simple steering sequence (similar to your original)."""
     # Start by fitting only background
     recipe.fix("all")
@@ -186,10 +188,7 @@ def steerFit(recipe):
 
 if __name__ == "__main__":
     recipe = make_recipe()
-    steerFit(recipe)
+    steer_fit(recipe)
     res = FitResults(recipe)
-    res.printResults()
-    x = recipe.peaks.profile.x
-    yobs = recipe.peaks.profile.y
-    ycalc = recipe.peaks.profile.ycalc
-    plot_results(x, yobs, ycalc, difference_offset=-700)
+    res.print_results()
+    recipe.plot_recipe()

@@ -23,8 +23,8 @@ from diffpy.srfit.fitbase import (
     Profile,
 )
 from diffpy.srfit.pdf import PDFGenerator, PDFParser
-from diffpy.srfit.structure import constrainAsSpaceGroup
-from diffpy.structure.parsers import getParser
+from diffpy.srfit.structure import constrain_as_space_group
+from diffpy.structure.parsers import get_parser
 
 plt.style.use(all_styles["bg-style"])
 # Config ##############################
@@ -91,10 +91,10 @@ def make_recipe(cif_path1, cif_path2, dat_path):
     """
     # 9: Create two CIF file parsing objects, parse and load the structures,
     # and grab the space group names.
-    p_cif1 = getParser("cif")
-    p_cif2 = getParser("cif")
-    stru1 = p_cif1.parseFile(cif_path1)
-    stru2 = p_cif2.parseFile(cif_path2)
+    p_cif1 = get_parser("cif")
+    p_cif2 = get_parser("cif")
+    stru1 = p_cif1.parse_file(cif_path1)
+    stru2 = p_cif2.parse_file(cif_path2)
     sg1 = p_cif1.spacegroup.short_name
     sg2 = p_cif2.spacegroup.short_name
 
@@ -102,9 +102,9 @@ def make_recipe(cif_path1, cif_path2, dat_path):
     # tell this profile the range and mesh of points in r-space.
     profile = Profile()
     parser = PDFParser()
-    parser.parseFile(dat_path)
-    profile.loadParsedData(parser)
-    profile.setCalculationRange(xmin=PDF_RMIN, xmax=PDF_RMAX, dx=PDF_RSTEP)
+    parser.parse_file(dat_path)
+    profile.load_parsed_data(parser)
+    profile.set_calculation_range(xmin=PDF_RMIN, xmax=PDF_RMAX, dx=PDF_RSTEP)
 
     # 11a: Create a PDF Generator object for a periodic structure model
     # of phase 1.
@@ -121,8 +121,8 @@ def make_recipe(cif_path1, cif_path2, dat_path):
     # represented by 'generator_crystal1' AND the phase represented
     # by 'generator_crystal2'.
     contribution = FitContribution("crystal")
-    contribution.addProfileGenerator(generator_crystal1)
-    contribution.addProfileGenerator(generator_crystal2)
+    contribution.add_profile_generator(generator_crystal1)
+    contribution.add_profile_generator(generator_crystal2)
 
     # If you have a multi-core computer (you probably do), run your refinement
     # in parallel!
@@ -146,7 +146,7 @@ def make_recipe(cif_path1, cif_path2, dat_path):
         generator_crystal2.parallel(ncpu=ncpu, mapfunc=pool.map)
 
     # 13: Set the Fit Contribution profile to the Profile object.
-    contribution.setProfile(profile, xname="r")
+    contribution.set_profile(profile, xname="r")
 
     # 14: Set an equation, based on your PDF generators. This is
     # a more complicated case, since we have two phases. The equation
@@ -154,15 +154,15 @@ def make_recipe(cif_path1, cif_path2, dat_path):
     # 'G_Si' and 'G_Ni' weighted by a refined scale term for each phase,
     # 's1_Si' and '(1 - s1_Si)'. We also include a general 's2'
     # to account for data scale.
-    contribution.setEquation("s2*(s1_Si*G_Si + (1.0-s1_Si)*G_Ni)")
+    contribution.set_equation("s2*(s1_Si*G_Si + (1.0-s1_Si)*G_Ni)")
 
     # 15: Create the Fit Recipe object that holds all the details of the fit.
     recipe = FitRecipe()
-    recipe.addContribution(contribution)
+    recipe.add_contribution(contribution)
 
     # 16: Add, initialize, and tag the two scale variables.
-    recipe.addVar(contribution.s1_Si, SCALE_I_SI, tag="scale")
-    recipe.addVar(contribution.s2, DATA_SCALE_I, tag="scale")
+    recipe.add_variable(contribution.s1_Si, SCALE_I_SI, tag="scale")
+    recipe.add_variable(contribution.s2, DATA_SCALE_I, tag="scale")
 
     # 17:This is new, we want to ensure that the data scale parameter 's2'
     # is always positive, and the phase scale parameter 's1_Si' is always
@@ -171,12 +171,14 @@ def make_recipe(cif_path1, cif_path2, dat_path):
     # our objective function such that if the parameter approaches a user
     # defined upper or lower bound, the objective function will increase,
     # driving the fit away from the boundary.
-    recipe.restrain("s2", lb=0.0, scaled=True, sig=0.00001)
+    recipe.add_soft_bounds("s2", lower_bound=0.0, scaled=True, sig=0.00001)
 
-    recipe.restrain("s1_Si", lb=0.0, ub=1.0, scaled=True, sig=0.00001)
+    recipe.add_soft_bounds(
+        "s1_Si", lower_bound=0.0, upper_bound=1.0, scaled=True, sig=0.00001
+    )
 
     # 18a: This is a bit new. We will again use the srfit function
-    # constrainAsSpaceGroup to constrain the lattice and ADP parameters
+    # constrain_as_space_group to constrain the lattice and ADP parameters
     # according to the space group of each of the two phases.
     # We loop through generators composed of PDF Generators
     # and space groups specific to EACH of the TWO candidate phases.
@@ -194,22 +196,24 @@ def make_recipe(cif_path1, cif_path2, dat_path):
         generator.setQmin(QMIN)
 
         # 18c: Get the symmetry equivalent parameters for each phase.
-        spacegroupparams = constrainAsSpaceGroup(generator.phase, space_group)
+        spacegroupparams = constrain_as_space_group(
+            generator.phase, space_group
+        )
         # 18d: Loop over and constrain these parameters for each phase.
         # Each parameter name gets the loop index 'i' appended so there
         # are not parameter name collisions.
         for par in spacegroupparams.latpars:
-            recipe.addVar(
+            recipe.add_variable(
                 par, name=f"{par.name}_{name}", fixed=False, tag="lat"
             )
         for par in spacegroupparams.adppars:
-            recipe.addVar(
+            recipe.add_variable(
                 par, name=f"{par.name}_{name}", fixed=False, tag="adp"
             )
 
         # 19: Add delta, but not instrumental parameters to Fit Recipe.
         # One for each phase.
-        recipe.addVar(
+        recipe.add_variable(
             generator.delta1,
             name=f"Delta1_{name}",
             value=DELTA1_I_SI,
@@ -383,11 +387,11 @@ def main():
 
     # 24 Print the fit results to the terminal.
     res = FitResults(recipe)
-    res.printResults()
+    res.print_results()
 
     # 25 Write the fit results to a file.
     header = "crystal_HF.\n"
-    res.saveResults(resdir / f"{basename}.res", header=header)
+    res.save_results(resdir / f"{basename}.res", header=header)
 
     # 26 Write a plot of the fit to a (pdf) file.
     plot_results(recipe, figdir / basename)

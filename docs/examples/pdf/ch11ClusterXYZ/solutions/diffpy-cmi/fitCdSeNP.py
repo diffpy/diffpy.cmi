@@ -8,8 +8,6 @@
 # 1: Import packages that we will need
 from pathlib import Path
 
-import matplotlib as mpl
-import matplotlib.pyplot as plt
 import numpy as np
 from scipy.optimize import least_squares
 
@@ -79,16 +77,15 @@ def make_recipe(stru_path, dat_path):
     fitrecipe : The initialized Fit Recipe object using the datname and
                 structure provided.
     """
-
     stru1 = Structure(filename=str(stru_path))
 
     # 9: Create a Profile object for the experimental dataset and
     # tell this profile the range and mesh of points in r-space.
     profile = Profile()
     parser = PDFParser()
-    parser.parseFile(dat_path)
-    profile.loadParsedData(parser)
-    profile.setCalculationRange(xmin=PDF_RMIN, xmax=PDF_RMAX, dx=PDF_RSTEP)
+    parser.parse_file(dat_path)
+    profile.load_parsed_data(parser)
+    profile.set_calculation_range(xmin=PDF_RMIN, xmax=PDF_RMAX, dx=PDF_RSTEP)
 
     # 10: Create a Debye PDF Generator object for the discrete structure model.
     generator_cluster1 = DebyePDFGenerator("G1")
@@ -96,7 +93,7 @@ def make_recipe(stru_path, dat_path):
 
     # 11: Create a Fit Contribution object.
     contribution = FitContribution("cluster")
-    contribution.addProfileGenerator(generator_cluster1)
+    contribution.add_profile_generator(generator_cluster1)
 
     # If you have a multi-core computer (you probably do),
     # run your refinement in parallel!
@@ -119,14 +116,14 @@ def make_recipe(stru_path, dat_path):
         pool = Pool(processes=ncpu)
         generator_cluster1.parallel(ncpu=ncpu, mapfunc=pool.map)
     # 12: Set the Fit Contribution profile to the Profile object.
-    contribution.setProfile(profile, xname="r")
+    contribution.set_profile(profile, xname="r")
 
     # 13: Set an equation, based on your PDF generators.
-    contribution.setEquation("s1*G1")
+    contribution.set_equation("s1*G1")
 
     # 14: Create the Fit Recipe object that holds all the details of the fit.
     recipe = FitRecipe()
-    recipe.addContribution(contribution)
+    recipe.add_contribution(contribution)
 
     # 15: Initialize the instrument parameters, Q_damp and Q_broad, and
     # assign Q_max and Q_min.
@@ -137,7 +134,7 @@ def make_recipe(stru_path, dat_path):
 
     # 16: Add, initialize, and tag variables in the Fit Recipe object.
     # In this case we also add psize, which is the NP size.
-    recipe.addVar(contribution.s1, SCALE_I, tag="scale")
+    recipe.add_variable(contribution.s1, SCALE_I, tag="scale")
 
     # 17: Define a phase and lattice from the Debye PDF Generator
     # object and assign an isotropic lattice expansion factor tagged
@@ -147,86 +144,32 @@ def make_recipe(stru_path, dat_path):
 
     lattice1 = phase_cluster1.getLattice()
 
-    recipe.newVar("zoomscale", ZOOMSCALE_I, tag="lat")
+    recipe.create_new_variable("zoomscale", ZOOMSCALE_I, tag="lat")
 
-    recipe.constrain(lattice1.a, "zoomscale")
-    recipe.constrain(lattice1.b, "zoomscale")
-    recipe.constrain(lattice1.c, "zoomscale")
+    recipe.add_constraint(lattice1.a, "zoomscale")
+    recipe.add_constraint(lattice1.b, "zoomscale")
+    recipe.add_constraint(lattice1.c, "zoomscale")
 
     # 18: Initialize an atoms object and constrain the isotropic
     # Atomic Displacement Parameters (ADPs) per element.
 
     atoms1 = phase_cluster1.getScatterers()
 
-    recipe.newVar("Cd_Uiso", UISO_Cd_I, tag="adp")
-    recipe.newVar("Se_Uiso", UISO_Se_I, tag="adp")
+    recipe.create_new_variable("Cd_Uiso", UISO_Cd_I, tag="adp")
+    recipe.create_new_variable("Se_Uiso", UISO_Se_I, tag="adp")
 
     for atom in atoms1:
         if atom.element.title() == "Cd":
-            recipe.constrain(atom.Uiso, "Cd_Uiso")
+            recipe.add_constraint(atom.Uiso, "Cd_Uiso")
         elif atom.element.title() == "Se":
-            recipe.constrain(atom.Uiso, "Se_Uiso")
+            recipe.add_constraint(atom.Uiso, "Se_Uiso")
 
     # 19: Add and tag a variable for correlated motion effects
-    recipe.addVar(
+    recipe.add_variable(
         generator_cluster1.delta2, name="CdSe_Delta2", value=DELTA2_I, tag="d2"
     )
 
     return recipe
-
-    # End of function
-
-
-def plot_results(recipe, figname):
-    """Creates plots of the fitted PDF and residual, and writes them to
-    disk as *.pdf files.
-
-    Parameters
-    ----------
-    recipe :    The optimized Fit Recipe object containing the PDF data
-                we wish to plot
-    figname :   string, the location and name of the figure file to create
-
-    Returns
-    ----------
-    None
-    """
-    r = recipe.cluster.profile.x
-
-    g = recipe.cluster.profile.y
-    gcalc = recipe.cluster.profile.ycalc
-    diffzero = -0.65 * max(g) * np.ones_like(g)
-    diff = g - gcalc + diffzero
-
-    mpl.rcParams.update(mpl.rcParamsDefault)
-
-    fig, ax1 = plt.subplots(1, 1)
-
-    ax1.plot(
-        r,
-        g,
-        ls="None",
-        marker="o",
-        ms=5,
-        mew=0.2,
-        mfc="None",
-        label="G(r) Data",
-    )
-
-    ax1.plot(r, gcalc, lw=1.3, label="G(r) Fit")
-    ax1.plot(r, diff, lw=1.2, label="G(r) diff")
-    ax1.plot(r, diffzero, lw=1.0, ls="--", c="black")
-
-    ax1.set_xlabel(r"r($\mathrm{\AA}$)")
-    ax1.set_ylabel(r"G($\mathrm{\AA}$$^{-2}$)")
-    ax1.tick_params(axis="both", which="major", top=True, right=True)
-
-    ax1.set_xlim(r[0], r[-1])
-    ax1.legend()
-
-    plt.tight_layout()
-    plt.show()
-    fig.savefig(figname.parent / f"{figname.name}.pdf", format="pdf")
 
     # End of function
 
@@ -243,7 +186,6 @@ def main():
     ----------
     None
     """
-
     # Make some folders to store our output files.
     resdir = PWD / "res"
     fitdir = PWD / "fit"
@@ -283,14 +225,19 @@ def main():
 
     # Print the fit results to the terminal.
     res = FitResults(recipe)
-    res.printResults()
+    res.print_results()
 
     # Write the fit results to a file.
     header = "crystal_HF.\n"
-    res.saveResults(resdir / f"{basename}.res", header=header)
+    res.save_results(resdir / f"{basename}.res", header=header)
 
     # Write a plot of the fit to a (pdf) file.
-    plot_results(recipe, figdir / basename)
+    fig, ax1 = recipe.plot_recipe(
+        return_fig=True,
+        xlabel=r"r($\mathrm{\AA}$)",
+        ylabel=r"G($\mathrm{\AA}$$^{-2}$)",
+    )
+    fig.savefig(figdir / f"{basename}.pdf", format="pdf")
 
     # End of function
 

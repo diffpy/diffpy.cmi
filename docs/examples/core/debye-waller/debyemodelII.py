@@ -56,7 +56,6 @@ def make_recipeII():
     constrain the Debye temperature in each FitContribution to be the
     same.
     """
-
     # We'll throw these away. We just want the FitContributions that are
     # configured within the recipes.
     m1 = make_recipe()
@@ -73,66 +72,58 @@ def make_recipeII():
     # Now create a fresh FitRecipe to work with and add to it the two
     # FitContributions.
     recipe = FitRecipe()
-    recipe.addContribution(lowT)
-    recipe.addContribution(highT)
+    recipe.add_contribution(lowT)
+    recipe.add_contribution(highT)
 
     # Change the fit ranges of the Profiles embedded within the
     # FitContributions. We want to fit one of the contributions at low
     # temperature, and one at high.
-    lowT.profile.setCalculationRange(0, 150)
-    highT.profile.setCalculationRange(400, 500)
+    lowT.profile.set_calculation_range(0, 150)
+    highT.profile.set_calculation_range(400, 500)
 
     # Vary the offset from each FitContribution separately, while keeping the
     # Debye temperatures the same. We give each offset variable a different
     # name in the recipe so it retains its identity.
-    recipe.addVar(recipe.lowT.offset, name="lowToffset")
-    recipe.addVar(recipe.highT.offset, name="highToffset")
+    recipe.add_variable(recipe.lowT.offset, name="lowToffset")
+    recipe.add_variable(recipe.highT.offset, name="highToffset")
     # We create a new Variable and use the recipe's "constrain" method to
     # associate the Debye temperature parameters with that variable.
-    recipe.newVar("thetaD", 100)
-    recipe.constrain(recipe.lowT.thetaD, "thetaD")
-    recipe.constrain(recipe.highT.thetaD, "thetaD")
+    recipe.create_new_variable("thetaD", 100)
+    recipe.add_constraint(recipe.lowT.thetaD, "thetaD")
+    recipe.add_constraint(recipe.highT.thetaD, "thetaD")
     return recipe
 
 
 def plot_results(recipe):
     """Display the results contained within a refined FitRecipe."""
-
     # The variable values are returned in the order in which the variables were
     # added to the FitRecipe.
-    lowToffset, highToffset, thetaD = recipe.getValues()
+    lowToffset, highToffset, thetaD = recipe.get_values()
+    print(
+        r"lowT:  $T_d$=%3.1f K, offset=%1.5f $\AA^2$"
+        % (abs(thetaD), lowToffset)
+    )
+    print(
+        r"highT: $T_d$=%3.1f K, offset=%1.5f $\AA^2$"
+        % (abs(thetaD), highToffset)
+    )
 
     # We want to extend the fitting range to its full extent so we can get a
-    # nice full plot.
-    recipe.lowT.profile.setCalculationRange(xmin="obs", xmax="obs")
-    recipe.highT.profile.setCalculationRange(xmin="obs", xmax="obs")
-    T = recipe.lowT.profile.x
-    U = recipe.lowT.profile.y
-    # We can use a FitContribution's 'evaluateEquation' method to evaluate
-    # expressions involving the Parameters and other aspects of the
-    # FitContribution. Here we evaluate the fitting equation, which is always
-    # accessed using the name "eq". We access it this way (rather than through
-    # the Profile's ycalc attribute) because we changed the calculation range
-    # above, and we therefore need to recalculate the profile.
-    lowU = recipe.lowT.evaluateEquation("eq")
-    highU = recipe.highT.evaluateEquation("eq")
+    # nice full plot. Since the calculated profile is only valid for the
+    # calculation range that was used during the fit, we need to trigger a
+    # recalculation over the widened range before plotting.
+    recipe.lowT.profile.set_calculation_range(xmin="obs", xmax="obs")
+    recipe.highT.profile.set_calculation_range(xmin="obs", xmax="obs")
+    recipe.residual()
 
-    # Now we can plot this.
-    import pylab
-
-    pylab.plot(T, U, "o", label="Pb $U_{iso}$ Data")
-    lbl1 = r"$T_d$=%3.1f K, lowToff=%1.5f $\AA^2$" % (abs(thetaD), lowToffset)
-    lbl2 = r"$T_d$=%3.1f K, highToff=%1.5f $\AA^2$" % (
-        abs(thetaD),
-        highToffset,
+    recipe.plot_recipe(
+        show_diff=False,
+        data_label=r"Pb $U_{iso}$ Data",
+        fit_label="Calculated",
+        xlabel="T (K)",
+        ylabel=r"$U_{iso} (\AA^2)$",
+        legend_loc=(0.0, 0.8),
     )
-    pylab.plot(T, lowU, label=lbl1)
-    pylab.plot(T, highU, label=lbl2)
-    pylab.xlabel("T (K)")
-    pylab.ylabel(r"$U_{iso} (\AA^2)$")
-    pylab.legend()
-
-    pylab.show()
     return
 
 
@@ -148,7 +139,7 @@ def main():
     res = FitResults(recipe)
 
     # Print the results
-    res.printResults()
+    res.print_results()
 
     # Plot the results
     plot_results(recipe)

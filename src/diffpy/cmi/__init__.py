@@ -15,7 +15,6 @@
 """Complex modeling infrastructure:
 a modular framework for multi-modal modeling of scientific data."""
 
-
 __all__ = [
     "__version__",
 ]
