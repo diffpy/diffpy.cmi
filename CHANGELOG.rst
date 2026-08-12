@@ -4,6 +4,18 @@ Release notes
 
 .. current developments
 
+3.2.0
+=====
+
+**Added:**
+
+* Update function names in examples to remove deprecated functions.
+
+**Changed:**
+
+* Removed pin ``sphinx<9`` now that ``sphinx_rtd_theme`` supports it.
+
+
 3.1.2
 =====
 
