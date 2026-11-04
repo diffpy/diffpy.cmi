@@ -182,7 +182,7 @@ def main():
 
     # Generate and print the FitResults
     res = FitResults(recipe)
-    res.print_results()
+    res.print_results_table()
 
     # Plot!
     recipe.plot_recipe(xlabel=r"$r (\AA)$", ylabel=r"$G (\AA^{-2})$")

@@ -190,5 +190,5 @@ if __name__ == "__main__":
     recipe = make_recipe()
     steer_fit(recipe)
     res = FitResults(recipe)
-    res.print_results()
+    res.print_results_table()
     recipe.plot_recipe()

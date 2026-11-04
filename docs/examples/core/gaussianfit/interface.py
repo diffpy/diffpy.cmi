@@ -66,7 +66,7 @@ def main():
 
     res = FitResults(r)
     # Print the results.
-    res.print_results()
+    res.print_results_table()
     # Plot the results.
     r.plot_recipe(xlabel="x", ylabel="y")
 

@@ -258,7 +258,7 @@ def main():
 
     # Generate and print the FitResults
     res = FitResults(recipe)
-    res.print_results()
+    res.print_results_table()
 
     # Plot!
     plot_results(recipe)
