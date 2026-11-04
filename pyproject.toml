@@ -6,10 +6,10 @@ build-backend = "setuptools.build_meta"
 name = "diffpy.cmi"
 dynamic=['version', 'dependencies']
 authors = [
-  { name="Simon Billinge", email="sb2896@columbia.edu" },
+  { name="Simon Billinge", email="sbillinge@ucsb.edu" },
 ]
 maintainers = [
-  { name="Simon Billinge", email="sb2896@columbia.edu" },
+  { name="Simon Billinge", email="sbillinge@ucsb.edu" },
 ]
 description = "Complex modeling infrastructure: a modular framework for multi-modal modeling of scientific data."
 keywords = ['modelling', 'regression', 'diffraction', 'PDF', 'complex-modeling']
