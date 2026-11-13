@@ -14,13 +14,3 @@ This pack was created by members of the Billinge Group and the DiffPy community.
 packs: ``core``, ``pdf``, ``plotting``
 
 extras: ``ipykernel``
-
-======
-_tests
-======
-
-Testing and development tools for ``diffpy.cmi``.
-
-packs: ``core``, ``pdf``, ``tests``
-
-extras: ``_pytest.sh tar_url.txt``, ``_pytest.bat tar_url.txt``
