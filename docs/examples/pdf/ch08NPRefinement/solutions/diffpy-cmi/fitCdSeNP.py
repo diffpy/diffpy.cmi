@@ -14,15 +14,15 @@ import numpy as np
 from scipy.optimize import least_squares
 
 # ... and the relevant CMI packages
+from diffpy.cmipdf import PDFGenerator, PDFParser
+from diffpy.cmipdf.characteristicfunctions import spherical_particle
+from diffpy.cmistructure import constrain_as_space_group
 from diffpy.srfit.fitbase import (
     FitContribution,
     FitRecipe,
     FitResults,
     Profile,
 )
-from diffpy.srfit.pdf import PDFGenerator, PDFParser
-from diffpy.srfit.pdf.characteristicfunctions import spherical_particle
-from diffpy.srfit.structure import constrain_as_space_group
 from diffpy.structure.parsers import get_parser
 
 # Config ##############################
@@ -108,7 +108,7 @@ def make_recipe_one_phase(cif_path, dat_path, adp_iso=True):
 
     # 12: Create a PDF Generator object for a periodic structure model.
     generator_crystal1 = PDFGenerator("G1")
-    generator_crystal1.setStructure(stru1, periodic=True)
+    generator_crystal1.set_structure(stru1, periodic=True)
 
     # 13: Create a Fit Contribution object.
     contribution = FitContribution("crystal")
@@ -155,8 +155,8 @@ def make_recipe_one_phase(cif_path, dat_path, adp_iso=True):
     # assign Q_max and Q_min.
     generator_crystal1.qdamp.value = QDAMP
     generator_crystal1.qbroad.value = QBROAD
-    generator_crystal1.setQmax(QMAX)
-    generator_crystal1.setQmin(QMIN)
+    generator_crystal1.set_qmax(QMAX)
+    generator_crystal1.set_qmin(QMIN)
 
     # 18: Add, initialize, and tag variables in the Fit Recipe object.
     # In this case we also add psize, which is the NP size.
@@ -201,7 +201,7 @@ def make_recipe_one_phase(cif_path, dat_path, adp_iso=True):
 
         # 23: For all atoms in the structure model, we constrain their
         # Uiso according to their species.
-        atoms = generator_crystal1.phase.getScatterers()
+        atoms = generator_crystal1.phase.get_scatterers()
         for atom in atoms:
             if atom.element == "Cd":
                 recipe.add_constraint(atom.Uiso, cd_uiso)
@@ -279,12 +279,12 @@ def make_recipe_two_phase(cif_path1, cif_path2, dat_path):
     # 32: Create a PDF Generator object for a periodic structure model
     # of phase 1.
     generator_crystal1 = PDFGenerator("G1")
-    generator_crystal1.setStructure(stru1, periodic=True)
+    generator_crystal1.set_structure(stru1, periodic=True)
 
     # 33: Create a PDF Generator object for a periodic structure model
     # of phase 2.
     generator_crystal2 = PDFGenerator("G2")
-    generator_crystal2.setStructure(stru2, periodic=True)
+    generator_crystal2.set_structure(stru2, periodic=True)
 
     # 33: Make convenient lists of the generators and space group names
     generators = [generator_crystal1, generator_crystal2]
@@ -361,8 +361,8 @@ def make_recipe_two_phase(cif_path1, cif_path2, dat_path):
     # assign Q_max and Q_min.
     generator_crystal1.qdamp.value = QDAMP
     generator_crystal1.qbroad.value = QBROAD
-    generator_crystal1.setQmax(QMAX)
-    generator_crystal1.setQmin(QMIN)
+    generator_crystal1.set_qmax(QMAX)
+    generator_crystal1.set_qmin(QMIN)
 
     # 41: We create the variables of ADP and assign the initial value to them,
     # specified above. In this example, we use isotropic ADP for all atoms.
@@ -381,7 +381,7 @@ def make_recipe_two_phase(cif_path1, cif_path2, dat_path):
         recipe.add_constraint(generator.delta2, delta2)
 
         # 45: turn off anisotropy
-        generator.phase.stru.anisotropy = False
+        generator.phase.structure.anisotropy = False
 
         # 46: Use the srfit function constrain_as_space_group to constrain
         # the lattice, ADP parameters, and atomic positions according to the
@@ -407,7 +407,7 @@ def make_recipe_two_phase(cif_path1, cif_path2, dat_path):
 
         # 47: We do not use the ADP portion of spacegroupparams, instead we
         # add isotropic ADPs. We use one set across both phases.
-        atoms = generator.phase.getScatterers()
+        atoms = generator.phase.get_scatterers()
         for atom in atoms:
             if atom.element == "Cd":
                 recipe.add_constraint(atom.Uiso, cd_uiso)

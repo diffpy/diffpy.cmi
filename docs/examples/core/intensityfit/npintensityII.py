@@ -171,7 +171,7 @@ def make_recipe(strufile, datname1, datname2):
     # We can also refine structural parameters. We only have to do this once,
     # since each generator holds the same DiffpyStructureParSet.
     phase = generator1.phase
-    lattice = phase.getLattice()
+    lattice = phase.get_lattice()
     a = recipe.add_variable(lattice.a)
     # We want to allow for isotropic expansion, so we'll make constraints for
     # that.
@@ -182,7 +182,7 @@ def make_recipe(strufile, datname1, datname2):
     # this. Note that we don't give Uiso an initial value. The initial value
     # will be inferred from the subsequent constraints.
     Uiso = recipe.create_new_variable("Uiso")
-    for atom in phase.getScatterers():
+    for atom in phase.get_scatterers():
         recipe.add_constraint(atom.Uiso, Uiso)
 
     # Give the recipe away so it can be used!
