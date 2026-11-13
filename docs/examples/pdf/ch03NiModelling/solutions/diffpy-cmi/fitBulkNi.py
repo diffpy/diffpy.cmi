@@ -15,14 +15,14 @@ from bg_mpl_stylesheets.styles import all_styles
 from scipy.optimize import least_squares
 
 # ... and the relevant CMI packages
+from diffpy.cmipdf import PDFGenerator, PDFParser
+from diffpy.cmistructure import constrain_as_space_group
 from diffpy.srfit.fitbase import (
     FitContribution,
     FitRecipe,
     FitResults,
     Profile,
 )
-from diffpy.srfit.pdf import PDFGenerator, PDFParser
-from diffpy.srfit.structure import constrain_as_space_group
 from diffpy.structure.parsers import get_parser
 
 plt.style.use(all_styles["bg-style"])
@@ -116,7 +116,7 @@ def make_recipe(cif_path, dat_path):
     # This Generator will later compute the model PDF for the structure
     # object we provide it here.
     generator_crystal1 = PDFGenerator("G1")
-    generator_crystal1.setStructure(stru1, periodic=True)
+    generator_crystal1.set_structure(stru1, periodic=True)
 
     # 12: Create a Fit Contribution object, and arbitrarily name it 'crystal'.
     # We then give the PDF Generator object we created just above
@@ -173,8 +173,8 @@ def make_recipe(cif_path, dat_path):
     # below '.value = ' syntax.
     recipe.crystal.G1.qdamp.value = QDAMP_I
     recipe.crystal.G1.qbroad.value = QBROAD_I
-    recipe.crystal.G1.setQmax(QMAX)
-    recipe.crystal.G1.setQmin(QMIN)
+    recipe.crystal.G1.set_qmax(QMAX)
+    recipe.crystal.G1.set_qmin(QMIN)
 
     # 17: Add a variable to the Fit Recipe object, initialize the variables
     # with some value, and tag it with an arbitrary string. Here we add the

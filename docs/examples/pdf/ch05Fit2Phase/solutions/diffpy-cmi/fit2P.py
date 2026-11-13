@@ -16,14 +16,14 @@ from bg_mpl_stylesheets.styles import all_styles
 from scipy.optimize import least_squares
 
 # ... and the relevant CMI packages
+from diffpy.cmipdf import PDFGenerator, PDFParser
+from diffpy.cmistructure import constrain_as_space_group
 from diffpy.srfit.fitbase import (
     FitContribution,
     FitRecipe,
     FitResults,
     Profile,
 )
-from diffpy.srfit.pdf import PDFGenerator, PDFParser
-from diffpy.srfit.structure import constrain_as_space_group
 from diffpy.structure.parsers import get_parser
 
 plt.style.use(all_styles["bg-style"])
@@ -109,12 +109,12 @@ def make_recipe(cif_path1, cif_path2, dat_path):
     # 11a: Create a PDF Generator object for a periodic structure model
     # of phase 1.
     generator_crystal1 = PDFGenerator("G_Si")
-    generator_crystal1.setStructure(stru1, periodic=True)
+    generator_crystal1.set_structure(stru1, periodic=True)
 
     # 11b: Create a PDF Generator object for a periodic structure model
     # of phase 2.
     generator_crystal2 = PDFGenerator("G_Ni")
-    generator_crystal2.setStructure(stru2, periodic=True)
+    generator_crystal2.set_structure(stru2, periodic=True)
 
     # 12: Create a Fit Contribution object. This is new, as we
     # need to tell the Fit Contribution about BOTH the phase
@@ -192,8 +192,8 @@ def make_recipe(cif_path1, cif_path2, dat_path):
         # assign Q_max and Q_min for each phase.
         generator.qdamp.value = QDAMP_I
         generator.qbroad.value = QBROAD_I
-        generator.setQmax(QMAX)
-        generator.setQmin(QMIN)
+        generator.set_qmax(QMAX)
+        generator.set_qmin(QMIN)
 
         # 18c: Get the symmetry equivalent parameters for each phase.
         spacegroupparams = constrain_as_space_group(
