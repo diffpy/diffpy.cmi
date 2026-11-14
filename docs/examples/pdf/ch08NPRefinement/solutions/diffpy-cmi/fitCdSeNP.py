@@ -494,7 +494,7 @@ def main():
 
         # 58: Print the fit results to the terminal.
         res = FitResults(recipe)
-        res.print_results()
+        res.print_results_table()
 
         # 59: Write the fit results to a file.
         header = "crystal_HF.\n"
@@ -571,7 +571,7 @@ def main():
 
                 # 68: Print the fit results to the terminal.
                 res = FitResults(recipe)
-                res.print_results()
+                res.print_results_table()
 
                 # 69: Write the fit results to a file.
                 header = "crystal_HF.\n"

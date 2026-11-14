@@ -2,6 +2,7 @@ import runpy
 import shutil
 from pathlib import Path
 
+import matplotlib.pyplot as plt
 import pytest
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
@@ -30,3 +31,4 @@ def test_all_examples(tmp_examples):
         script_relative_path = script.relative_to(tmp_examples)
         print(f"Testing {script_relative_path}")
         runpy.run_path(str(script), run_name="__main__")
+        plt.close("all")

@@ -297,10 +297,10 @@ def main():
     profile.savetxt(fitdir / f"{basename}.fit")
 
     # 26: We use the 'FitResults' method to parse out the results from
-    # the optimized Fit Recipe, and 'printResults' to print them
+    # the optimized Fit Recipe, and 'print_results_table' to print them
     # to the terminal.
     res = FitResults(recipe)
-    res.print_results()
+    res.print_results_table()
 
     # 27: We use the 'saveResults' method of 'FitResults' to write a text file
     # containing the fitted parameters and fit quality indices to disk.
