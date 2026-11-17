@@ -94,7 +94,7 @@ def make_recipe(stru1, stru2, datname):
     # diameter to twice the shell radius.
     recipe.add_variable(contribution.radius, 15)
     recipe.add_variable(contribution.thickness, 11)
-    recipe.add_constraint(contribution.psize, "2 * radius")
+    recipe.add_constraint(contribution.particle_diameter, "2 * radius")
 
     # Configure the fit variables
     # Start by configuring the scale factor and resolution factors.
