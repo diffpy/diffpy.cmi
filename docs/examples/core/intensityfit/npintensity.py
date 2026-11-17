@@ -47,6 +47,7 @@ import matplotlib.pyplot as plt
 import numpy
 
 from diffpy.cmi.fit_tools import optimize_recipe
+from diffpy.cmistructure.diffpyparset import DiffpyStructureParSet
 from diffpy.srfit.fitbase import (
     FitContribution,
     FitRecipe,
@@ -54,7 +55,6 @@ from diffpy.srfit.fitbase import (
     Profile,
     ProfileGenerator,
 )
-from diffpy.srfit.structure.diffpyparset import DiffpyStructureParSet
 
 ######
 #  Example Code
@@ -103,7 +103,7 @@ class IntensityGenerator(ProfileGenerator):
                         function whenever it is called.
 
         This will create the refinement Parameters using the
-        DiffpyStructureParSet adapter from diffpy.srfit.structure.diffpyparset.
+        DiffpyStructureParSet adapter from diffpy.cmistructure.diffpyparset.
         DiffpyStructureParSet is a ParameterSet object that organizes and gives
         attribute access to Parameters and ParameterSets adapted from a diffpy
         Structure object.  The Parameters embedded in the DiffpyStructureParSet
@@ -113,14 +113,14 @@ class IntensityGenerator(ProfileGenerator):
         are organized hierarchically:
 
         phase
-          - lattice (retrieved with 'getLattice')
+          - lattice (retrieved with 'get_lattice')
             - a
             - b
             - c
             - alpha
             - beta
             - gamma
-          - scatterers (retrieved with 'getScatterers')
+          - scatterers (retrieved with 'get_scatterers')
             - atom1 (the name depends on the element)
               - x
               - y
@@ -136,7 +136,7 @@ class IntensityGenerator(ProfileGenerator):
             - etc.
 
         The diffpy.structure.Structure instance is held within the
-        DiffpyStructureParSet as the 'stru' attribute.
+        DiffpyStructureParSet as the 'structure' attribute.
         """
         # Load the structure from file
         from diffpy.structure import Structure
@@ -170,7 +170,7 @@ class IntensityGenerator(ProfileGenerator):
         """
         self.count += 1
         print("iofq called", self.count)
-        return iofq(self.phase.stru, q)
+        return iofq(self.phase.structure, q)
 
 
 # End class IntensityGenerator
@@ -287,7 +287,7 @@ def make_recipe(strufile, datname):
     # parameters to the same value (the lattice is cubic). Note that we
     # constrain to the "a" Parameter directly. In previous examples, we
     # constrained to a Variable by name. This has the same effect.
-    lattice = phase.getLattice()
+    lattice = phase.get_lattice()
     a = lattice.a
     recipe.add_variable(a)
     recipe.add_constraint(lattice.b, a)
@@ -297,7 +297,7 @@ def make_recipe(strufile, datname):
     # this. Note that we don't give Uiso an initial value. The initial value
     # will be inferred from the following constraints.
     Uiso = recipe.create_new_variable("Uiso")
-    for atom in phase.getScatterers():
+    for atom in phase.get_scatterers():
         recipe.add_constraint(atom.Uiso, Uiso)
 
     # Give the recipe away so it can be used!

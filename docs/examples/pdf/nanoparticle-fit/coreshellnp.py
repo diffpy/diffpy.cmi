@@ -25,13 +25,13 @@ from pathlib import Path
 from pyobjcryst import loadCrystal
 from scipy.optimize import leastsq
 
+from diffpy.cmipdf import PDFGenerator, PDFParser
 from diffpy.srfit.fitbase import (
     FitContribution,
     FitRecipe,
     FitResults,
     Profile,
 )
-from diffpy.srfit.pdf import PDFGenerator, PDFParser
 
 # Example Code
 
@@ -54,13 +54,13 @@ def make_recipe(stru1, stru2, datname):
     # The generator for the CdS core. We call it "G_CdS" and will use this name
     # later when we set the fitting equation in the FitContribution.
     generator_cds = PDFGenerator("G_CdS")
-    generator_cds.setStructure(stru1)
-    generator_cds.setQmax(26)
+    generator_cds.set_structure(stru1)
+    generator_cds.set_qmax(26)
     generator_cds.qdamp.value = 0.0396
     # The generator for the ZnS shell. We call it "G_ZnS".
     generator_zns = PDFGenerator("G_ZnS")
-    generator_zns.setStructure(stru2)
-    generator_zns.setQmax(26)
+    generator_zns.set_structure(stru2)
+    generator_zns.set_qmax(26)
     generator_zns.qdamp.value = 0.0396
 
     # The FitContribution
@@ -74,7 +74,7 @@ def make_recipe(stru1, stru2, datname):
     # and a spherical shell CF for the shell. Since this is set up as two
     # phases, we implicitly assume that the core-shell correlations contribute
     # very little to the PDF.
-    from diffpy.srfit.pdf.characteristicfunctions import (
+    from diffpy.cmipdf.characteristicfunctions import (
         shell_particle,
         spherical_particle,
     )

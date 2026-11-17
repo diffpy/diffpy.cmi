@@ -19,15 +19,15 @@ from bg_mpl_stylesheets.styles import all_styles
 from scipy.optimize import least_squares
 
 # ... and the relevant CMI packages
+from diffpy.cmipdf import PDFGenerator, PDFParser
+from diffpy.cmipdf.characteristicfunctions import spherical_particle
+from diffpy.cmistructure import constrain_as_space_group
 from diffpy.srfit.fitbase import (
     FitContribution,
     FitRecipe,
     FitResults,
     Profile,
 )
-from diffpy.srfit.pdf import PDFGenerator, PDFParser
-from diffpy.srfit.pdf.characteristicfunctions import spherical_particle
-from diffpy.srfit.structure import constrain_as_space_group
 from diffpy.structure.parsers import get_parser
 
 plt.style.use(all_styles["bg-style"])
@@ -126,7 +126,7 @@ def make_recipe(cif_path, dat_path):
 
     # 12: Create a PDF Generator object for a periodic structure model.
     generator_crystal1 = PDFGenerator("G1")
-    generator_crystal1.setStructure(stru1, periodic=True)
+    generator_crystal1.set_structure(stru1, periodic=True)
 
     # 13: Create a Fit Contribution object.
     contribution = FitContribution("crystal")
@@ -172,8 +172,8 @@ def make_recipe(cif_path, dat_path):
     # assign Q_max and Q_min.
     generator_crystal1.qdamp.value = QDAMP_I
     generator_crystal1.qbroad.value = QBROAD_I
-    generator_crystal1.setQmax(QMAX)
-    generator_crystal1.setQmin(QMIN)
+    generator_crystal1.set_qmax(QMAX)
+    generator_crystal1.set_qmin(QMIN)
 
     # 18: Add, initialize, and tag variables in the Fit Recipe object.
     # In this case we also add 'psize', which is the NP size.

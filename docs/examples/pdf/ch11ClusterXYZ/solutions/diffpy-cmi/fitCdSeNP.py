@@ -11,13 +11,13 @@ from pathlib import Path
 import numpy as np
 from scipy.optimize import least_squares
 
+from diffpy.cmipdf import DebyePDFGenerator, PDFParser
 from diffpy.srfit.fitbase import (
     FitContribution,
     FitRecipe,
     FitResults,
     Profile,
 )
-from diffpy.srfit.pdf import DebyePDFGenerator, PDFParser
 from diffpy.structure import Structure
 
 # Config ##############################
@@ -89,7 +89,7 @@ def make_recipe(stru_path, dat_path):
 
     # 10: Create a Debye PDF Generator object for the discrete structure model.
     generator_cluster1 = DebyePDFGenerator("G1")
-    generator_cluster1.setStructure(stru1, periodic=False)
+    generator_cluster1.set_structure(stru1, periodic=False)
 
     # 11: Create a Fit Contribution object.
     contribution = FitContribution("cluster")
@@ -129,8 +129,8 @@ def make_recipe(stru_path, dat_path):
     # assign Q_max and Q_min.
     generator_cluster1.qdamp.value = QDAMP_I
     generator_cluster1.qbroad.value = QBROAD_I
-    generator_cluster1.setQmax(QMAX)
-    generator_cluster1.setQmin(QMIN)
+    generator_cluster1.set_qmax(QMAX)
+    generator_cluster1.set_qmin(QMIN)
 
     # 16: Add, initialize, and tag variables in the Fit Recipe object.
     # In this case we also add psize, which is the NP size.
@@ -142,7 +142,7 @@ def make_recipe(stru_path, dat_path):
 
     phase_cluster1 = generator_cluster1.phase
 
-    lattice1 = phase_cluster1.getLattice()
+    lattice1 = phase_cluster1.get_lattice()
 
     recipe.create_new_variable("zoomscale", ZOOMSCALE_I, tag="lat")
 
@@ -153,7 +153,7 @@ def make_recipe(stru_path, dat_path):
     # 18: Initialize an atoms object and constrain the isotropic
     # Atomic Displacement Parameters (ADPs) per element.
 
-    atoms1 = phase_cluster1.getScatterers()
+    atoms1 = phase_cluster1.get_scatterers()
 
     recipe.create_new_variable("Cd_Uiso", UISO_Cd_I, tag="adp")
     recipe.create_new_variable("Se_Uiso", UISO_Se_I, tag="adp")

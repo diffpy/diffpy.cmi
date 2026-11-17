@@ -5,6 +5,7 @@ from pyobjcryst import loadCrystal
 from pyobjcryst.crystal import Crystal
 from scipy.optimize import least_squares
 
+from diffpy.cmipdf import PDFGenerator, PDFParser
 from diffpy.srfit.fitbase import (
     FitContribution,
     FitRecipe,
@@ -12,7 +13,6 @@ from diffpy.srfit.fitbase import (
     Profile,
 )
 from diffpy.srfit.fitbase.parameterset import ParameterSet
-from diffpy.srfit.pdf import PDFGenerator, PDFParser
 
 
 # Recipe functions
@@ -51,7 +51,7 @@ def _create_recipe(
     fc = FitContribution(fc_name)
     for name, crystal in crystals.items():
         pg = PDFGenerator(name)
-        pg.setStructure(crystal, periodic=True)
+        pg.set_structure(crystal, periodic=True)
         fc.add_profile_generator(pg)
     for name, (f, argnames) in functions.items():
         fc.register_function(f, name=name, argnames=argnames)
@@ -162,7 +162,7 @@ def _add_params_in_pg(recipe: FitRecipe, pg: PDFGenerator) -> None:
             fixed=True,
             tags=_get_tags(name, "lat"),
         ).bound_range(0.0)
-    atoms: typing.List[ParameterSet] = pg.phase.getScatterers()
+    atoms: typing.List[ParameterSet] = pg.phase.get_scatterers()
     for atom in atoms:
         par = atom.Biso
         recipe.add_variable(
@@ -435,7 +435,7 @@ def save_results(
     if pg_names is not None:
         for pg_name in pg_names:
             pg: PDFGenerator = getattr(fc, pg_name)
-            stru: Crystal = pg.stru
+            stru: Crystal = pg.structure
             cif_path = f_path.with_name(
                 "{}_{}".format(f_path.stem, pg_name)
             ).with_suffix(".cif")
